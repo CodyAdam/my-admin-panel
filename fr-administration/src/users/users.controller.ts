@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { isErrored } from 'stream';
 import supertest from 'supertest';
 import { User } from './user.entity';
@@ -20,7 +20,10 @@ function getNewId(): number {
     return max+1
 }
 function findUser(id: number): User {
-    return users.find(u => u.id === id)
+    let res: User = users.find(u => u.id === id)
+    if(!res)
+        throw new HttpException(`User ${id} not found`, HttpStatus.NOT_FOUND)
+    return res
 }
 
 @Controller('users')
@@ -45,8 +48,6 @@ export class UsersController {
     @Put(":id")
     updateUser(@Param('id', ParseIntPipe) id: number, @Body('firstname') firstname: string, @Body('lastname') lastname: string): User {
         let user = findUser(id)
-        if(!user)
-            return user
         if(firstname)
             user.firstname = firstname
         if(lastname)
@@ -62,7 +63,7 @@ export class UsersController {
                 index = j
         }
         if(index === -1)
-            return false
+            throw new HttpException(`User ${id} not found`, HttpStatus.NOT_FOUND)
 
         users.splice(index, 1)
         return true
