@@ -5,7 +5,8 @@ const users: User[] = [
     {
         id: 0,
         lastname: 'Doe',
-        firstname: 'John'
+        firstname: 'John',
+        age: 23
     }
 ]
 
@@ -28,20 +29,22 @@ export class UsersService {
     getAll(): User[] {
         return users
     }
-    create(firstname: string, lastname: string): User {
-        let user = new User(this.getNewId(), lastname, firstname)
+    create(firstname: string, lastname: string, age: number): User {
+        let user = new User(this.getNewId(), lastname, firstname, age)
         users.push(user)
         return user
     }
     getUser(id: number): User {
         return this.findUser(id)
     }
-    updateUser(id: number, firstname: string, lastname: string): User {
+    updateUser(id: number, firstname: string, lastname: string, age: number): User {
         let user = this.findUser(id)
         if(firstname)
             user.firstname = firstname
         if(lastname)
             user.lastname = lastname
+        if(age)
+            user.age = age
         return user
     }
     deleteUser(id: number): boolean {

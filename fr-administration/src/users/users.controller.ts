@@ -13,8 +13,8 @@ export class UsersController {
     }
 
     @Post()
-    create(@Body('lastname') lastname: string, @Body('firstname') firstname: string): User {
-        return this.service.create(lastname, firstname)
+    create(@Body('lastname') lastname: string, @Body('firstname') firstname: string, @Body('age', ParseIntPipe) age: number): User {
+        return this.service.create(lastname, firstname, age)
     }
     
     @Get(":id")
@@ -23,8 +23,11 @@ export class UsersController {
     }
 
     @Put(":id")
-    updateUser(@Param('id', ParseIntPipe) id: number, @Body('firstname') firstname: string, @Body('lastname') lastname: string): User {
-        return this.service.updateUser(id, firstname, lastname)
+    updateUser(@Param('id', ParseIntPipe) id: number, 
+        @Body('firstname') firstname: string, 
+        @Body('lastname') lastname: string,
+        @Body('age', ParseIntPipe) age: number): User {
+        return this.service.updateUser(id, firstname, lastname, age)
     }
 
     @Delete(":id")
