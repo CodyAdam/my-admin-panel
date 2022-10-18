@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { isErrored } from 'stream';
 import supertest from 'supertest';
 import { User } from './user.entity';
@@ -52,5 +52,19 @@ export class UsersController {
         if(lastname)
             user.lastname = lastname
         return user
+    }
+
+    @Delete(":id")
+    deleteUser(@Param('id', ParseIntPipe) id: number): boolean {
+        let index = -1
+        for(let j=0; j<users.length; j++){
+            if(users[j].id === id)
+                index = j
+        }
+        if(index === -1)
+            return false
+
+        users.splice(index, 1)
+        return true
     }
 }
