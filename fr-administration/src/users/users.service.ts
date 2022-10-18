@@ -54,7 +54,7 @@ export class UsersService {
                 index = j
         }
         if(index === -1)
-            throw new HttpException(`User ${id} not found`, HttpStatus.NOT_FOUND)
+            return false
 
         users.splice(index, 1)
         return true
