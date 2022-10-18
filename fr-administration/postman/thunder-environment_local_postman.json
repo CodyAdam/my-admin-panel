@@ -1,0 +1,1 @@
+{"name":"local","id":"1c7c3df7-b9b2-4e49-a9bb-a03dce35a91c","_postman_variable_scope":"environment","_postman_exported_at":"2022-10-18T14:00:55.608Z","_postman_exported_using":"Thunder Client","values":[{"key":"url","value":"http://localhost:3000","enabled":true}]}
