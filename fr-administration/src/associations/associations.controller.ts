@@ -12,32 +12,35 @@ export class AssociationsController {
         ){}
 
     @Get()
-    getAll(): Association[] {
-        return this.service.getAll()
+    async getAll(): Promise<Association[]> {
+        return await this.service.getAll()
     }
 
     @Get(':id')
-    getOne(@Param('id', ParseIntPipe) id: number): Association {
-        return this.service.findById(id)
+    async getOne(@Param('id', ParseIntPipe) id: number): Promise<Association> {
+        return await this.service.findById(id)
     }
 
     @Post()
-    create(@Body('idUsers') idUsers: number[], @Body('name') name: string): Association {
-        return this.service.create(idUsers, name)
+    async create(@Body('idUsers') idUsers: number[], @Body('name') name: string): Promise<Association> {
+        let users: User[] = await Promise.all(idUsers.map(async u => await this.users.findUser(u)))
+        return await this.service.create(users, name)
     }
 
     @Put(':id')
-    update(@Param('id', ParseIntPipe) id: number, @Body('idUsers') idUsers: number[], @Body('name') name: string): Association {
-        return this.service.update(id, idUsers, name)
+    async update(@Param('id', ParseIntPipe) id: number, @Body('idUsers') idUsers: number[], @Body('name') name: string): Promise<Association> {
+        let users: User[] = await Promise.all(idUsers.map(async u => await this.users.findUser(u)))
+        return await this.service.update(id, users, name)
     }
 
     @Delete(':id')
-    delete(@Param('id', ParseIntPipe) id: number): boolean {
-        return this.service.delete(id)
+    async delete(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
+        return await this.service.delete(id)
     }
 
     @Get(':id/members')
-    getMembers(@Param('id', ParseIntPipe) id: number): User[] {
-        return this.service.findById(id).idUsers.map(u => this.users.findUser(u))
+    async getMembers(@Param('id', ParseIntPipe) id: number): Promise<User[]> {
+        let asso = await this.service.findById(id)
+        return asso.idUsers
     }
 }

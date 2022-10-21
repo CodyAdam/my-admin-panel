@@ -8,30 +8,30 @@ export class UsersController {
     constructor(private service: UsersService){}
 
     @Get()
-    getAll(): User[] {
-        return this.service.getAll()
+    async getAll(): Promise<User[]> {
+        return await this.service.getAll()
     }
 
     @Post()
-    create(@Body('lastname') lastname: string, @Body('firstname') firstname: string, @Body('age', ParseIntPipe) age: number): User {
-        return this.service.create(lastname, firstname, age)
+    async create(@Body('lastname') lastname: string, @Body('firstname') firstname: string, @Body('age', ParseIntPipe) age: number): Promise<User> {
+        return await this.service.create(lastname, firstname, age)
     }
     
     @Get(":id")
-    getUser(@Param('id', ParseIntPipe) id: number): User {
-        return this.service.findUser(id)
+    async getUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
+        return await this.service.findUser(id)
     }
 
     @Put(":id")
-    updateUser(@Param('id', ParseIntPipe) id: number, 
+    async updateUser(@Param('id', ParseIntPipe) id: number, 
         @Body('firstname') firstname: string, 
         @Body('lastname') lastname: string,
-        @Body('age', ParseIntPipe) age: number): User {
-        return this.service.updateUser(id, firstname, lastname, age)
+        @Body('age', ParseIntPipe) age: number): Promise<User> {
+        return await this.service.updateUser(id, firstname, lastname, age)
     }
 
     @Delete(":id")
-    deleteUser(@Param('id', ParseIntPipe) id: number): boolean {
-        return this.service.deleteUser(id)
+    async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
+        return await this.service.deleteUser(id)
     }
 }

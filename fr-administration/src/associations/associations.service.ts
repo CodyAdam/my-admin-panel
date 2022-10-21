@@ -1,57 +1,49 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/users/user.entity';
+import { Repository } from 'typeorm';
+import { threadId } from 'worker_threads';
 import { Association } from './association.entity';
-
-const associations: Association[] = [
-    {
-        id: 0,
-        idUsers: [0],
-        name: 'ADAPEI'
-    }
-]
 
 @Injectable()
 export class AssociationsService {
-    getAll(): Association[] {
-        return associations
+
+    constructor(
+        @InjectRepository(Association)
+        private repo: Repository<Association>
+    ){}
+
+    async getAll(): Promise<Association[]> {
+        return await this.repo.find({})
     }
-    findById(id: number): Association {
-        let res = associations.find(a => a.id === id)
+    async findById(id: number): Promise<Association> {
+        let res = await this.repo.findOne({where: {id: id}})
         if(!res)
             throw new HttpException(`Association ${id} not found`, HttpStatus.NOT_FOUND)
         return res
     }
-    getNewId(): number {
-        let max = 0
-        associations.forEach(a => {
-            if(a.id > max)
-                max = a.id
+    async create(idUsers: User[], name: string): Promise<Association> {
+        let ass = await this.repo.create({
+            idUsers: Promise.resolve(idUsers),
+            name
         })
-        return max+1
-    }
-    create(idUsers: number[], name: string): Association {
-        let ass = new Association(this.getNewId(), idUsers, name)
-        associations.push(ass)
+        await this.repo.save(ass)
         return ass
     }
-    update(id: number, idUsers: number[], name: string): Association {
-        let ass = this.findById(id)
+    async update(id: number, idUsers: User[], name: string): Promise<Association> {
+        let ass = await this.findById(id)
 
         if(idUsers)
-            ass.idUsers = idUsers
+            ass.idUsers = Promise.resolve(idUsers)
         if(name)
             ass.name = name
 
+        await this.repo.save(ass)
         return ass
     }
-    delete(id: number){
-        let index = -1
-        for(let i=0; i<associations.length; i++){
-            if(associations[i].id === id)
-                index = i
-        }
-        if(index === -1)
-            return false
-        associations.splice(index, 1)
+    async delete(id: number): Promise<boolean>{
+        let ass = await this.findById(id)
+        await this.repo.remove(ass)
         return true
     }
 }

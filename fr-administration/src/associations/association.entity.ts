@@ -1,11 +1,15 @@
+import { User } from "src/users/user.entity"
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+
+@Entity()
 export class Association {
+
+    @PrimaryGeneratedColumn()
     id: number
-    idUsers: number[]
+    @ManyToMany(() => User, {eager: false})
+    @JoinTable()
+    idUsers: Promise<User[]>
+    @Column()
     name: string
 
-    constructor(id: number, idUsers: number[], name: string){
-        this.id = id
-        this.idUsers = idUsers
-        this.name = name
-    }
 }
