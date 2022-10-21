@@ -1,10 +1,12 @@
 import { Body, Controller, Delete, Get, Param, ParseArrayPipe, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { Association } from './association.entity';
 import { AssociationsService } from './associations.service';
 
 @Controller('associations')
+@ApiTags('associations')
 export class AssociationsController {
     constructor(
         private service: AssociationsService,
