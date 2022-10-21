@@ -1,9 +1,40 @@
 import { Body, Controller, Delete, Get, Param, ParseArrayPipe, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { Association } from './association.entity';
 import { AssociationsService } from './associations.service';
+
+export class AssociationCreate{
+    @ApiProperty({
+        description: 'List of users',
+        example: [1],
+        type: Array<Number>
+    })
+    public idUsers: number[]
+    @ApiProperty({
+        description: 'Name',
+        example: 'ADAPEI',
+        type: String
+    })
+    public name: string
+}
+export class AssociationUpdate{
+    @ApiProperty({
+        description: 'List of users',
+        example: [1],
+        type: Array<Number>,
+        required: false
+    })
+    public idUsers?: number[]
+    @ApiProperty({
+        description: 'Name',
+        example: 'ADAPEI',
+        type: String,
+        required: false
+    })
+    public name?: string
+}
 
 @Controller('associations')
 @ApiTags('associations')
@@ -24,15 +55,15 @@ export class AssociationsController {
     }
 
     @Post()
-    async create(@Body('idUsers') idUsers: number[], @Body('name') name: string): Promise<Association> {
-        let users: User[] = await Promise.all(idUsers.map(async u => await this.users.findUser(u)))
-        return await this.service.create(users, name)
+    async create(@Body() a: AssociationCreate): Promise<Association> {
+        let users: User[] = await Promise.all(a.idUsers.map(async u => await this.users.findUser(u)))
+        return await this.service.create(users, a.name)
     }
 
     @Put(':id')
-    async update(@Param('id', ParseIntPipe) id: number, @Body('idUsers') idUsers: number[], @Body('name') name: string): Promise<Association> {
-        let users: User[] = await Promise.all(idUsers.map(async u => await this.users.findUser(u)))
-        return await this.service.update(id, users, name)
+    async update(@Param('id', ParseIntPipe) id: number, @Body() a: AssociationUpdate): Promise<Association> {
+        let users: User[] = await Promise.all(a.idUsers.map(async u => await this.users.findUser(u)))
+        return await this.service.update(id, users, a.name)
     }
 
     @Delete(':id')

@@ -3,7 +3,7 @@ import { ApiCreatedResponse, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 
-export class UserInput {
+export class UserCreation {
     @ApiProperty({
         description: 'Firstname',
         example: 'John',
@@ -23,6 +23,29 @@ export class UserInput {
     })
     public age: number
 }
+export class UserUpdate{
+    @ApiProperty({
+        description: 'Firstname',
+        example: 'John',
+        type: String,
+        required: false
+    })
+    public firstname?: string
+    @ApiProperty({
+        description: 'Lastname',
+        example: 'Doe',
+        type: String,
+        required: false
+    })
+    public lastname?: string
+    @ApiProperty({
+        description: 'Age',
+        example: 22,
+        type: Number,
+        required: false
+    })
+    public age?: number
+}
 
 @Controller('users')
 @ApiTags('users')
@@ -39,7 +62,7 @@ export class UsersController {
         description: 'The user has neem successfully created.'
     })
     @Post()
-    async create(@Body() u: UserInput): Promise<User> {
+    async create(@Body() u: UserCreation): Promise<User> {
         return await this.service.create(u.lastname, u.firstname, u.age)
     }
     
@@ -50,10 +73,8 @@ export class UsersController {
 
     @Put(":id")
     async updateUser(@Param('id', ParseIntPipe) id: number, 
-        @Body('firstname') firstname: string, 
-        @Body('lastname') lastname: string,
-        @Body('age', ParseIntPipe) age: number): Promise<User> {
-        return await this.service.updateUser(id, firstname, lastname, age)
+        @Body() u: UserUpdate): Promise<User> {
+        return await this.service.updateUser(id, u.firstname, u.lastname, u.age)
     }
 
     @Delete(":id")
