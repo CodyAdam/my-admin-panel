@@ -62,7 +62,9 @@ export class AssociationsController {
 
     @Put(':id')
     async update(@Param('id', ParseIntPipe) id: number, @Body() a: AssociationUpdate): Promise<Association> {
-        let users: User[] = await Promise.all(a.idUsers.map(async u => await this.users.findUser(u)))
+        let users: User[]
+        if(a.idUsers)
+            users = await Promise.all(a.idUsers.map(async u => await this.users.findUser(u)))
         return await this.service.update(id, users, a.name)
     }
 
