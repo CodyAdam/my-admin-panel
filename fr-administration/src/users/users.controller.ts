@@ -22,6 +22,12 @@ export class UserCreation {
         type: Number
     })
     public age: number
+    @ApiProperty({
+        description: 'Password',
+        example: 'test',
+        type: String
+    })
+    public password: string
 }
 export class UserUpdate{
     @ApiProperty({
@@ -45,6 +51,12 @@ export class UserUpdate{
         required: false
     })
     public age?: number
+    @ApiProperty({
+        description: 'Password',
+        example: 'test',
+        type: String
+    })
+    public password?: string
 }
 
 @Controller('users')
@@ -63,7 +75,7 @@ export class UsersController {
     })
     @Post()
     async create(@Body() u: UserCreation): Promise<User> {
-        return await this.service.create(u.lastname, u.firstname, u.age)
+        return await this.service.create(u.lastname, u.firstname, u.age, u.password)
     }
     
     @Get(":id")
@@ -74,7 +86,7 @@ export class UsersController {
     @Put(":id")
     async updateUser(@Param('id', ParseIntPipe) id: number, 
         @Body() u: UserUpdate): Promise<User> {
-        return await this.service.updateUser(id, u.firstname, u.lastname, u.age)
+        return await this.service.updateUser(id, u.firstname, u.lastname, u.age, u.password)
     }
 
     @Delete(":id")

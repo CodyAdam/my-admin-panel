@@ -42,7 +42,8 @@ describe('AssociationsService', () => {
       id: 0,
       firstname: 'John',
       lastname: 'Doe',
-      age: 23
+      age: 23,
+      password: ''
     }
     asso = {
       id: 0,

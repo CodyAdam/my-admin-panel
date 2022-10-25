@@ -11,5 +11,7 @@ export class User {
     firstname: string
     @Column()
     age: number
+    @Column()
+    password: string
 
 }

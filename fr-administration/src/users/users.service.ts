@@ -20,11 +20,12 @@ export class UsersService {
     async getAll(): Promise<User[]> {
         return await this.repo.find({})
     }
-    async create(firstname: string, lastname: string, age: number): Promise<User> {
+    async create(firstname: string, lastname: string, age: number, password: string): Promise<User> {
         let user = await this.repo.create({
             lastname,
             firstname,
-            age
+            age,
+            password
         })
         await this.repo.save(user)
         return user
@@ -32,7 +33,7 @@ export class UsersService {
     async getUser(id: number): Promise<User> {
         return await this.findUser(id)
     }
-    async updateUser(id: number, firstname: string, lastname: string, age: number): Promise<User> {
+    async updateUser(id: number, firstname: string, lastname: string, age: number, password: string): Promise<User> {
         let user = await this.findUser(id)
         if(firstname)
             user.firstname = firstname
@@ -40,6 +41,8 @@ export class UsersService {
             user.lastname = lastname
         if(age)
             user.age = age
+        if(password)
+            user.password = password
         await this.repo.save(user)
         return user
     }

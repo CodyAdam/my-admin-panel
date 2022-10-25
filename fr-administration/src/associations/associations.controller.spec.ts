@@ -43,7 +43,8 @@ describe('AssociationsController', () => {
       id: 0,
       firstname: 'John',
       lastname: 'Doe',
-      age: 23
+      age: 23,
+      password: ''
     }])
     service = module.get<AssociationsService>(AssociationsService)
     userService = module.get<UsersService>(UsersService)
@@ -62,7 +63,8 @@ describe('AssociationsController', () => {
         id: 0,
         firstname: 'John',
         lastname: 'Doe',
-        age: 23
+        age: 23,
+        password: ''
       }])
       let expected: Promise<Association[]> = Promise.all([{
         id: 0,

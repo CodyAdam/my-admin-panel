@@ -44,7 +44,8 @@ describe('UsersController', () => {
         id: 0,
         firstname: 'John',
         lastname: 'Doe',
-        age: 23
+        age: 23,
+        password: ''
       }]);
       jest.spyOn(service, 'getAll').mockImplementation(() => expected);
       expect(await controller.getAll()).toBe(await expected);
@@ -57,7 +58,8 @@ describe('UsersController', () => {
         id: 0,
         firstname: 'John',
         lastname: 'Doe',
-        age: 23
+        age: 23,
+        password: ''
       })
       jest.spyOn(service, 'findUser').mockImplementation(() => expected)
       expect(await controller.getUser(0)).toBe(await expected)
@@ -70,7 +72,8 @@ describe('UsersController', () => {
         id: 1,
         firstname: 'Fab',
         lastname: 'gdou',
-        age: 21
+        age: 21,
+        password: ''
       })
       const expectedReal = await expected
       delete expectedReal.id
@@ -85,13 +88,15 @@ describe('UsersController', () => {
         id: 1,
         firstname: 'Fab',
         lastname: 'gdou',
-        age: 21
+        age: 21,
+        password: ''
       })
       const expected: Promise<User> = Promise.resolve({
         id: 1,
         firstname: 'Fab',
         lastname: 'gdou',
-        age: 22
+        age: 22,
+        password: ''
       })
       const modif: UserUpdate = {
         age: 22
