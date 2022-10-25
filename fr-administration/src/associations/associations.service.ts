@@ -42,8 +42,12 @@ export class AssociationsService {
         return ass
     }
     async delete(id: number): Promise<boolean>{
-        let ass = await this.findById(id)
-        await this.repo.remove(ass)
-        return true
+        try{
+            let ass = await this.findById(id)
+            await this.repo.remove(ass)
+            return true
+        }catch(e){
+            return false
+        }
     }
 }
