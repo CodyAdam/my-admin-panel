@@ -44,8 +44,12 @@ export class UsersService {
         return user
     }
     async deleteUser(id: number): Promise<boolean> {
-        let user = await this.findUser(id)
-        await this.repo.remove(user)
-        return true
+        try{
+            let user = await this.findUser(id)
+            await this.repo.remove(user)
+            return true
+        }catch(e){
+            return false
+        }
     }
 }

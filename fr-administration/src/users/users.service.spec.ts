@@ -1,3 +1,4 @@
+import { HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { repositoryMockFactory } from 'src/associations/associations.controller.spec';
@@ -10,7 +11,11 @@ export type MockType<T> = {
 }
 export const respositoryMockFactory: () => MockType<Repository<any>> = jest.fn(() => ({
   findOne: jest.fn(entity => entity),
-  find: jest.fn(e => e)
+  find: jest.fn(e => e),
+  create: jest.fn(e => e),
+  save: jest.fn(e => e),
+  delete: jest.fn(e => e),
+  remove: jest.fn(e => e)
 }))
 
 describe('UsersService', () => {
@@ -50,6 +55,50 @@ describe('UsersService', () => {
 
       repo.find.mockReturnValue(expected)
       expect(await service.getAll()).toBe(expected)
+    })
+  })
+  describe('getOne', () => {
+    it('should return one user', async () => {
+      repo.findOne.mockReturnValue(user)
+      expect(await service.findUser(user.id)).toBe(user)
+    })
+  })
+  describe('create', () => {
+    it('should return the new user', async () => {
+      let newUserFromBase: User = {
+        id: user.id,
+        lastname: undefined,
+        firstname: undefined,
+        age: undefined
+      }
+      repo.create.mockImplementation((e) => {
+        e.id = user.id
+        return e
+      })
+      expect(await service.create(user.firstname, user.lastname, user.age)).toStrictEqual(user)
+    })
+  })
+  describe('update', () => {
+    it('should return the object updated', async () => {
+      let userExpected = user
+      userExpected.firstname = 'Joe'
+
+      repo.findOne.mockReturnValue(user)
+      expect(await service.updateUser(user.id, 'Joe', undefined, undefined)).toBe(await userExpected)
+    })
+    it('should crash', async () => {
+      repo.findOne.mockReturnValue(undefined)
+      expect(await service.updateUser(user.id, 'Joe', undefined, undefined).then(()=>false).catch(()=>true)).toBe(true)
+    })
+  })
+  describe('delete', () => {
+    it('should return true if user exist', async () => {
+      repo.findOne.mockReturnValue(user)
+      expect(await service.deleteUser(user.id)).toBe(true)
+    })
+    it('should return false if user not exist', async () => {
+      repo.findOne.mockReturnValue(undefined)
+      expect(await service.deleteUser(user.id)).toBe(false)
     })
   })
 });
