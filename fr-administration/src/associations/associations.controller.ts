@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseArrayPipe, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
-import { User } from 'src/users/user.entity';
-import { UsersService } from 'src/users/users.service';
+import { User } from '../users/user.entity';
+import { UsersService } from '../users/users.service';
 import { Association } from './association.entity';
 import { AssociationsService } from './associations.service';
 
