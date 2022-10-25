@@ -29,10 +29,38 @@ describe('UsersController', () => {
       ]
     }).compile();
 
+    service = module.get<UsersService>(UsersService)
     controller = module.get<UsersController>(UsersController);
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
+
+
+  describe('getAll', () => {
+    it('should return an array of users', async () => {
+      const expected: Promise<User[]> = Promise.all([{
+        id: 0,
+        firstname: 'John',
+        lastname: 'Doe',
+        age: 23
+      }]);
+      jest.spyOn(service, 'getAll').mockImplementation(() => expected);
+      expect(await controller.getAll()).toBe(await expected);
+    })
+  })
+
+  describe('getUser', () => {
+    it('should return a single user, with the provided id', async () => {
+      const expected: Promise<User> = Promise.resolve({
+        id: 0,
+        firstname: 'John',
+        lastname: 'Doe',
+        age: 23
+      })
+      jest.spyOn(service, 'findUser').mockImplementation(() => expected)
+      expect(await controller.getUser(0)).toBe(await expected)
+    })
+  })
 });
