@@ -45,4 +45,41 @@ describe('AssociationsController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
+
+  describe('getAll', () => {
+    it('should return all of the associations', async () => {
+      let users: Promise<User[]> = Promise.all([{
+        id: 0,
+        firstname: 'John',
+        lastname: 'Doe',
+        age: 23
+      }])
+      let expected: Promise<Association[]> = Promise.all([{
+        id: 0,
+        name: 'ADAPEI',
+        idUsers: users
+      }])
+
+      jest.spyOn(service, 'getAll').mockImplementation(() => expected)
+      expect(await controller.getAll()).toBe(await expected)
+    })
+  })
+  describe('getOne', () => {
+    it('should return one association', async () => {
+      let users: Promise<User[]> = Promise.all([{
+        id: 0,
+        firstname: 'John',
+        lastname: 'Doe',
+        age: 23
+      }])
+      let expected: Promise<Association> = Promise.resolve({
+        id: 0,
+        name: 'ADAPEI',
+        idUsers: users
+      })
+
+      jest.spyOn(service, 'findById').mockImplementation(() => expected)
+      expect(await controller.getOne(0)).toBe(await expected)
+    })
+  })
 });
