@@ -2,6 +2,8 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
+import * as bcrypt from 'bcrypt'
+import {jwtConstants} from '../auth/constants'
 
 @Injectable()
 export class UsersService {
@@ -21,6 +23,9 @@ export class UsersService {
         return await this.repo.find({})
     }
     async create(firstname: string, lastname: string, age: number, password: string): Promise<User> {
+
+        password = await bcrypt.hash(password, jwtConstants.salt)
+
         let user = await this.repo.create({
             lastname,
             firstname,
@@ -42,7 +47,7 @@ export class UsersService {
         if(age)
             user.age = age
         if(password)
-            user.password = password
+            user.password = await bcrypt.hash(password, jwtConstants.salt)
         await this.repo.save(user)
         return user
     }

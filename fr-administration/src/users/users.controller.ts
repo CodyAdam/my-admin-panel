@@ -62,11 +62,11 @@ export class UserUpdate{
 
 @Controller('users')
 @ApiTags('users')
-@UseGuards(AuthGuard('jwt'))
 export class UsersController {
 
     constructor(private service: UsersService){}
 
+    @UseGuards(AuthGuard('jwt'))
     @Get()
     async getAll(): Promise<User[]> {
         return await this.service.getAll()
@@ -80,17 +80,20 @@ export class UsersController {
         return await this.service.create(u.lastname, u.firstname, u.age, u.password)
     }
     
+    @UseGuards(AuthGuard('jwt'))
     @Get(":id")
     async getUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
         return await this.service.findUser(id)
     }
 
+    @UseGuards(AuthGuard('jwt'))
     @Put(":id")
     async updateUser(@Param('id', ParseIntPipe) id: number, 
         @Body() u: UserUpdate): Promise<User> {
         return await this.service.updateUser(id, u.firstname, u.lastname, u.age, u.password)
     }
 
+    @UseGuards(AuthGuard('jwt'))
     @Delete(":id")
     async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
         return await this.service.deleteUser(id)
