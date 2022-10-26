@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, ParseArrayPipe, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseArrayPipe, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
@@ -36,8 +37,10 @@ export class AssociationUpdate{
     public name?: string
 }
 
+
 @Controller('associations')
 @ApiTags('associations')
+@UseGuards(AuthGuard('jwt'))
 export class AssociationsController {
     constructor(
         private service: AssociationsService,
