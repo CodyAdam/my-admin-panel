@@ -9,5 +9,6 @@ import { Association } from './association.entity';
   providers: [AssociationsService],
   controllers: [AssociationsController],
   imports: [UsersModule, TypeOrmModule.forFeature([Association])],
+  exports: [AssociationsService]
 })
 export class AssociationsModule {}
