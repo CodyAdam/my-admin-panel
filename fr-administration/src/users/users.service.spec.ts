@@ -1,10 +1,12 @@
 import { HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { repositoryMockFactory } from 'src/associations/associations.controller.spec';
+import { repositoryMockFactory } from '../associations/associations.controller.spec';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
+import * as bcrypt from 'bcrypt'
+import { jwtConstants } from '../auth/constants';
 
 export type MockType<T> = {
   [P in keyof T]?: jest.Mock<{}>;
@@ -42,6 +44,7 @@ describe('UsersService', () => {
       age: 23,
       password: ''
     }
+
     repo = module.get(getRepositoryToken(User))
     service = module.get<UsersService>(UsersService);
   });
@@ -77,7 +80,9 @@ describe('UsersService', () => {
         e.id = user.id
         return e
       })
-      expect(await service.create(user.firstname, user.lastname, user.age, user.password)).toStrictEqual(user)
+      let response = await service.create(user.firstname, user.lastname, user.age, user.password)
+      response.password = ''
+      expect(response).toStrictEqual(user)
     })
   })
   describe('update', () => {
