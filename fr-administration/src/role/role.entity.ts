@@ -1,6 +1,6 @@
 import { Association } from "src/associations/association.entity";
 import { User } from "src/users/user.entity";
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Role {
@@ -8,8 +8,8 @@ export class Role {
     id: number
     @Column()
     name: string
-    @OneToOne(() => User)
+    @ManyToOne(() => User, {eager: true})
     idUser: User
-    @OneToOne(() => Association)
+    @ManyToOne(() => Association, {eager: true})
     idAssociation: Association
 }

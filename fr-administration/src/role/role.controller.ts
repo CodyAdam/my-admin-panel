@@ -6,7 +6,7 @@ import { RoleService } from './role.service';
 import { RoleUpdate } from './role.update';
 
 @UseGuards(AuthGuard('jwt'))
-@Controller('role')
+@Controller('roles')
 export class RoleController {
     constructor(
         private service: RoleService
@@ -16,13 +16,13 @@ export class RoleController {
     async create(@Body() role: RoleInput): Promise<Role>{
         return await this.service.create(role)
     }
-    @Delete(':id')
-    async delete(@Param('id', ParseIntPipe) id: number): Promise<boolean>{
-        return await this.service.delete(id)
+    @Delete(':user/:asso')
+    async delete(@Param('user', ParseIntPipe) user: number, @Param('asso', ParseIntPipe) asso: number): Promise<boolean>{
+        return await this.service.delete(user, asso)
     }
-    @Put(':id')
-    async update(@Param('id', ParseIntPipe) id: number, role: RoleUpdate){
-        return await this.service.update(id, role)
+    @Put(':user/:asso')
+    async update(@Param('user', ParseIntPipe) user: number, @Param('asso', ParseIntPipe) asso: number, @Body() role: RoleUpdate){
+        return await this.service.update(user, asso, role)
     }
     @Get()
     async getAll(): Promise<Role[]>{

@@ -23,21 +23,26 @@ export class RoleService {
             idAssociation: await this.assoService.findById(role.idAssociation),
             name: role.name
         })
+        this.repo.save(obj)
         return obj
     }
-    async getByUserAndAsso(user: number, asso: number): Promise<Role>{
+    async getByUserAndAsso(userId: number, assoId: number): Promise<Role>{
         let role = await this.repo.findOne({
             where: {
-                idAssociation: Equal(asso),
-                idUser: Equal(asso)
+                idAssociation: {
+                    id: assoId
+                },
+                idUser: {
+                    id: userId
+                }
             }
         })
         if(!role)
             throw new HttpException("Role not found", HttpStatus.NOT_FOUND)
         return role
     }
-    async update(id: number, role: RoleUpdate): Promise<Role>{
-        let r = await this.getById(id)
+    async update(user: number, asso: number, role: RoleUpdate): Promise<Role>{
+        let r = await this.getByUserAndAsso(user, asso)
         r.name = role.name
         this.repo.save(r)
         return r
@@ -53,9 +58,9 @@ export class RoleService {
             throw new HttpException('Role not found', HttpStatus.NOT_FOUND)
         return role
     }
-    async delete(id: number): Promise<boolean>{
+    async delete(user: number, asso: number): Promise<boolean>{
         try{
-            let role = await this.getById(id)
+            let role = await this.getByUserAndAsso(user, asso)
             await this.repo.remove(role)
             return true
         }catch(e){

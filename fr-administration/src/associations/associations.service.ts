@@ -24,9 +24,9 @@ export class AssociationsService {
     }
     async create(idUsers: User[], name: string): Promise<Association> {
         let ass = await this.repo.create({
-            idUsers: Promise.resolve(idUsers),
             name
         })
+        ass.idUsers = Promise.resolve(idUsers)
         await this.repo.save(ass)
         return ass
     }
