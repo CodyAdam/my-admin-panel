@@ -24,7 +24,7 @@ export class UsersService {
     }
     async create(firstname: string, lastname: string, age: number, password: string): Promise<User> {
 
-        password = await bcrypt.hash(password, jwtConstants.salt)
+        password = await bcrypt.hash('password', jwtConstants.salt)
 
         let user = await this.repo.create({
             lastname,

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AssociationsService } from 'src/associations/associations.service';
+import { AssociationsModule } from 'src/associations/associations.module';
 import { UsersModule } from 'src/users/users.module';
 import { Minute } from './minute.entity';
 import { MinutesController } from './minutes.controller';
@@ -12,7 +12,7 @@ import { MinutesService } from './minutes.service';
   imports: [
     TypeOrmModule.forFeature([Minute]),
     UsersModule,
-    AssociationsService
+    AssociationsModule
   ]
 })
 export class MinutesModule {}

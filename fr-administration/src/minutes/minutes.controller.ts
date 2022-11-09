@@ -5,7 +5,7 @@ import { MinuteInput } from './minutes.input';
 import { MinutesService } from './minutes.service';
 import { MinuteUpdate } from './minutes.update';
 
-@UseGuards(AuthGuard('jwt'))
+// @UseGuards(AuthGuard('jwt'))
 @Controller('minutes')
 export class MinutesController {
     constructor(private service: MinutesService){}

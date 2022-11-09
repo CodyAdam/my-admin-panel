@@ -40,7 +40,7 @@ export class AssociationUpdate{
 
 @Controller('associations')
 @ApiTags('associations')
-@UseGuards(AuthGuard('jwt'))
+// @UseGuards(AuthGuard('jwt'))
 export class AssociationsController {
     constructor(
         private service: AssociationsService,
