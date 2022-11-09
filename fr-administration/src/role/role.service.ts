@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AssociationsService } from '../associations/associations.service';
 import { UsersService } from '../users/users.service';
-import { Repository } from 'typeorm';
+import { Equal, Repository } from 'typeorm';
 import { Role } from './role.entity';
 import { RoleInput } from './role.input';
 import { RoleUpdate } from './role.update';
@@ -24,6 +24,17 @@ export class RoleService {
             name: role.name
         })
         return obj
+    }
+    async getByUserAndAsso(user: number, asso: number): Promise<Role>{
+        let role = await this.repo.findOne({
+            where: {
+                idAssociation: Equal(asso),
+                idUser: Equal(asso)
+            }
+        })
+        if(!role)
+            throw new HttpException("Role not found", HttpStatus.NOT_FOUND)
+        return role
     }
     async update(id: number, role: RoleUpdate): Promise<Role>{
         let r = await this.getById(id)
