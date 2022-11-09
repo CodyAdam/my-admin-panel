@@ -1,6 +1,6 @@
 import { Association } from "src/associations/association.entity";
 import { User } from "src/users/user.entity";
-import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, TableColumn } from "typeorm";
 
 @Entity()
 export class Minute{
@@ -10,6 +10,7 @@ export class Minute{
     date: string
     @Column()
     content: string
+    @JoinTable()
     @ManyToMany(() => User, {eager: true})
     users: User[]
     @ManyToOne(() => Association, {eager: true})

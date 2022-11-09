@@ -17,7 +17,7 @@ export class MinutesService {
         ){}
 
     async getById(id: number): Promise<Minute> {
-        let min = this.repo.findOne({
+        let min = await this.repo.findOne({
             where: {
                 id: id
             }

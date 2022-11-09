@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './role/role.module';
 import { Role } from './role/role.entity';
 import { MinutesModule } from './minutes/minutes.module';
+import { Minute } from './minutes/minute.entity';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { MinutesModule } from './minutes/minutes.module';
       entities: [
         User,
         Association,
-        Role
+        Role,
+        Minute
       ],
       synchronize: true
     }),
