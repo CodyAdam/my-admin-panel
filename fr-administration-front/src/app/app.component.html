@@ -1,3 +1,55 @@
-<div data-theme="bumblebee" class="h-full">
+<div data-theme="bumblebee" class="h-full min-h-screen flex flex-col">
+  <div class="navbar bg-base-100">
+    <div class="navbar-start">
+      <div class="dropdown">
+        <label tabindex="0" class="btn btn-ghost btn-circle">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h7"
+            />
+          </svg>
+        </label>
+        <ul
+          tabindex="0"
+          class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+        >
+          <li><a href="/">Home</a></li>
+          <li><a href="/users">Users list</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="navbar-center hidden sm:block">
+      <a href="/" class="btn btn-ghost normal-case text-xl">Administration</a>
+    </div>
+    <div class="navbar-end">
+      <button
+        *ngIf="isLogged()"
+        class="btn btn-ghost btn-circle"
+        (click)="handleLogout()"
+      >
+        <div class="indicator">
+          <svg width="23" height="23" viewBox="0 0 32 32">
+            <path
+              fill="currentColor"
+              d="M6 30h12a2.002 2.002 0 0 0 2-2v-3h-2v3H6V4h12v3h2V4a2.002 2.002 0 0 0-2-2H6a2.002 2.002 0 0 0-2 2v24a2.002 2.002 0 0 0 2 2Z"
+            />
+            <path
+              fill="currentColor"
+              d="M20.586 20.586L24.172 17H10v-2h14.172l-3.586-3.586L22 10l6 6l-6 6l-1.414-1.414z"
+            />
+          </svg>
+        </div>
+      </button>
+    </div>
+  </div>
   <router-outlet></router-outlet>
 </div>
