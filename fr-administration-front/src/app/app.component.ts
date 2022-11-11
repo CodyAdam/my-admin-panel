@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { TokenStorageService } from './services/token-storage.service';
 
 @Component({
@@ -8,7 +9,10 @@ import { TokenStorageService } from './services/token-storage.service';
 export class AppComponent {
   title = 'fr-administration-front';
 
-  constructor(private tokenStorage: TokenStorageService) {}
+  constructor(
+    private tokenStorage: TokenStorageService,
+    private router: Router
+  ) {}
 
   isLogged() {
     return this.tokenStorage.isLogged();
@@ -16,7 +20,6 @@ export class AppComponent {
 
   handleLogout() {
     this.tokenStorage.clear();
-    window.location.reload();
-
+    this.router.navigateByUrl('/');
   }
 }
