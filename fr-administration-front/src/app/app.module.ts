@@ -8,9 +8,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { LoginComponent } from './login/login.component';
 import { TokenHttpInterceptor } from './interceptors/token.interceptor';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 @NgModule({
-  declarations: [AppComponent, UsersListComponent, LoginComponent],
+  declarations: [AppComponent, UsersListComponent, LoginComponent, PagenotfoundComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
