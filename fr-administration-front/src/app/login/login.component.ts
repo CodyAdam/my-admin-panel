@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiHelperService } from '../services/api-helper.service';
 import { TokenStorageService } from '../services/token-storage.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  host: { class: 'h-full' },
 })
 export class LoginComponent implements OnInit {
   public username: string | null = null;
@@ -12,10 +14,13 @@ export class LoginComponent implements OnInit {
   public state: 'loading' | 'error' | 'success' | 'idle' = 'idle';
   constructor(
     private api: ApiHelperService,
-    private token: TokenStorageService
+    private token: TokenStorageService,
+    private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.token.isLogged()) this.state = 'success';
+  }
   login() {
     this.state = 'loading';
     const [username, password] = [this.username, this.password];
@@ -25,7 +30,7 @@ export class LoginComponent implements OnInit {
         if (response.access_token) {
           this.token.save(response.access_token);
           this.state = 'success';
-          window.location.href = '/users';
+          this.router.navigateByUrl('/users');
         } else this.state = 'error';
       })
       .catch((error) => {
