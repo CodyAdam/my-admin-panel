@@ -5,6 +5,7 @@ import { Observable, lastValueFrom } from 'rxjs';
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
+  host: { class: 'h-full' },
 })
 export class UsersListComponent implements OnInit {
   users: any;
