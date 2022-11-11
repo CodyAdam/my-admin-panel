@@ -1,8 +1,35 @@
-<p>login works!</p>
-<div>
-  <label for="username">Username</label>
-  <input type="text" id="username" placeholder="username" />
-  <label for="password">Password</label>
-  <input type="password" id="password" placeholder="password" />
-  <a><button>Login</button></a>
+<div class="hero min-h-screen bg-base-200">
+  <div class="hero-content text-center">
+    <div class="max-w-md flex flex-col gap-5 items-center">
+      <h1 class="text-5xl font-bold">Hello there!</h1>
+      <p class="py-1">It's nice to see you here. Would you like to log in?</p>
+      <div>
+        <div class="form-control w-full max-w-xs">
+          <label class="label">
+            <span class="label-text">What is your name?</span>
+          </label>
+          <input
+            type="text"
+            [value]="username"
+            (change)="handleChangeUsername($event)"
+            placeholder="Type here"
+            class="input input-bordered w-full max-w-xs"
+          />
+        </div>
+        <div class="form-control w-full max-w-xs">
+          <label class="label">
+            <span class="label-text">And password?</span>
+          </label>
+          <input
+            type="text"
+            [value]="password"
+            (change)="handleChangePassword($event)"
+            placeholder="Type here"
+            class="input input-bordered w-full max-w-xs"
+          />
+        </div>
+      </div>
+      <button class="btn btn-primary" (click)="login()">Let's go!</button>
+    </div>
+  </div>
 </div>
