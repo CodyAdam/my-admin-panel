@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
         if (response.access_token) {
           this.token.save(response.access_token);
           this.state = 'success';
+          window.location.href = '/users';
         } else this.state = 'error';
       })
       .catch((error) => {
