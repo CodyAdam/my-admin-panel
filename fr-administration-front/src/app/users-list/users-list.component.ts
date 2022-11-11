@@ -7,8 +7,7 @@ import { Observable, lastValueFrom } from 'rxjs';
   templateUrl: './users-list.component.html',
 })
 export class UsersListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'lastname', 'firstname', 'age'];
-  dataSource: any;
+  users: any;
 
   constructor(private http: HttpClient) {}
 
@@ -17,7 +16,7 @@ export class UsersListComponent implements OnInit {
       observe: 'response',
     });
     lastValueFrom(resquest).then(
-      (response) => (this.dataSource = response.body)
+      (response) => (this.users = response.body)
     );
   }
 }

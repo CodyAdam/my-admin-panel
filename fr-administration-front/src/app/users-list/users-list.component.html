@@ -1,26 +1,21 @@
-<div class="p-10">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>id</th>
-      <td mat-cell *matCellDef="let user">{{ user.id }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="lastname">
-      <th mat-header-cell *matHeaderCellDef>Lastname</th>
-      <td mat-cell *matCellDef="let user">{{ user.lastname }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="firstname">
-      <th mat-header-cell *matHeaderCellDef>Firstname</th>
-      <td mat-cell *matCellDef="let user">{{ user.firstname }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="age">
-      <th mat-header-cell *matHeaderCellDef>Age</th>
-      <td mat-cell *matCellDef="let user">{{ user.age }}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+<div class="overflow-x-auto m-10 shadow-xl">
+  <table class="table w-full">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th></th>
+        <th>Lastname</th>
+        <th>Firstname</th>
+        <th>Age</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.lastname }}</td>
+        <td>{{ user.firstname }}</td>
+        <td>{{ user.age }}</td>
+      </tr>
+    </tbody>
   </table>
 </div>
