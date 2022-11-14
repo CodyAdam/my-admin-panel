@@ -20,6 +20,7 @@ export class AppComponent {
 
   handleLogout() {
     this.tokenStorage.clear();
-    this.router.navigateByUrl('/');
+    // refresh the page
+    window.location.reload();
   }
 }

@@ -1,0 +1,9 @@
+services:
+  front:
+    build: ./fr-administration-front
+    ports:
+      - '8080:80'
+    depends_on:
+      - back
+  back:
+    build: ./fr-administration
