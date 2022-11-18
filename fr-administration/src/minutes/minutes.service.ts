@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AssociationsService } from 'src/associations/associations.service';
 import { UsersService } from 'src/users/users.service';
@@ -13,6 +13,7 @@ export class MinutesService {
         @InjectRepository(Minute)
         private repo: Repository<Minute>,
         private userService: UsersService,
+        @Inject(forwardRef(() => AssociationsService))
         private assoService: AssociationsService
         ){}
 
@@ -25,6 +26,24 @@ export class MinutesService {
         if(!min)
             throw new HttpException("Minute not found", HttpStatus.NOT_FOUND)
         return min
+    }
+    async getByAsso(asso: number, sort?: string, order?: string): Promise<Minute[]> {
+        if(!sort)
+            sort = "id"
+        if(!order)
+            order = "ASC"
+
+        let orderObj = {}
+        orderObj[sort] = {name: order}
+        let minutes = await this.repo.find({
+            where: {
+                association: {
+                    id: asso
+                }
+            },
+            order: orderObj
+        })
+        return minutes
     }
     async create(creation: MinuteInput): Promise<Minute> {
         let users = await Promise.all(creation.idVoters.map(async id => await this.userService.findUser(id)))

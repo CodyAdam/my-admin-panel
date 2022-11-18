@@ -1,6 +1,8 @@
-import { Body, Controller, Delete, Get, Param, ParseArrayPipe, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, forwardRef, Get, Inject, Param, ParseArrayPipe, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
+import { Minute } from 'src/minutes/minute.entity';
+import { MinutesService } from 'src/minutes/minutes.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { AssociationDTO } from './association.dto';
@@ -45,7 +47,8 @@ export class AssociationUpdate{
 export class AssociationsController {
     constructor(
         private service: AssociationsService,
-        private users: UsersService
+        private users: UsersService,
+        private minutes: MinutesService
         ){}
 
     @Get()
@@ -75,6 +78,11 @@ export class AssociationsController {
             users = await Promise.all(a.idUsers.map(async u => await this.users.findUser(u)))
         let asso = await this.service.update(id, users, a.name)
         return this.service.mapDTO(asso)
+    }
+
+    @Get(':id/minutes')
+    async getMinutes(@Param('id', ParseIntPipe) id: number, @Body() body): Promise<Minute[]> {
+        return this.minutes.getByAsso(id, body.sort, body.order)
     }
 
     @Delete(':id')
