@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from 'src/users/user.entity';
 import { Role } from './role.entity';
 import { RoleInput } from './role.input';
 import { RoleService } from './role.service';
@@ -31,6 +32,10 @@ export class RoleController {
     @Get(':id')
     async getById(@Param('id', ParseIntPipe) id: number): Promise<Role>{
         return await this.service.getById(id)
+    }
+    @Get('users/:name')
+    async getUsersByRoleName(@Param('name') name: string): Promise<User[]> {
+        return await this.service.getUsersByName(name)
     }
     @Get(':user/:asso')
     async getByUserAndAsso(@Param('user', ParseIntPipe) user: number, @Param('asso', ParseIntPipe) asso: number): Promise<Role>{

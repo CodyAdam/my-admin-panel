@@ -6,6 +6,7 @@ import { Role } from './role.entity';
 import { RoleInput } from './role.input';
 import { RoleUpdate } from './role.update';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class RoleService {
@@ -50,6 +51,13 @@ export class RoleService {
     }
     async getAll(): Promise<Role[]>{
         return await this.repo.find({})
+    }
+    async getUsersByName(name: string): Promise<User[]> {
+        let roles = await this.repo.find({where: {
+            name: name
+        }})
+        let users = roles.map(r => r.idUser)
+        return users
     }
     async getById(id: number): Promise<Role>{
         let role = await this.repo.findOne({where: {
