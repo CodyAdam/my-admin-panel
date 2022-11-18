@@ -11,6 +11,8 @@ services:
       - DB_PORT=5432
     depends_on:
       - db
+    volumes:
+      - ./fr-administration:/app
   db:
     image: postgres:15.1
     environment:
@@ -20,7 +22,7 @@ services:
     volumes:
       - ./db:/var/lib/postgresql/data
 
-  web:
+  proxy:
     build:
       context: nginx
     volumes:

@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { AssociationsService } from '../associations/associations.service';
 import { UsersService } from '../users/users.service';
 import { Equal, Repository } from 'typeorm';
@@ -14,6 +14,7 @@ export class RoleService {
         @InjectRepository(Role)
         private repo: Repository<Role>,
         private usersService: UsersService,
+        @Inject(forwardRef(() => AssociationsService))
         private assoService: AssociationsService
     ){}
 
