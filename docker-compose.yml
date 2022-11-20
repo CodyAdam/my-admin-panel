@@ -1,8 +1,7 @@
 version: '3'
 services:
   backend:
-    build:
-      context: fr-administration
+    build: fr-administration
     environment:
       - DB_HOST=db
       - DB_USER=${DB_USERNAME}
@@ -22,6 +21,17 @@ services:
     volumes:
       - ./db:/var/lib/postgresql/data
 
+  frontend:
+    build: fr-administration-front
+    environment:
+      - BACK_URL=${BACK_URL}
+      - FRONT_URL=${FRONT_URL}
+    volumes:
+      - ./fr-administration-front:/app
+    depends_on:
+      - backend
+
+
   proxy:
     build:
       context: nginx
@@ -34,3 +44,4 @@ services:
     - NGINX_PORT=80
     depends_on:
       - backend
+      - frontend
