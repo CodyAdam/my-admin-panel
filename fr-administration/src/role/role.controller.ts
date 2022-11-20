@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { User } from 'src/users/user.entity';
 import { Role } from './role.entity';
 import { RoleInput } from './role.input';
@@ -8,6 +9,7 @@ import { RoleUpdate } from './role.update';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('roles')
+@ApiTags('roles')
 export class RoleController {
     constructor(
         private service: RoleService
