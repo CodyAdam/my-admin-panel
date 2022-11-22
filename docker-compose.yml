@@ -7,3 +7,12 @@ services:
       - back
   back:
     build: ./fr-administration
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: dbpassword
+      POSTGRES_USER: dbuser

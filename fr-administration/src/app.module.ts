@@ -15,17 +15,21 @@ import { Minute } from './minutes/minute.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'mydatabase.db',
-      entities: [
-        User,
-        Association,
-        Role,
-        Minute
-      ],
-      synchronize: true
+      type: 'postgres',
+      host: process.env.POSTGRES_HOST,
+      port: parseInt(process.env.POSTGRES_PORT),
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DATABASE,
+      entities: [User, Association, Role, Minute],
+      synchronize: true,
     }),
-    UsersModule, AssociationsModule, AuthModule, RoleModule, MinutesModule],
+    UsersModule,
+    AssociationsModule,
+    AuthModule,
+    RoleModule,
+    MinutesModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
