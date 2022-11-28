@@ -1,7 +1,9 @@
 version: '3'
 services:
   mail:
-    build: mail
+    build:
+      context: mail
+      target: dev
 
   backend:
     build: fr-administration
@@ -48,10 +50,13 @@ services:
       - frontend
 
   mom:
+    hostname: mom
     image: rabbitmq:3-management
     volumes:
       - ./rabbitmq/core:/var/lib/rabbitmq/
       - ./rabbitmq/conf:/etc/rabbitmq/
+    ports:
+      - 5672:5672
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBIT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBIT_PWD}

@@ -1,20 +1,20 @@
 package org.acme;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+
+import org.eclipse.microprofile.reactive.messaging.Incoming;
 
 import io.quarkus.mailer.Mail;
 import io.quarkus.mailer.Mailer;
-import io.smallrye.common.annotation.Blocking;
-import io.smallrye.common.annotation.NonBlocking;
 
-@Path("/mail")
+@ApplicationScoped
 public class MailResource {
     @Inject Mailer mailer;
     
-    @GET
-    @Blocking
+
+    // @Incoming("mail")
     public void sendEMail(){
         mailer.send(
             Mail.withText("fabien.goardou@etudiant.univ-rennes1.fr",
@@ -23,9 +23,7 @@ public class MailResource {
         );
     }
 
-    @GET
-    @Path("/creation")
-    @Blocking
+    @Incoming("mail")
     public void accountCreated(String email){
         mailer.send(
             Mail.withText(
