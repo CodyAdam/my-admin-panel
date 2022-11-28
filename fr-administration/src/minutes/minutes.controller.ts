@@ -1,12 +1,14 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { Minute } from './minute.entity';
 import { MinuteInput } from './minutes.input';
 import { MinutesService } from './minutes.service';
 import { MinuteUpdate } from './minutes.update';
 
-// @UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'))
 @Controller('minutes')
+@ApiTags('minutes')
 export class MinutesController {
     constructor(private service: MinutesService){}
 

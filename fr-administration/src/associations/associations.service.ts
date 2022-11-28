@@ -1,16 +1,20 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { RoleService } from 'src/role/role.service';
 import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
 import { threadId } from 'worker_threads';
+import { AssociationDTO } from './association.dto';
 import { Association } from './association.entity';
+import { Member } from './association.member';
 
 @Injectable()
 export class AssociationsService {
 
     constructor(
         @InjectRepository(Association)
-        private repo: Repository<Association>
+        private repo: Repository<Association>,
+        private roleService: RoleService
     ){}
 
     async getAll(): Promise<Association[]> {
@@ -49,5 +53,25 @@ export class AssociationsService {
         }catch(e){
             return false
         }
+    }
+    async mapDTO(asso: Association): Promise<AssociationDTO> {
+        let assoDTO = new AssociationDTO()
+        assoDTO.name = asso.name
+        let members = (await asso.idUsers).map(async u => {
+            let role = ""
+            try{
+                role = (await this.roleService.getByUserAndAsso(u.id, asso.id)).name
+            }catch(e){
+                
+            }
+            let member = new Member()
+            member.role = role
+            member.firstname = u.firstname
+            member.age = u.age
+            member.name = u.lastname
+            return member
+        })
+        assoDTO.members = await Promise.all(members)
+        return assoDTO
     }
 }
