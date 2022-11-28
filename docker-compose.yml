@@ -46,3 +46,12 @@ services:
     depends_on:
       - backend
       - frontend
+
+  mom:
+    image: rabbitmq:3-management
+    volumes:
+      - ./rabbitmq/core:/var/lib/rabbitmq/
+      - ./rabbitmq/conf:/etc/rabbitmq/
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBIT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBIT_PWD}
