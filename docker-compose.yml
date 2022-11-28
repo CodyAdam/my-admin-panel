@@ -38,8 +38,6 @@ services:
   proxy:
     build:
       context: nginx
-    volumes:
-    - ./fr-administration-front:/usr/share/nginx/html
     ports:
     - "${FRONT_PORT}:80"
     environment:
