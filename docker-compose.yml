@@ -1,5 +1,8 @@
 version: '3'
 services:
+  mail:
+    build: mail
+
   backend:
     build: fr-administration
     environment:
