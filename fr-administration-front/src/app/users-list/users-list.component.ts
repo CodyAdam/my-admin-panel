@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { lastValueFrom, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export class User {
   constructor(
@@ -24,10 +27,18 @@ export class UsersListComponent implements OnInit {
   displayedColumns: string[] = [
     'id', 'lastname', 'firstname', 'age'
   ]
-  dataSource: User[] = users
+  dataSource = []
+
+  constructor(
+    private http: HttpClient
+  ){}
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    const request: Observable<any> = this.http.get(
+      environment.BACK_URL + '/users',
+      {observe: 'response'}
+    );
+    lastValueFrom(request).then(response => this.dataSource = response.body);
   }
 
 }
