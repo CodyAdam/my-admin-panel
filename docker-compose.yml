@@ -6,7 +6,9 @@ services:
       target: dev
 
   backend:
-    build: fr-administration
+    build: 
+      target: dev
+      context: fr-administration
     environment:
       - DB_HOST=db
       - DB_USER=${DB_USERNAME}
@@ -27,7 +29,9 @@ services:
       - ./db:/var/lib/postgresql/data
 
   frontend:
-    build: fr-administration-front
+    build: 
+      context: fr-administration-front
+      target: dev
     environment:
       - BACK_URL=${BACK_URL}
       - FRONT_URL=${FRONT_URL}
