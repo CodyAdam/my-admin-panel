@@ -1,0 +1,20 @@
+<form (ngSubmit)="register()" [formGroup]="form">
+    <mat-form-field class="m-2" appearance="fill">
+        <mat-label>Firstname</mat-label>
+        <input type="text" matInput formControlName="firstname">
+    </mat-form-field>
+    <mat-form-field class="m-2" appearance="fill">
+        <mat-label>Lastname</mat-label>
+        <input type="text" matInput formControlName="lastname">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="m-2">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="m-2">
+        <mat-label>age</mat-label>
+        <input type="number" matInput formControlName="age">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Login</button>
+</form>

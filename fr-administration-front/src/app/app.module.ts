@@ -16,6 +16,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { TokenHttpInterceptor } from './interceptor/token.interceptor';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
+import { RegisterComponent } from './register/register.component';
 
 
 
@@ -26,6 +27,7 @@ import { HomeComponent } from './home/home.component';
     LoginComponent,
     NavComponent,
     HomeComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
