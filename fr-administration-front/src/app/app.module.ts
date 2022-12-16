@@ -14,6 +14,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button'; 
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { TokenHttpInterceptor } from './interceptor/token.interceptor';
+import { NavComponent } from './nav/nav.component';
+import { HomeComponent } from './home/home.component';
 
 
 
@@ -22,6 +24,8 @@ import { TokenHttpInterceptor } from './interceptor/token.interceptor';
     AppComponent,
     UsersListComponent,
     LoginComponent,
+    NavComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
