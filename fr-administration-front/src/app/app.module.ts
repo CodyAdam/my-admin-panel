@@ -15,7 +15,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { TokenHttpInterceptor } from './interceptor/token.interceptor';
 import { RegisterComponent } from './register/register.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -36,7 +35,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatInputModule,
     MatButtonModule,
     HttpClientModule,
-    NgbModule,
   ],
   providers: [
     {
