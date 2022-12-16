@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button'; 
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { TokenHttpInterceptor } from './interceptor/token.interceptor';
+import { RegisterComponent } from './register/register.component';
 
 
 
@@ -21,7 +22,8 @@ import { TokenHttpInterceptor } from './interceptor/token.interceptor';
   declarations: [
     AppComponent,
     UsersListComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

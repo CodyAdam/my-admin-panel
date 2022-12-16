@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ApiHelperService } from '../api-helper.service';
 import { TokenStorageService } from '../services/token-storage.service';
 
@@ -20,10 +21,13 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private api: ApiHelperService,
-    private token: TokenStorageService
+    private token: TokenStorageService,
+    private router: Router
   ){}
   ngOnInit(): void {
-    
+    if(this.token.isLogged()){
+      this.router.navigate(['/users'])
+    }
   }
 
 
@@ -37,6 +41,7 @@ export class LoginComponent implements OnInit {
       }
     }).then(response => {
       this.token.save(response.access_token)
+      this.router.navigate(['/users']);
     }).catch((err: HttpErrorResponse) => {
       if(err.status === 401){
         this.loginError = true
