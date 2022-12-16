@@ -4,16 +4,19 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
+  HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { TokenStorageService } from '../services/token-storage.service';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
 export class TokenHttpInterceptor implements HttpInterceptor {
   constructor(
-    private service: TokenStorageService
+    private service: TokenStorageService,
+    private router: Router
   ) {}
   // C'est dans la fonction intercept qu'on implémente la logique
   intercept(
@@ -34,7 +37,14 @@ export class TokenHttpInterceptor implements HttpInterceptor {
     return next.handle(updatedRequest).pipe(
       tap( {
         next: (event) => {},
-        error: (error) => {}
+        error: (error) => {
+          if(error instanceof HttpErrorResponse){
+            if(error.status == 401){
+              this.service.clear()
+              this.router.navigateByUrl('')
+            }
+          }
+        }
       })
     );
   }
