@@ -12,8 +12,8 @@ import { MinutesService } from './minutes.service';
   imports: [
     TypeOrmModule.forFeature([Minute]),
     UsersModule,
-    forwardRef(() => AssociationsModule)
+    forwardRef(() => AssociationsModule),
   ],
-  exports: [MinutesService]
+  exports: [MinutesService],
 })
 export class MinutesModule {}

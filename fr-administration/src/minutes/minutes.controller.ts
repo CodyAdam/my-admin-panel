@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { Minute } from './minute.entity';
@@ -10,26 +20,29 @@ import { MinuteUpdate } from './minutes.update';
 @Controller('minutes')
 @ApiTags('minutes')
 export class MinutesController {
-    constructor(private service: MinutesService){}
+  constructor(private service: MinutesService) {}
 
-    @Get()
-    async getAll(): Promise<Minute[]> {
-        return await this.service.getAll()
-    }
-    @Get(':id')
-    async getById(@Param('id', ParseIntPipe) id: number): Promise<Minute> {
-        return this.service.getById(id)
-    }
-    @Post()
-    async create(@Body() min: MinuteInput): Promise<Minute>{
-        return this.service.create(min)
-    }
-    @Put(':id')
-    async update(@Param('id', ParseIntPipe) id: number, @Body() min: MinuteUpdate): Promise<Minute>{
-        return this.service.update(id, min)
-    }
-    @Delete(':id')
-    async delete(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
-        return this.service.delete(id)
-    }
+  @Get()
+  async getAll(): Promise<Minute[]> {
+    return await this.service.getAll();
+  }
+  @Get(':id')
+  async getById(@Param('id', ParseIntPipe) id: number): Promise<Minute> {
+    return this.service.getById(id);
+  }
+  @Post()
+  async create(@Body() min: MinuteInput): Promise<Minute> {
+    return this.service.create(min);
+  }
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() min: MinuteUpdate,
+  ): Promise<Minute> {
+    return this.service.update(id, min);
+  }
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
+    return this.service.delete(id);
+  }
 }

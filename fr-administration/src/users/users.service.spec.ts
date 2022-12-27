@@ -5,25 +5,27 @@ import { repositoryMockFactory } from '../associations/associations.controller.s
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt';
 import { jwtConstants } from '../auth/constants';
 
 export type MockType<T> = {
   [P in keyof T]?: jest.Mock<{}>;
-}
-export const respositoryMockFactory: () => MockType<Repository<any>> = jest.fn(() => ({
-  findOne: jest.fn(entity => entity),
-  find: jest.fn(e => e),
-  create: jest.fn(e => e),
-  save: jest.fn(e => e),
-  delete: jest.fn(e => e),
-  remove: jest.fn(e => e)
-}))
+};
+export const respositoryMockFactory: () => MockType<Repository<any>> = jest.fn(
+  () => ({
+    findOne: jest.fn((entity) => entity),
+    find: jest.fn((e) => e),
+    create: jest.fn((e) => e),
+    save: jest.fn((e) => e),
+    delete: jest.fn((e) => e),
+    remove: jest.fn((e) => e),
+  }),
+);
 
 describe('UsersService', () => {
   let service: UsersService;
-  let repo: MockType<Repository<User>>
-  let user: User
+  let repo: MockType<Repository<User>>;
+  let user: User;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -32,8 +34,8 @@ describe('UsersService', () => {
         Repository<User>,
         {
           provide: getRepositoryToken(User),
-          useFactory: respositoryMockFactory
-        }
+          useFactory: respositoryMockFactory,
+        },
       ],
     }).compile();
 
@@ -42,10 +44,10 @@ describe('UsersService', () => {
       firstname: 'John',
       lastname: 'Doe',
       age: 23,
-      password: ''
-    }
+      password: '',
+    };
 
-    repo = module.get(getRepositoryToken(User))
+    repo = module.get(getRepositoryToken(User));
     service = module.get<UsersService>(UsersService);
   });
 
@@ -55,57 +57,75 @@ describe('UsersService', () => {
 
   describe('getAll', () => {
     it('should return all the users', async () => {
-      let expected: User[] = [user]
+      const expected: User[] = [user];
 
-      repo.find.mockReturnValue(expected)
-      expect(await service.getAll()).toBe(expected)
-    })
-  })
+      repo.find.mockReturnValue(expected);
+      expect(await service.getAll()).toBe(expected);
+    });
+  });
   describe('getOne', () => {
     it('should return one user', async () => {
-      repo.findOne.mockReturnValue(user)
-      expect(await service.findUser(user.id)).toBe(user)
-    })
-  })
+      repo.findOne.mockReturnValue(user);
+      expect(await service.findUser(user.id)).toBe(user);
+    });
+  });
   describe('create', () => {
     it('should return the new user', async () => {
-      let newUserFromBase: User = {
+      const newUserFromBase: User = {
         id: user.id,
         lastname: undefined,
         firstname: undefined,
         age: undefined,
-        password: undefined
-      }
+        password: undefined,
+      };
       repo.create.mockImplementation((e) => {
-        e.id = user.id
-        return e
-      })
-      let response = await service.create(user.firstname, user.lastname, user.age, user.password)
-      response.password = ''
-      expect(response).toStrictEqual(user)
-    })
-  })
+        e.id = user.id;
+        return e;
+      });
+      const response = await service.create(
+        user.firstname,
+        user.lastname,
+        user.age,
+        user.password,
+      );
+      response.password = '';
+      expect(response).toStrictEqual(user);
+    });
+  });
   describe('update', () => {
     it('should return the object updated', async () => {
-      let userExpected = user
-      userExpected.firstname = 'Joe'
+      const userExpected = user;
+      userExpected.firstname = 'Joe';
 
-      repo.findOne.mockReturnValue(user)
-      expect(await service.updateUser(user.id, 'Joe', undefined, undefined, undefined)).toBe(await userExpected)
-    })
+      repo.findOne.mockReturnValue(user);
+      expect(
+        await service.updateUser(
+          user.id,
+          'Joe',
+          undefined,
+          undefined,
+          undefined,
+        ),
+      ).toBe(await userExpected);
+    });
     it('should crash', async () => {
-      repo.findOne.mockReturnValue(undefined)
-      expect(await service.updateUser(user.id, 'Joe', undefined, undefined, undefined).then(()=>false).catch(()=>true)).toBe(true)
-    })
-  })
+      repo.findOne.mockReturnValue(undefined);
+      expect(
+        await service
+          .updateUser(user.id, 'Joe', undefined, undefined, undefined)
+          .then(() => false)
+          .catch(() => true),
+      ).toBe(true);
+    });
+  });
   describe('delete', () => {
     it('should return true if user exist', async () => {
-      repo.findOne.mockReturnValue(user)
-      expect(await service.deleteUser(user.id)).toBe(true)
-    })
+      repo.findOne.mockReturnValue(user);
+      expect(await service.deleteUser(user.id)).toBe(true);
+    });
     it('should return false if user not exist', async () => {
-      repo.findOne.mockReturnValue(undefined)
-      expect(await service.deleteUser(user.id)).toBe(false)
-    })
-  })
+      repo.findOne.mockReturnValue(undefined);
+      expect(await service.deleteUser(user.id)).toBe(false);
+    });
+  });
 });
