@@ -11,11 +11,10 @@ import { MinutesModule } from 'src/minutes/minutes.module';
   providers: [AssociationsService],
   controllers: [AssociationsController],
   imports: [
-    UsersModule,
-    TypeOrmModule.forFeature([Association]),
+    UsersModule, TypeOrmModule.forFeature([Association]), 
     RoleModule,
-    MinutesModule,
+    MinutesModule
   ],
-  exports: [AssociationsService],
+  exports: [AssociationsService]
 })
 export class AssociationsModule {}

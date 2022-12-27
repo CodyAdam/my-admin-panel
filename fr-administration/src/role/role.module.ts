@@ -10,10 +10,10 @@ import { RoleService } from './role.service';
   controllers: [RoleController],
   providers: [RoleService],
   imports: [
-    TypeOrmModule.forFeature([Role]),
-    UsersModule,
-    forwardRef(() => AssociationsModule),
+    TypeOrmModule.forFeature([Role]), 
+    UsersModule, 
+    forwardRef(() => AssociationsModule)
   ],
-  exports: [RoleService],
+  exports: [RoleService]
 })
 export class RoleModule {}

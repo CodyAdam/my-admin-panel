@@ -16,20 +16,20 @@ import { Minute } from './minutes/minute.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'db',
-      port: 5432,
-      username: 'postgres',
-      password: 'example',
-      database: 'postgres',
-      entities: [User, Association, Role, Minute],
-      synchronize: true,
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT),
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      entities: [
+        User,
+        Association,
+        Role,
+        Minute
+      ],
+      synchronize: true
     }),
-    UsersModule,
-    AssociationsModule,
-    AuthModule,
-    RoleModule,
-    MinutesModule,
-  ],
+    UsersModule, AssociationsModule, AuthModule, RoleModule, MinutesModule],
   controllers: [AppController],
   providers: [AppService],
 })
