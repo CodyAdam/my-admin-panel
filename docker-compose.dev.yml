@@ -25,6 +25,12 @@ services:
       - ./fr-administration:/app
     working_dir: /app
     command: yarn start:dev
+    environment:
+      - DB_HOST=db
+      - DB_USER=postgres
+      - DB_PASSWORD=example
+      - DB_DATABASE=postgres
+      - DB_PORT=5432
   db:
     image: postgres
     restart: always
@@ -41,3 +47,8 @@ services:
   # user :               postgres
   # password :           example
   # database :           postgres
+
+
+  # Front : http://localhost:8080
+  # Adminer : http://localhost:8081
+  # Back : http://localhost:8082
