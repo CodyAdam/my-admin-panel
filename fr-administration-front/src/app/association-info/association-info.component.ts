@@ -21,7 +21,6 @@ export class AssociationInfoComponent implements OnInit {
   name = new FormControl('')
   newMember = new FormGroup({
     name: new FormControl(''),
-    role: new FormControl('')
   })
 
   constructor(
@@ -79,7 +78,12 @@ export class AssociationInfoComponent implements OnInit {
       endpoint: `/users/byEmail`,
       data: {email: email},
     }).then(u => {
-      this.association.members.push(new Member(u.lastname, u.firstname, u.age, "", u.id, u.email))
+      if(this.association.members.some(m => m.id == u.id)){
+        this.error = "This user is already in the list"
+      }else {
+        this.association.members.push(new Member(u.lastname, u.firstname, u.age, "", u.id, u.email))
+        this.newMember.get('name')?.setValue('')
+      }
     }).catch((e) => {
       console.log(e)
       if(e.status == HttpStatusCode.NotFound){
@@ -92,4 +96,7 @@ export class AssociationInfoComponent implements OnInit {
   }
 
 
+  clearError() {
+    this.error = null
+  }
 }
