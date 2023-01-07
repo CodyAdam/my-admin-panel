@@ -9,12 +9,13 @@
 |-------------------|----------------|----------------------------|-------------------------------------------------------|
 | Front             | Angular        | http://localhost/          | [fr-administration-front](./fr-administration-front/) | 
 | API               | NestJS         | http://localhost/api/      | [fr-administration](./fr-administration/)             |
-| Swagger           |                | http://localhost/api/api/  | [fr-administration](./fr-administration/)             |
+| Swagger           | Swagger        | http://localhost/api/api/  | [fr-administration](./fr-administration/)             |
 | Mail microservice | Quarkus native |                            | [mail](./mail/)                                       |
-| MailDev           |                | http://localhost/maildev/  |                                                       |
-| RabbitMQ          |                | http://localhost/rabbitmq/ |                                                       |
-| Adminer (dev)     |                | http://localhost/adminer/  |                                                       |
+| MailDev           | MailDev        | http://localhost/maildev/  |                                                       |
+| RabbitMQ          | RabbitMQ       | http://localhost/rabbitmq/ |                                                       |
+| Adminer (dev)     | Adminer        | http://localhost/adminer/  |                                                       |
 | Database          | postgres       |                            |                                                       |
+| Nginx             | Nginx          |                            | [nginx](./nginx/)                                     |
 
 # Auth
 Usernames and passwords for rabbitmq and postgres are in the [.env](./.env) file
