@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AssociationsModule } from 'src/associations/associations.module';
 import { UsersModule } from 'src/users/users.module';
@@ -12,7 +12,8 @@ import { MinutesService } from './minutes.service';
   imports: [
     TypeOrmModule.forFeature([Minute]),
     UsersModule,
-    AssociationsModule
-  ]
+    forwardRef(() => AssociationsModule),
+  ],
+  exports: [MinutesService],
 })
 export class MinutesModule {}

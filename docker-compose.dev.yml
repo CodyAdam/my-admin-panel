@@ -1,0 +1,67 @@
+services:
+
+  mail:
+    build:
+      context: mail
+      target: dev
+    depends_on:
+      - mom
+
+  front:
+    build:
+      context: ./fr-administration-front
+      target: dev
+    volumes:
+      - ./fr-administration-front/src:/app/src:ro
+
+  proxy:
+    build:
+      context: nginx
+      target: dev
+    ports:
+      - ${FRONT_PORT}:80
+    depends_on:
+      - front
+      - back
+
+
+  back:
+    build:
+      context: ./fr-administration
+      target: dev
+    depends_on:
+      - db
+      - mom
+    environment:
+      - DB_HOST=db
+      - DB_USER=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_PORT=5432
+    volumes:
+      - ./fr-administration/src:/app/src:ro
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_USER=${DB_USERNAME}
+    volumes:
+      - ./db:/var/lib/postgresql/data
+
+  mom:
+    hostname: mom
+    image: rabbitmq:3.11.5-management
+    volumes:
+      - ./rabbitmq/conf:/etc/rabbitmq/
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBIT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBIT_PWD}
+
+  adminer:
+    image: adminer
+
+  smtp:
+    image: maildev/maildev:2.0.5

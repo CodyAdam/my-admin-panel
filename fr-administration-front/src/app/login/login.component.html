@@ -1,0 +1,211 @@
+<div class="hero min-h-full grow bg-base-200">
+  <div class="hero-content text-center flex-col gap-10">
+    <div class="max-w-md flex flex-col gap-10 items-center">
+      <div class="card card-bordered card-body border-base-300">
+        <h1 class="text-5xl font-bold">Hello there!</h1>
+        <p class="py-1">
+          It's nice to see you here. Would you like to log in? Or maybe you want
+          to register?
+        </p>
+      </div>
+      <div class="flex w-full flex-col sm:flex-row gap-6">
+        <form
+          #loginForm
+          (submit)="submit($event)"
+          *ngIf="state != 'success'"
+          [formGroup]="loginGroup"
+          class="flex flex-col gap-5 items-center"
+        >
+          <div>
+            <div class="form-control w-full max-w-xs">
+              <label class="label">
+                <span class="label-text">What is your email?</span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                formControlName="email"
+                required
+                pattern="[^@]+@[^@]+"
+                autocomplete="email"
+                placeholder="email@domain.com"
+                class="input input-bordered w-full max-w-xs"
+              />
+            </div>
+            <div class="form-control w-full max-w-xs">
+              <label class="label">
+                <span class="label-text">And password?</span>
+              </label>
+              <input
+                autocomplete="current-password"
+                type="password"
+                formControlName="password"
+                name="password"
+                required
+                placeholder="secret123"
+                class="input input-bordered w-full max-w-xs"
+              />
+            </div>
+          </div>
+          <button
+            class="btn btn-primary flex gap-5 flex-nowrap"
+            [disabled]="state == 'loading'"
+            (click)="login()"
+          >
+            Log me in!
+            <div *ngIf="state == 'loading'" class="animate-spin">
+              <svg width="32" height="32" viewBox="0 0 50 50">
+                <path
+                  fill="currentColor"
+                  d="M41.9 23.9c-.3-6.1-4-11.8-9.5-14.4c-6-2.7-13.3-1.6-18.3 2.6c-4.8 4-7 10.5-5.6 16.6c1.3 6 6 10.9 11.9 12.5c7.1 2 13.6-1.4 17.6-7.2c-3.6 4.8-9.1 8-15.2 6.9c-6.1-1.1-11.1-5.7-12.5-11.7c-1.5-6.4 1.5-13.1 7.2-16.4c5.9-3.4 14.2-2.1 18.1 3.7c1 1.4 1.7 3.1 2 4.8c.3 1.4.2 2.9.4 4.3c.2 1.3 1.3 3 2.8 2.1c1.3-.8 1.2-2.5 1.1-3.8c0-.4.1.7 0 0z"
+                />
+              </svg>
+            </div>
+          </button>
+        </form>
+        <div class="divider divider-vertical sm:divider-horizontal">OR</div>
+        <form
+          #registerForm
+          (submit)="submit($event)"
+          *ngIf="state != 'success'"
+          [formGroup]="registerGroup"
+          class="flex flex-col gap-5 items-center"
+        >
+          <div>
+            <div class="form-control w-full max-w-xs">
+              <label class="label">
+                <span class="label-text">What is your email?</span>
+              </label>
+              <input
+                type="email"
+                autocomplete="email"
+                name="email"
+                formControlName="email"
+                pattern="[^@]+@[^@]+"
+                required
+                placeholder="email@domain.com"
+                class="input input-bordered w-full max-w-xs"
+              />
+            </div>
+            <div class="form-control w-full max-w-xs">
+              <label class="label">
+                <span class="label-text">Firstname ?</span>
+              </label>
+              <input
+                type="text"
+                autocomplete="firstname"
+                name="firstname"
+                formControlName="firstname"
+                required
+                placeholder="John"
+                class="input input-bordered w-full max-w-xs"
+              />
+            </div>
+            <div class="form-control w-full max-w-xs">
+              <label class="label">
+                <span class="label-text">Lastname ?</span>
+              </label>
+              <input
+                type="text"
+                autocomplete="lastname"
+                formControlName="lastname"
+                name="lastname"
+                required
+                placeholder="Doe"
+                class="input input-bordered w-full max-w-xs"
+              />
+            </div>
+            <div class="form-control w-full max-w-xs">
+              <label class="label">
+                <span class="label-text">Age ?</span>
+              </label>
+              <input
+                type="number"
+                autocomplete="age"
+                formControlName="age"
+                name="age"
+                required
+                placeholder="19"
+                class="input input-bordered w-full max-w-xs"
+              />
+            </div>
+            <div class="form-control w-full max-w-xs">
+              <label class="label">
+                <span class="label-text">And password?</span>
+              </label>
+              <input
+                required
+                type="password"
+                formControlName="password"
+                autocomplete="new-password"
+                name="password"
+                placeholder="secret123"
+                class="input input-bordered w-full max-w-xs"
+              />
+            </div>
+          </div>
+          <button
+            class="btn btn-primary flex gap-5 min-w-fit flex-nowrap"
+            [disabled]="state == 'loading'"
+            (click)="register()"
+          >
+            Register me!
+            <div *ngIf="state == 'loading'" class="animate-spin">
+              <svg width="32" height="32" viewBox="0 0 50 50">
+                <path
+                  fill="currentColor"
+                  d="M41.9 23.9c-.3-6.1-4-11.8-9.5-14.4c-6-2.7-13.3-1.6-18.3 2.6c-4.8 4-7 10.5-5.6 16.6c1.3 6 6 10.9 11.9 12.5c7.1 2 13.6-1.4 17.6-7.2c-3.6 4.8-9.1 8-15.2 6.9c-6.1-1.1-11.1-5.7-12.5-11.7c-1.5-6.4 1.5-13.1 7.2-16.4c5.9-3.4 14.2-2.1 18.1 3.7c1 1.4 1.7 3.1 2 4.8c.3 1.4.2 2.9.4 4.3c.2 1.3 1.3 3 2.8 2.1c1.3-.8 1.2-2.5 1.1-3.8c0-.4.1.7 0 0z"
+                />
+              </svg>
+            </div>
+          </button>
+        </form>
+      </div>
+    </div>
+    <div *ngIf="state == 'success'">
+      <div
+        class="alert alert-success shadow-lg absolute bottom-0 w-fit left-0 m-10"
+      >
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="stroke-current flex-shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>You are connected! Hooray!</span>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="state == 'error'">
+      <div
+        class="alert alert-error shadow-lg absolute bottom-0 w-fit left-0 m-10"
+      >
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="stroke-current flex-shrink-0 h-6 w-6 cursor-pointer"
+            fill="none"
+            viewBox="0 0 24 24"
+            (click)="closeErrorMessage()"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>{{errorMessage}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

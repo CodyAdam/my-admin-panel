@@ -1,0 +1,24 @@
+<div class="h-full bg-base-200 p-10 flex flex-col gap-5">
+  <h1 class="text-3xl font-semibold opacity-40">Users list</h1>
+  <div class="overflow-x-auto">
+    <table class="table w-full">
+      <!-- head -->
+      <thead>
+        <tr class="[&>th]:bg-secondary">
+          <th></th>
+          <th>Lastname</th>
+          <th>Firstname</th>
+          <th>Age</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td class="font-bold">{{ user.id }}</td>
+          <td>{{ user.lastname }}</td>
+          <td>{{ user.firstname }}</td>
+          <td>{{ user.age }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
