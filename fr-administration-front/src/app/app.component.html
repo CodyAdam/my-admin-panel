@@ -1,5 +1,5 @@
 <div data-theme="bumblebee" class="h-full min-h-screen flex flex-col">
-  <div class="navbar bg-base-100">
+  <div class="navbar bg-base-100 sticky top-0">
     <div class="navbar-start">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost btn-circle">
@@ -23,11 +23,7 @@
       <a href="/" class="btn btn-ghost normal-case text-xl">Administration</a>
     </div>
     <div class="navbar-end gap-3">
-      <button
-        *ngIf="isLogged()"
-        class="btn btn-ghost btn-circle"
-        (click)="handleLogout()"
-      >
+      <a *ngIf="isLogged()" class="btn btn-ghost btn-circle" href="/profile">
         <div class="indicator">
           <svg width="32" height="32" viewBox="0 0 24 24" class="w-6 h-6">
             <path
@@ -36,7 +32,7 @@
             />
           </svg>
         </div>
-      </button>
+      </a>
       <button
         *ngIf="isLogged()"
         class="btn btn-ghost btn-circle"
