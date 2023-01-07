@@ -45,6 +45,7 @@ describe('UsersService', () => {
       lastname: 'Doe',
       age: 23,
       password: '',
+      email: 'fabigoardou@gmail.com'
     };
 
     repo = module.get(getRepositoryToken(User));
@@ -77,6 +78,7 @@ describe('UsersService', () => {
         firstname: undefined,
         age: undefined,
         password: undefined,
+        email: undefined
       };
       repo.create.mockImplementation((e) => {
         e.id = user.id;
@@ -87,6 +89,7 @@ describe('UsersService', () => {
         user.lastname,
         user.age,
         user.password,
+        user.email
       );
       response.password = '';
       expect(response).toStrictEqual(user);
@@ -105,6 +108,7 @@ describe('UsersService', () => {
           undefined,
           undefined,
           undefined,
+            undefined
         ),
       ).toBe(await userExpected);
     });
@@ -112,7 +116,7 @@ describe('UsersService', () => {
       repo.findOne.mockReturnValue(undefined);
       expect(
         await service
-          .updateUser(user.id, 'Joe', undefined, undefined, undefined)
+          .updateUser(user.id, 'Joe', undefined, undefined, undefined, undefined)
           .then(() => false)
           .catch(() => true),
       ).toBe(true);

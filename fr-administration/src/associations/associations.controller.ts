@@ -26,7 +26,7 @@ export class AssociationCreate {
   @ApiProperty({
     description: 'List of users',
     example: [1],
-    type: Array<number>,
+    type: Array<number>(),
   })
   public idUsers: number[];
   @ApiProperty({
@@ -40,7 +40,7 @@ export class AssociationUpdate {
   @ApiProperty({
     description: 'List of users',
     example: [1],
-    type: Array<number>,
+    type: Array<number>(),
     required: false,
   })
   public idUsers?: number[];
