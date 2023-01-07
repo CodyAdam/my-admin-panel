@@ -1,9 +1,15 @@
 <div *ngIf="association" class="h-full bg-base-200 p-10 flex flex-col gap-5">
   <h1 class="flex items-center gap-5">
-    <div class="text-5xl flex gap-3">
+    <div class="text-5xl flex gap-3 items-center">
       <div>Association</div>
-      <div *ngIf="!edit">{{association.name}}</div>
-      <input type="text" *ngIf="edit" placeholder="Name" class="input w-full" [formControl]="name">
+      <div *ngIf="!edit" class="font-semibold">{{ association.name }}</div>
+      <input
+        type="text"
+        *ngIf="edit"
+        placeholder="Name"
+        class="input w-full input-lg text-5xl font-semibold"
+        [formControl]="name"
+      />
     </div>
     <button class="btn btn-primary" (click)="changeEdit(true)" *ngIf="!edit">
       Edit
@@ -15,27 +21,65 @@
       Submit
     </button>
   </h1>
-  <div>
-    <div>Members :</div>
-    <table class="ml-4 table">
-      <tbody>
+  <div class="text-3xl font-semibold opacity-40">Members</div>
+  <table class="table">
+    <div *ngIf="association.members.length == 0" class="opacity-50 italic">
+      No members
+    </div>
+    <tbody>
       <tr *ngFor="let member of association.members">
-        <td>{{member.email}}</td>
-        <td>{{member.firstname}} {{member.name}}</td>
+        <td>{{ member.email }}</td>
+        <td>{{ member.firstname }} {{ member.name }}</td>
         <td>
-          <div *ngIf="edit" >
+          <div *ngIf="edit">
             <button mat-icon-button (click)="removeUser(member.id)">
               <mat-icon>delete</mat-icon>
             </button>
           </div>
         </td>
       </tr>
-      </tbody>
-    </table>
-    <form *ngIf="edit" class="flex gap-3 mt-3" (ngSubmit)="addMember()" [formGroup]="newMember">
-      <input type="text" class="input" formControlName="name" placeholder="Email">
-      <button class="btn btn-primary" type="submit" [disabled]="newMember.status == 'DISABLED'">Ajouter un membre</button>
-    </form>
-    <div class="alert alert-error shadow-lg mt-2" *ngIf="error">Error : {{error}}</div>
+    </tbody>
+  </table>
+  <form
+    *ngIf="edit"
+    class="flex gap-3"
+    (ngSubmit)="addMember()"
+    [formGroup]="newMember"
+  >
+    <input
+      type="text"
+      class="input"
+      formControlName="name"
+      placeholder="Email"
+    />
+    <button
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="newMember.status == 'DISABLED'"
+    >
+      Add member
+    </button>
+  </form>
+  <div *ngIf="error">
+    <div
+      class="alert alert-error shadow-lg absolute bottom-0 w-fit left-0 m-10"
+    >
+      <div class="cursor-pointer">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="stroke-current flex-shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span>{{ error }}</span>
+      </div>
+    </div>
   </div>
 </div>

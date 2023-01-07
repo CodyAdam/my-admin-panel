@@ -1,5 +1,5 @@
 <div class="h-full bg-base-200 p-10 flex flex-col gap-5">
-  <div class="flex align-middle gap-5">
+  <div class="flex items-center gap-5">
     <div class="text-3xl font-semibold opacity-40">Association List</div>
     <label for="newAssociation" class="btn btn-primary">Create</label>
   </div>
@@ -7,38 +7,52 @@
     <table class="table w-full">
       <!-- head -->
       <thead>
-      <tr class="[&>th]:bg-secondary">
-        <th>Name</th>
-        <th>Members</th>
-        <th>Actions</th>
-      </tr>
+        <tr class="[&>th]:bg-secondary">
+          <th>Name</th>
+          <th>Members</th>
+          <th>Actions</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let asso of associations">
-        <td class="font-bold"><a [routerLink]="[asso.id]">{{ asso.name }}</a></td>
-        <td>{{ membersToString(asso) }}</td>
-        <td>
-          <button mat-icon-button aria-label="about" (click)="show(asso)">
-            <mat-icon>information</mat-icon>
-          </button>
-          <button mat-icon-button aria-label="delete" (click)="delete(asso)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </tr>
+        <tr *ngFor="let asso of associations">
+          <td class="font-bold">
+            <a [routerLink]="[asso.id]">{{ asso.name }}</a>
+          </td>
+          <td>{{ membersToString(asso) }}</td>
+          <td>
+            <button mat-icon-button aria-label="about" (click)="show(asso)">
+              <mat-icon>information</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="delete" (click)="delete(asso)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 
-  <input type="checkbox" id="newAssociation" class="modal-toggle" [formControl]="modalNewAsso">
+  <input
+    type="checkbox"
+    id="newAssociation"
+    class="modal-toggle"
+    [formControl]="modalNewAsso"
+  />
   <div class="modal">
     <div class="modal-box">
-      <h3 class="font-bold text-lg">Create new association</h3>
-      <form [formGroup]="newAsso" (ngSubmit)="createAsso()">
-        <div class="m-2 mb-5">
-          <input type="text" class="input w-full" placeholder="Name" formControlName="name">
-        </div>
-        <div class="flex flex-row-reverse">
+      <form
+        [formGroup]="newAsso"
+        (ngSubmit)="createAsso()"
+        class="flex flex-col gap-4"
+      >
+        <h3 class="font-bold text-lg">Create new association</h3>
+        <input
+          type="text"
+          class="input w-full input-bordered"
+          placeholder="Name"
+          formControlName="name"
+        />
+        <div class="flex flex-row-reverse gap-3">
           <button class="btn btn-primary" type="submit">Create</button>
           <label class="btn btn-ghost" for="newAssociation">Cancel</label>
         </div>
