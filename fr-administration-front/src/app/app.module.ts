@@ -9,16 +9,18 @@ import { MatTableModule } from '@angular/material/table';
 import { LoginComponent } from './login/login.component';
 import { TokenHttpInterceptor } from './interceptors/token.interceptor';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [AppComponent, UsersListComponent, LoginComponent, PagenotfoundComponent],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatTableModule,
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatTableModule,
+        ReactiveFormsModule,
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

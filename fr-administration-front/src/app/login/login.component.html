@@ -13,6 +13,7 @@
           #loginForm
           (submit)="submit($event)"
           *ngIf="state != 'success'"
+          [formGroup]="loginGroup"
           class="flex flex-col gap-5 items-center"
         >
           <div>
@@ -22,12 +23,11 @@
               </label>
               <input
                 type="email"
-                name="username"
+                name="email"
+                formControlName="email"
                 required
                 pattern="[^@]+@[^@]+"
-                autocomplete="username"
-                [value]="username"
-                (change)="handleChangeUsername($event)"
+                autocomplete="email"
                 placeholder="email@domain.com"
                 class="input input-bordered w-full max-w-xs"
               />
@@ -39,10 +39,9 @@
               <input
                 autocomplete="current-password"
                 type="password"
+                formControlName="password"
                 name="password"
                 required
-                [value]="password"
-                (change)="handleChangePassword($event)"
                 placeholder="secret123"
                 class="input input-bordered w-full max-w-xs"
               />
@@ -69,6 +68,7 @@
           #registerForm
           (submit)="submit($event)"
           *ngIf="state != 'success'"
+          [formGroup]="registerGroup"
           class="flex flex-col gap-5 items-center"
         >
           <div>
@@ -78,13 +78,54 @@
               </label>
               <input
                 type="email"
-                autocomplete="username"
-                name="username"
+                autocomplete="email"
+                name="email"
+                formControlName="email"
                 pattern="[^@]+@[^@]+"
                 required
-                [value]="registerUsername"
-                (change)="handleChangeRegisterUsername($event)"
                 placeholder="email@domain.com"
+                class="input input-bordered w-full max-w-xs"
+              />
+            </div>
+            <div class="form-control w-full max-w-xs">
+              <label class="label">
+                <span class="label-text">Firstname ?</span>
+              </label>
+              <input
+                type="text"
+                autocomplete="firstname"
+                name="firstname"
+                formControlName="firstname"
+                required
+                placeholder="John"
+                class="input input-bordered w-full max-w-xs"
+              />
+            </div>
+            <div class="form-control w-full max-w-xs">
+              <label class="label">
+                <span class="label-text">Lastname ?</span>
+              </label>
+              <input
+                type="text"
+                autocomplete="lastname"
+                formControlName="lastname"
+                name="lastname"
+                required
+                placeholder="Doe"
+                class="input input-bordered w-full max-w-xs"
+              />
+            </div>
+            <div class="form-control w-full max-w-xs">
+              <label class="label">
+                <span class="label-text">Age ?</span>
+              </label>
+              <input
+                type="number"
+                autocomplete="age"
+                formControlName="age"
+                name="age"
+                required
+                placeholder="19"
                 class="input input-bordered w-full max-w-xs"
               />
             </div>
@@ -95,10 +136,9 @@
               <input
                 required
                 type="password"
+                formControlName="password"
                 autocomplete="new-password"
                 name="password"
-                [value]="registerPassword"
-                (change)="handleChangeRegisterPassword($event)"
                 placeholder="secret123"
                 class="input input-bordered w-full max-w-xs"
               />
@@ -151,9 +191,10 @@
         <div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="stroke-current flex-shrink-0 h-6 w-6"
+            class="stroke-current flex-shrink-0 h-6 w-6 buttonClose"
             fill="none"
             viewBox="0 0 24 24"
+            (click)="closeErrorMessage()"
           >
             <path
               stroke-linecap="round"
@@ -162,7 +203,7 @@
               d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <span>Sadly, we couldn't connect you. Please try again.</span>
+          <span>{{errorMessage}}</span>
         </div>
       </div>
     </div>

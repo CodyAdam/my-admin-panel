@@ -2,18 +2,32 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiHelperService } from '../services/api-helper.service';
 import { TokenStorageService } from '../services/token-storage.service';
+import {FormControl, FormGroup} from "@angular/forms";
+import {HttpErrorResponse, HttpStatusCode} from "@angular/common/http";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   host: { class: 'h-full' },
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  public username: string | null = null;
-  public password: string | null = null;
-  public registerUsername: string | null = null;
-  public registerPassword: string | null = null;
+
+  loginGroup = new FormGroup({
+    email: new FormControl(''),
+    password: new FormControl('')
+  })
+  registerGroup = new FormGroup({
+    email: new FormControl(''),
+    age: new FormControl(0),
+    firstname: new FormControl(''),
+    lastname: new FormControl(''),
+    password: new FormControl('')
+  })
+
   public state: 'loading' | 'error' | 'success' | 'idle' = 'idle';
+  errorMessage: string = ""
+
   @ViewChild('loginForm') loginForm: ElementRef<HTMLFormElement> | null = null;
   @ViewChild('registerForm') registerForm: ElementRef<HTMLFormElement> | null =
     null;
@@ -32,9 +46,9 @@ export class LoginComponent implements OnInit {
       return;
     this.state = 'loading';
 
-    const [username, password] = [this.username, this.password];
+    const [email, password] = [this.loginGroup.get('email')?.value, this.loginGroup.get('password')?.value];
     this.api
-      .post({ endpoint: '/auth/login', data: { username, password } })
+      .post({ endpoint: '/auth/login', data: { email: email, password } })
       .then((response) => {
         if (response.access_token) {
           this.token.save(response.access_token);
@@ -43,6 +57,8 @@ export class LoginComponent implements OnInit {
         } else this.state = 'error';
       })
       .catch((error) => {
+        if(error.status == HttpStatusCode.Unauthorized)
+          this.errorMessage = "Wrong information entered"
         this.state = 'error';
       });
   }
@@ -51,9 +67,15 @@ export class LoginComponent implements OnInit {
     if (!this.registerForm || !this.registerForm.nativeElement.checkValidity())
       return;
     this.state = 'loading';
-    const [username, password] = [this.registerUsername, this.registerPassword];
+    const data = {
+      email: this.registerGroup.get('email')?.value,
+      password: this.registerGroup.get('password')?.value,
+      firstname: this.registerGroup.get('firstname')?.value,
+      lastname: this.registerGroup.get('lastname')?.value,
+      age: this.registerGroup.get('age')?.value,
+    }
     this.api
-      .post({ endpoint: '/auth/register', data: { username, password } })
+      .post({ endpoint: '/auth/register', data})
       .then((response) => {
         if (response.access_token) {
           this.token.save(response.access_token);
@@ -62,29 +84,16 @@ export class LoginComponent implements OnInit {
         } else this.state = 'error';
       })
       .catch((error) => {
+        this.errorMessage = error.error.message
         this.state = 'error';
       });
   }
 
-  handleChangeUsername(event: any): void {
-    this.username = (event.target as HTMLInputElement).value;
-    this.state = 'idle';
-  }
-
-  handleChangePassword(event: any): void {
-    this.password = (event.target as HTMLInputElement).value;
-    this.state = 'idle';
-  }
-  handleChangeRegisterUsername(event: any): void {
-    this.registerUsername = (event.target as HTMLInputElement).value;
-    this.state = 'idle';
-  }
-  handleChangeRegisterPassword(event: any): void {
-    this.registerPassword = (event.target as HTMLInputElement).value;
-    this.state = 'idle';
-  }
-
   submit(event: any): void {
     event.preventDefault();
+  }
+
+  closeErrorMessage() {
+    this.state = "idle"
   }
 }

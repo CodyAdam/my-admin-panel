@@ -12,10 +12,10 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  public async validateUser(username: number, password: string): Promise<User> {
+  public async validateUser(email: string, password: string): Promise<User> {
     try {
       // password =  await bcrypt.hash(password, jwtConstants.salt)
-      const user = await this.userService.findUser(username);
+      const user = await this.userService.findUserByEmail(email);
       if (await bcrypt.compare(password, user.password)) return user;
       return undefined;
     } catch (e) {
@@ -24,7 +24,7 @@ export class AuthService {
   }
 
   public async login(user: any) {
-    const payload = { username: user.id };
+    const payload = { email: user.email, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
     };
