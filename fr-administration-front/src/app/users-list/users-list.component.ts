@@ -27,4 +27,11 @@ export class UsersListComponent implements OnInit {
       this.users = response;
     });
   }
+
+  deleteUser(id: number) {
+    const resquest = this.api.delete({ endpoint: `/users/${id}` });
+    resquest.then((response) => {
+      this.users = this.users.filter((user) => user.id !== id);
+    });
+  }
 }

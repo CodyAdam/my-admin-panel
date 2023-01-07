@@ -9,7 +9,7 @@
           <th>Lastname</th>
           <th>Firstname</th>
           <th>Age</th>
-          <th></th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -18,8 +18,8 @@
           <td>{{ user.lastname }}</td>
           <td>{{ user.firstname }}</td>
           <td>{{ user.age }}</td>
-          <td>
-            <label [for]="user.id" class="btn btn-primary">Inspect</label>
+          <td class="flex items-center">
+            <label [for]="user.id" class="cursor-pointer h-10 w-10 flex items-center justify-center"><mat-icon>information</mat-icon></label>
             <input type="checkbox" [id]="user.id" class="modal-toggle" />
             <div class="modal">
               <div class="modal-box relative">
@@ -97,6 +97,13 @@
                 </div>
               </div>
             </div>
+            <button
+            class="h-10 w-10 flex items-center justify-center"
+              aria-label="delete"
+              (click)="deleteUser(user.id)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
           </td>
         </tr>
       </tbody>
