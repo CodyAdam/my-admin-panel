@@ -101,4 +101,3 @@ dist
 
 # TernJS port file
 .tern-port
-mailer/src/main/resources/application.properties

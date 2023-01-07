@@ -46,7 +46,7 @@ export class UserCreation {
     example: 'test@example.fr',
     type: String,
   })
-  public email: string
+  public email: string;
 }
 export class UserUpdate {
   @ApiProperty({
@@ -105,7 +105,7 @@ export class UsersController {
       u.firstname,
       u.age,
       u.password,
-      u.email
+      u.email,
     );
   }
 
@@ -127,7 +127,7 @@ export class UsersController {
       u.lastname,
       u.age,
       u.password,
-      u.email
+      u.email,
     );
   }
 

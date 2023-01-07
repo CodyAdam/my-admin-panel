@@ -1,16 +1,16 @@
-import {Controller, Post, UseGuards, Request, Body} from '@nestjs/common';
+import { Controller, Post, UseGuards, Request, Body } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
-import {ApiCreatedResponse} from "@nestjs/swagger";
-import {User} from "../users/user.entity";
-import {UserCreation} from "../users/users.controller";
-import {UsersService} from "../users/users.service";
+import { ApiCreatedResponse } from '@nestjs/swagger';
+import { User } from '../users/user.entity';
+import { UserCreation } from '../users/users.controller';
+import { UsersService } from '../users/users.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
-      private authService: AuthService,
-      private userService: UsersService
+    private authService: AuthService,
+    private userService: UsersService,
   ) {}
 
   @UseGuards(AuthGuard('local'))
@@ -25,11 +25,11 @@ export class AuthController {
   @Post('register')
   async create(@Body() u: UserCreation): Promise<User> {
     return await this.userService.create(
-        u.firstname,
-        u.lastname,
-        u.age,
-        u.password,
-        u.email
+      u.firstname,
+      u.lastname,
+      u.age,
+      u.password,
+      u.email,
     );
   }
 }

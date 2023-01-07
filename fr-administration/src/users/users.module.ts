@@ -7,9 +7,7 @@ import { UsersService } from './users.service';
 
 @Module({
   controllers: [UsersController],
-  providers: [
-    UsersService
-  ],
+  providers: [UsersService],
   exports: [UsersService],
   imports: [
     TypeOrmModule.forFeature([User]),
@@ -23,9 +21,9 @@ import { UsersService } from './users.service';
           queueOptions: {
             durable: true,
           },
-        }
-      }
-    ])
+        },
+      },
+    ]),
   ],
 })
 export class UsersModule {}

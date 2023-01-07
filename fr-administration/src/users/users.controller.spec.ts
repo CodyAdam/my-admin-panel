@@ -48,7 +48,7 @@ describe('UsersController', () => {
           lastname: 'Doe',
           age: 23,
           password: '',
-          email: 'fabigoardou@gmail.com'
+          email: 'fabigoardou@gmail.com',
         },
       ]);
       jest.spyOn(service, 'getAll').mockImplementation(() => expected);
@@ -64,7 +64,7 @@ describe('UsersController', () => {
         lastname: 'Doe',
         age: 23,
         password: '',
-        email: 'fabigoardou@gmail.com'
+        email: 'fabigoardou@gmail.com',
       });
       jest.spyOn(service, 'findUser').mockImplementation(() => expected);
       expect(await controller.getUser(0)).toBe(await expected);
@@ -79,7 +79,7 @@ describe('UsersController', () => {
         lastname: 'gdou',
         age: 21,
         password: '',
-        email: 'fabigoardou@gmail.com'
+        email: 'fabigoardou@gmail.com',
       });
       const expectedReal = await expected;
       delete expectedReal.id;
@@ -96,7 +96,7 @@ describe('UsersController', () => {
         lastname: 'gdou',
         age: 21,
         password: '',
-        email: 'fabigoardou@gmail.com'
+        email: 'fabigoardou@gmail.com',
       });
       const expected: Promise<User> = Promise.resolve({
         id: 1,
@@ -104,7 +104,7 @@ describe('UsersController', () => {
         lastname: 'gdou',
         age: 22,
         password: '',
-        email: 'fabigoardou@gmail.com'
+        email: 'fabigoardou@gmail.com',
       });
       const modif: UserUpdate = {
         age: 22,

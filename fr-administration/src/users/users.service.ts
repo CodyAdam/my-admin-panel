@@ -11,8 +11,8 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private repo: Repository<User>,
-    @Inject('MAIL_SERVICE') 
-    private rabbitmq: ClientProxy
+    @Inject('MAIL_SERVICE')
+    private rabbitmq: ClientProxy,
   ) {}
 
   async findUser(id: number): Promise<User> {
@@ -22,8 +22,8 @@ export class UsersService {
     return res;
   }
   async findUserByEmail(email: string): Promise<User> {
-    const res = await this.repo.findOne({where: {email: email}})
-    if(!res)
+    const res = await this.repo.findOne({ where: { email: email } });
+    if (!res)
       throw new HttpException(`User ${email} not found`, HttpStatus.NOT_FOUND);
     return res;
   }
@@ -35,35 +35,37 @@ export class UsersService {
     lastname: string,
     age: number,
     password: string,
-    email: string
+    email: string,
   ): Promise<User> {
     password = await bcrypt.hash(password, jwtConstants.salt);
 
     try {
-      await this.findUserByEmail(email)
+      await this.findUserByEmail(email);
     } catch (e) {
-      if(e instanceof HttpException && e.getStatus() == HttpStatus.NOT_FOUND){
+      if (e instanceof HttpException && e.getStatus() == HttpStatus.NOT_FOUND) {
         const user = await this.repo.create({
           lastname,
           firstname,
           age,
           password,
-          email
+          email,
         });
         await this.repo.save(user);
 
-        let record = new RmqRecordBuilder(email).setOptions({
-          contentType: 'application/json',
-        }).build()
+        const record = new RmqRecordBuilder(email)
+          .setOptions({
+            contentType: 'application/json',
+          })
+          .build();
 
-        this.rabbitmq.emit("mail", record)
+        this.rabbitmq.emit('mail', record);
 
-        console.log(`User ${user.email} created`)
+        console.log(`User ${user.email} created`);
         return user;
       }
     }
 
-    throw new HttpException(`User ${email} already exist`, HttpStatus.FOUND)
+    throw new HttpException(`User ${email} already exist`, HttpStatus.FOUND);
   }
   async getUser(id: number): Promise<User> {
     return await this.findUser(id);
@@ -77,7 +79,7 @@ export class UsersService {
     lastname: string,
     age: number,
     password: string,
-    email: string
+    email: string,
   ): Promise<User> {
     const user = await this.findUser(id);
     if (firstname) user.firstname = firstname;
@@ -85,8 +87,7 @@ export class UsersService {
     if (age) user.age = age;
     if (password)
       user.password = await bcrypt.hash(password, jwtConstants.salt);
-    if(email)
-      user.email = email;
+    if (email) user.email = email;
     await this.repo.save(user);
     return user;
   }
