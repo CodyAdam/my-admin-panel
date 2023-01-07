@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   public state: 'loading' | 'error' | 'success' | 'idle' = 'idle';
   errorMessage: string = '';
   successMessage: string = '';
+  logged = false;
 
   @ViewChild('loginForm') loginForm: ElementRef<HTMLFormElement> | null = null;
   @ViewChild('registerForm') registerForm: ElementRef<HTMLFormElement> | null =
@@ -37,7 +38,8 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.token.isLogged()) this.state = 'success';
+    if (this.token.isLogged()) this.logged = true;
+
   }
 
   login() {
@@ -56,7 +58,7 @@ export class LoginComponent implements OnInit {
           this.token.save(response.access_token, response.id);
           this.successMessage = 'You are connected! Hooray!';
           this.state = 'success';
-          this.router.navigateByUrl('/users');
+          this.logged = true;
         } else this.state = 'error';
       })
       .catch((error) => {
@@ -93,7 +95,7 @@ export class LoginComponent implements OnInit {
     event.preventDefault();
   }
 
-  closeErrorMessage() {
+  closeAlert() {
     this.state = 'idle';
   }
 }

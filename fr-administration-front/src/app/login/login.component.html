@@ -3,16 +3,58 @@
     <div class="max-w-md flex flex-col gap-10 items-center">
       <div class="card card-bordered card-body border-base-300">
         <h1 class="text-5xl font-bold">Hello there!</h1>
-        <p class="py-1">
-          It's nice to see you here. Would you like to log in? Or maybe you want
-          to register?
+        <p *ngIf="!logged" class="py-1">
+          It's nice to see you here. Would you like to <strong>log in</strong>?
+          Or maybe you want to <strong>register</strong>?
         </p>
+        <p *ngIf="logged" class="py-1">It's nice to see you here.</p>
+      </div>
+      <div *ngIf="logged" class="flex -space-x-4 pt-5">
+        <svg
+          class="h-32 w-32 animate-bounce"
+          width="32"
+          height="32"
+          viewBox="0 0 32 32"
+        >
+          <g fill="none">
+            <path
+              fill="#FFC83D"
+              d="M20.031 4.5a2.5 2.5 0 0 1 5 0v10.435c.599.59.969 1.41.969 2.315c0 2.996-.398 5.646-2.107 8.246c-.286.435-.55.735-.792.92C21.533 28.606 19.08 30 16 30C9.406 30 6 25.52 6 20V8.03a2.5 2.5 0 0 1 5 0V9.6a2.694 2.694 0 0 1 1.977-.834c.955 0 1.795.466 2.274 1.216c.13-1.656 1.041-2.81 2.326-2.81c1.197 0 2.2.65 2.454 2.334V4.5Z"
+            />
+            <path
+              fill="#D67D00"
+              d="m20.991 5.305l.002-.034c.022-.52.057-1.33.302-2.062c.161-.484.398-.892.757-1.163c-.938.183-1.69.89-1.935 1.804a9.058 9.058 0 0 0-.086.72V14h.96V5.305ZM9.35 11.083c0-.92.445-1.934 1.65-2.759V9.62c-.502.517-.65 1.04-.65 1.464c0 .361-.012.761-.025 1.187l-.004.128c-.014.477-.028.99-.028 1.537c0 .66.331 1.501.613 1.964a2.638 2.638 0 0 0 2.07 1.023c.664 0 1.272-.253 1.741-.672c-.242-.548-.455-1.215-.455-2.035V10.07c0-.364.03-.682.075-.953c.37.21.684.504.914.865a5.175 5.175 0 0 0-.017.418v3.125c0 .186.01.369.028.547v.143c0 .302.036.578.096.835a2.993 2.993 0 0 1 1.683-.99c.414-.026.8-.027 1.128-.028h.237s-2.593.515-2.593 2.468c0 1.406.312 2.438 3.624 2.438c2.547 0 3.594 1.062 3.594 2.687c0 1.17-1.584 1.779-2.485 1.396c-.084-.322-.166-.648-.247-.969c-.09-.355-.177-.704-.264-1.035a8.62 8.62 0 0 0-.467-.001c-.466.01-1.121.059-1.87.21c-1.499.302-3.344 1.01-4.812 2.626a.5.5 0 0 1-.74-.673c1.656-1.822 3.723-2.604 5.355-2.934a11.79 11.79 0 0 1 2.026-.228c-.074-.017-.14-.017-.175-.017H17.64a2.997 2.997 0 0 1-2.884-2.167a1.837 1.837 0 0 1-.02-.036c-.469.645-1.01 1.203-2.508 1.203c-2.672 0-2.882-3.453-2.928-4.846a3.165 3.165 0 0 1-.008-.22v-.027c0-.552.014-1.069.028-1.538l.004-.126c.013-.43.025-.815.025-1.16Z"
+            />
+          </g>
+        </svg>
+        <svg class="h-32 w-32" width="32" height="32" viewBox="0 0 32 32">
+          <g fill="none">
+            <path
+              fill="#FFB02E"
+              d="M15.999 29.998c9.334 0 13.999-6.268 13.999-14c0-7.73-4.665-13.998-14-13.998C6.665 2 2 8.268 2 15.999c0 7.731 4.664 13.999 13.999 13.999Z"
+            />
+            <path
+              fill="#fff"
+              d="M10.42 16.224a4.206 4.206 0 1 0 0-8.411a4.206 4.206 0 0 0 0 8.411Zm11.148.077a4.244 4.244 0 1 0 0-8.489a4.244 4.244 0 0 0 0 8.49Z"
+            />
+            <path
+              fill="#402A32"
+              d="M11 15a3 3 0 1 0 0-6a3 3 0 0 0 0 6Zm10 0a3 3 0 1 0 0-6a3 3 0 0 0 0 6Z"
+            />
+            <path
+              fill="#402A32"
+              fill-rule="evenodd"
+              d="M10.4 18.2a1 1 0 0 1 1.4.2c.31.413 1.712 1.6 4.2 1.6c2.488 0 3.89-1.188 4.2-1.6a1 1 0 1 1 1.6 1.2c-.69.92-2.688 2.4-5.8 2.4c-3.112 0-5.11-1.48-5.8-2.4a1 1 0 0 1 .2-1.4Z"
+              clip-rule="evenodd"
+            />
+          </g>
+        </svg>
       </div>
       <div class="flex w-full flex-col sm:flex-row gap-6">
         <form
           #loginForm
           (submit)="submit($event)"
-          *ngIf="state != 'success'"
+          *ngIf="!logged"
           [formGroup]="loginGroup"
           class="flex flex-col gap-5 items-center"
         >
@@ -63,11 +105,16 @@
             </div>
           </button>
         </form>
-        <div class="divider divider-vertical sm:divider-horizontal">OR</div>
+        <div
+          *ngIf="!logged"
+          class="divider divider-vertical sm:divider-horizontal"
+        >
+          OR
+        </div>
         <form
           #registerForm
           (submit)="submit($event)"
-          *ngIf="state != 'success'"
+          *ngIf="!logged"
           [formGroup]="registerGroup"
           class="flex flex-col gap-5 items-center"
         >
@@ -166,7 +213,7 @@
       <div
         class="alert alert-success shadow-lg absolute bottom-0 w-fit left-0 m-10"
       >
-        <div>
+        <div (click)="closeAlert()" class="cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="stroke-current flex-shrink-0 h-6 w-6"
@@ -188,13 +235,12 @@
       <div
         class="alert alert-error shadow-lg absolute bottom-0 w-fit left-0 m-10"
       >
-        <div>
+        <div (click)="closeAlert()" class="cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="stroke-current flex-shrink-0 h-6 w-6 cursor-pointer"
+            class="stroke-current flex-shrink-0 h-6 w-6"
             fill="none"
             viewBox="0 0 24 24"
-            (click)="closeErrorMessage()"
           >
             <path
               stroke-linecap="round"
