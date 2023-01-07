@@ -25,7 +25,9 @@ Usernames and passwords for rabbitmq and postgres are in the [.env](./.env) file
 
 # Launch
 ## Production
-If you just want to launch the application with optimal performance, but slow build
+If you just want to launch the application with optimal performance, but slow build.
+
+About 1 to 5 min on the first build
 ```shell
 docker-compose up
 ```
