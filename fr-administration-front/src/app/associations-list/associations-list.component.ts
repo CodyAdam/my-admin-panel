@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AssociationDTO} from "./association.dto";
 import {ApiHelperService} from "../services/api-helper.service";
 import {Router} from "@angular/router";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-associations-list',
@@ -12,6 +13,11 @@ import {Router} from "@angular/router";
 export class AssociationsListComponent implements OnInit {
 
   associations: AssociationDTO[] = []
+
+  newAsso = new FormGroup({
+    name: new FormControl('')
+  })
+  modalNewAsso = new FormControl(false)
 
   constructor(
     private api: ApiHelperService,
@@ -41,6 +47,19 @@ export class AssociationsListComponent implements OnInit {
     this.api.delete({
       endpoint: `/associations/${asso.id}`
     }).then(() => this.getAssociations())
+  }
+
+  createAsso(){
+    let name = this.newAsso.get('name')?.value!;
+    this.api.post({
+      endpoint: '/associations',
+      data: {
+        name,
+        idUsers: []
+      }
+    }).then((asso: AssociationDTO) => {
+      this.router.navigate(['associations', asso.id])
+    })
   }
 
 }

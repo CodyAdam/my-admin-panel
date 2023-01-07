@@ -1,5 +1,8 @@
 <div class="h-full bg-base-200 p-10 flex flex-col gap-5">
-  <h1 class="text-3xl font-semibold opacity-40">Associations list</h1>
+  <div class="flex align-middle gap-5">
+    <div class="text-3xl font-semibold opacity-40">Association List</div>
+    <label for="newAssociation" class="btn btn-primary">Create</label>
+  </div>
   <div class="overflow-x-auto">
     <table class="table w-full">
       <!-- head -->
@@ -12,7 +15,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let asso of associations">
-        <td class="font-bold"><a [routerLink]="['assoctiations', asso.id]">{{ asso.name }}</a></td>
+        <td class="font-bold"><a [routerLink]="[asso.id]">{{ asso.name }}</a></td>
         <td>{{ membersToString(asso) }}</td>
         <td>
           <button mat-icon-button aria-label="about" (click)="show(asso)">
@@ -25,5 +28,21 @@
       </tr>
       </tbody>
     </table>
+  </div>
+
+  <input type="checkbox" id="newAssociation" class="modal-toggle" [formControl]="modalNewAsso">
+  <div class="modal">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg">Create new association</h3>
+      <form [formGroup]="newAsso" (ngSubmit)="createAsso()">
+        <div class="m-2 mb-5">
+          <input type="text" class="input w-full" placeholder="Name" formControlName="name">
+        </div>
+        <div class="flex flex-row-reverse">
+          <button class="btn btn-primary" type="submit">Create</button>
+          <label class="btn btn-ghost" for="newAssociation">Cancel</label>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
