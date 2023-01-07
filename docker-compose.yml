@@ -55,3 +55,6 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBIT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBIT_PWD}
+
+  smtp:
+    image: maildev/maildev:2.0.5
