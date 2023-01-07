@@ -35,6 +35,11 @@ export class AssociationsService {
     await this.repo.save(ass);
     return ass;
   }
+  removeDuplicates(users: User[]): User[] {
+    return users.filter((item, pos, self) => {
+      return self.indexOf(item) == pos;
+    });
+  }
   async update(
     id: number,
     idUsers: User[],
@@ -42,7 +47,7 @@ export class AssociationsService {
   ): Promise<Association> {
     const ass = await this.findById(id);
 
-    if (idUsers) ass.idUsers = Promise.resolve(idUsers);
+    if (idUsers) ass.idUsers = Promise.resolve(this.removeDuplicates(idUsers));
     if (name) ass.name = name;
 
     await this.repo.save(ass);
