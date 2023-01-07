@@ -49,8 +49,8 @@ export class LoginComponent implements OnInit {
     this.api
       .post({ endpoint: '/auth/login', data: { username: email, password } })
       .then((response) => {
-        if (response.access_token) {
-          this.token.save(response.access_token);
+        if (response.access_token && response.id) {
+          this.token.save(response.access_token, response.id);
           this.state = 'success';
           this.router.navigateByUrl('/users');
         } else this.state = 'error';
@@ -76,8 +76,8 @@ export class LoginComponent implements OnInit {
     this.api
       .post({ endpoint: '/auth/register', data})
       .then((response) => {
-        if (response.access_token) {
-          this.token.save(response.access_token);
+        if (response.access_token && response.id) {
+          this.token.save(response.access_token, response.id);
           this.state = 'success';
           this.router.navigateByUrl('/users');
         } else this.state = 'error';

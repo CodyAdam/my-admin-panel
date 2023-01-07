@@ -1,20 +1,12 @@
 <div data-theme="bumblebee" class="h-full min-h-screen flex flex-col">
-  <div class="navbar bg-base-100">
+  <div class="navbar bg-base-100 sticky top-0">
     <div class="navbar-start">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost btn-circle">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
+          <svg width="32" height="32" viewBox="0 0 24 24" class="w-6 h-6">
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h7"
+              fill="currentColor"
+              d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z"
             />
           </svg>
         </label>
@@ -31,21 +23,27 @@
     <div class="navbar-center hidden sm:block">
       <a href="/" class="btn btn-ghost normal-case text-xl">Administration</a>
     </div>
-    <div class="navbar-end">
+    <div class="navbar-end gap-3">
+      <a *ngIf="isLogged()" class="btn btn-ghost btn-circle" href="/profile">
+        <div class="indicator">
+          <svg width="32" height="32" viewBox="0 0 24 24" class="w-6 h-6">
+            <path
+              fill="currentColor"
+              d="M12 14v8H4a8 8 0 0 1 8-8zm0-1c-3.315 0-6-2.685-6-6s2.685-6 6-6s6 2.685 6 6s-2.685 6-6 6zm2.595 5.812a3.51 3.51 0 0 1 0-1.623l-.992-.573l1-1.732l.992.573A3.496 3.496 0 0 1 17 14.645V13.5h2v1.145c.532.158 1.012.44 1.405.812l.992-.573l1 1.732l-.992.573a3.51 3.51 0 0 1 0 1.622l.992.573l-1 1.732l-.992-.573a3.496 3.496 0 0 1-1.405.812V22.5h-2v-1.145a3.496 3.496 0 0 1-1.405-.812l-.992.573l-1-1.732l.992-.572zM18 17a1 1 0 1 0 0 2a1 1 0 0 0 0-2z"
+            />
+          </svg>
+        </div>
+      </a>
       <button
         *ngIf="isLogged()"
         class="btn btn-ghost btn-circle"
         (click)="handleLogout()"
       >
         <div class="indicator">
-          <svg width="23" height="23" viewBox="0 0 32 32">
+          <svg width="32" height="32" viewBox="0 0 24 24" class="w-6 h-6">
             <path
               fill="currentColor"
-              d="M6 30h12a2.002 2.002 0 0 0 2-2v-3h-2v3H6V4h12v3h2V4a2.002 2.002 0 0 0-2-2H6a2.002 2.002 0 0 0-2 2v24a2.002 2.002 0 0 0 2 2Z"
-            />
-            <path
-              fill="currentColor"
-              d="M20.586 20.586L24.172 17H10v-2h14.172l-3.586-3.586L22 10l6 6l-6 6l-1.414-1.414z"
+              d="M5 22a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3h-2V4H6v16h12v-2h2v3a1 1 0 0 1-1 1H5zm13-6v-3h-7v-2h7V8l5 4l-5 4z"
             />
           </svg>
         </div>
