@@ -1,5 +1,5 @@
 <div class="min-h-full grow bg-base-200 p-14">
-  <from
+  <form
     [formGroup]="profile"
     class="flex flex-col gap-3"
     (submit)="submit($event)"
@@ -97,10 +97,10 @@
       </details>
     </div>
 
-    <button class="pt-5 sm:self-start sm:mx-3" (click)="submit($event)">
+    <button class="pt-5 sm:self-start sm:mx-3">
       <span class="btn btn-primary">Save profile</span>
     </button>
-  </from>
+  </form>
   <div *ngIf="state == 'success'">
     <div
       class="alert alert-success shadow-lg absolute bottom-0 w-fit left-0 m-10"
