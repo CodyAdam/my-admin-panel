@@ -10,9 +10,10 @@ import { LoginComponent } from './login/login.component';
 import { TokenHttpInterceptor } from './interceptors/token.interceptor';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
-  declarations: [AppComponent, UsersListComponent, LoginComponent, PagenotfoundComponent],
+  declarations: [AppComponent, UsersListComponent, LoginComponent, PagenotfoundComponent, ProfileComponent],
     imports: [
         BrowserModule,
         HttpClientModule,
