@@ -10,17 +10,22 @@ import { LoginComponent } from './login/login.component';
 import { TokenHttpInterceptor } from './interceptors/token.interceptor';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { AssociationsListComponent } from './associations-list/associations-list.component';
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
-  declarations: [AppComponent, UsersListComponent, LoginComponent, PagenotfoundComponent],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatTableModule,
-        ReactiveFormsModule,
-    ],
+  declarations: [AppComponent, UsersListComponent, LoginComponent, PagenotfoundComponent, AssociationsListComponent],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

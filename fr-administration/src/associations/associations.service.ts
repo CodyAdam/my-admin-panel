@@ -60,6 +60,7 @@ export class AssociationsService {
   async mapDTO(asso: Association): Promise<AssociationDTO> {
     const assoDTO = new AssociationDTO();
     assoDTO.name = asso.name;
+    assoDTO.id = asso.id;
     const members = (await asso.idUsers).map(async (u) => {
       let role = '';
       try {
@@ -70,6 +71,8 @@ export class AssociationsService {
       member.firstname = u.firstname;
       member.age = u.age;
       member.name = u.lastname;
+      member.id = u.id;
+      member.email = u.email;
       return member;
     });
     assoDTO.members = await Promise.all(members);

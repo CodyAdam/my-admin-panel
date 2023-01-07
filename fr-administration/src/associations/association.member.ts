@@ -3,4 +3,6 @@ export class Member {
   firstname: string;
   age: number;
   role: string;
+  id: number;
+  email: string;
 }
