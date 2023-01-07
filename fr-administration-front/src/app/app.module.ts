@@ -13,9 +13,10 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { AssociationsListComponent } from './associations-list/associations-list.component';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
+import { AssociationInfoComponent } from './association-info/association-info.component';
 
 @NgModule({
-  declarations: [AppComponent, UsersListComponent, LoginComponent, PagenotfoundComponent, AssociationsListComponent],
+  declarations: [AppComponent, UsersListComponent, LoginComponent, PagenotfoundComponent, AssociationsListComponent, AssociationInfoComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
