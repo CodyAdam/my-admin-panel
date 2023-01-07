@@ -17,6 +17,7 @@ services:
   proxy:
     build:
       context: nginx
+      target: dev
     ports:
       - ${FRONT_PORT}:80
     depends_on:
@@ -54,7 +55,6 @@ services:
     hostname: mom
     image: rabbitmq:3.11.5-management
     volumes:
-      - ./rabbitmq/core:/var/lib/rabbitmq/
       - ./rabbitmq/conf:/etc/rabbitmq/
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBIT_USER}
