@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { AssociationsService } from '../associations/associations.service';
 import { UsersService } from '../users/users.service';
-import { Equal, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Role } from './role.entity';
 import { RoleInput } from './role.input';
 import { RoleUpdate } from './role.update';

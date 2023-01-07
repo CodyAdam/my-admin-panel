@@ -1,4 +1,3 @@
-import { Association } from './association.entity';
 import { Member } from './association.member';
 
 export class AssociationDTO {

@@ -3,11 +3,10 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
 import { Association } from './association.entity';
-import { AssociationCreate } from './associations.controller';
 import { AssociationsService } from './associations.service';
 
 export type MockType<T> = {
-  [P in keyof T]?: jest.Mock<{}>;
+  [P in keyof T]?: jest.Mock<unknown>;
 };
 export const respositoryMockFactory: () => MockType<Repository<any>> = jest.fn(
   () => ({
@@ -42,6 +41,7 @@ describe('AssociationsService', () => {
     service = module.get<AssociationsService>(AssociationsService);
     user = {
       id: 0,
+      email: 'random@random.com',
       firstname: 'John',
       lastname: 'Doe',
       age: 23,

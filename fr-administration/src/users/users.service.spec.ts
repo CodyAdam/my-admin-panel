@@ -1,15 +1,11 @@
-import { HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { repositoryMockFactory } from '../associations/associations.controller.spec';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
-import * as bcrypt from 'bcrypt';
-import { jwtConstants } from '../auth/constants';
 
 export type MockType<T> = {
-  [P in keyof T]?: jest.Mock<{}>;
+  [P in keyof T]?: jest.Mock<unknown>;
 };
 export const respositoryMockFactory: () => MockType<Repository<any>> = jest.fn(
   () => ({
@@ -72,14 +68,6 @@ describe('UsersService', () => {
   });
   describe('create', () => {
     it('should return the new user', async () => {
-      const newUserFromBase: User = {
-        id: user.id,
-        lastname: undefined,
-        firstname: undefined,
-        age: undefined,
-        password: undefined,
-        email: undefined,
-      };
       repo.create.mockImplementation((e) => {
         e.id = user.id;
         return e;

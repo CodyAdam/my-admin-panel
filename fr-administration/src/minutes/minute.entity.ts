@@ -7,7 +7,6 @@ import {
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
-  TableColumn,
 } from 'typeorm';
 
 @Entity()

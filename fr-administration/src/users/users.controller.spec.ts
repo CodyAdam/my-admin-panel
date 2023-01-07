@@ -6,7 +6,7 @@ import { UserCreation, UsersController, UserUpdate } from './users.controller';
 import { UsersService } from './users.service';
 
 export type MockType<T> = {
-  [P in keyof T]?: jest.Mock<{}>;
+  [P in keyof T]?: jest.Mock<unknown>;
 };
 
 export const respositoryMockFactory: () => MockType<Repository<any>> = jest.fn(

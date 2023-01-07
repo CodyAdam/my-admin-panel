@@ -1,15 +1,8 @@
-import {
-  forwardRef,
-  HttpException,
-  HttpStatus,
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RoleService } from 'src/role/role.service';
 import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
-import { threadId } from 'worker_threads';
 import { AssociationDTO } from './association.dto';
 import { Association } from './association.entity';
 import { Member } from './association.member';
