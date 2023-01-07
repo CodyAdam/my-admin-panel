@@ -48,6 +48,7 @@ describe('AssociationsController', () => {
     users = Promise.all([
       {
         id: 0,
+        email: 'random@random.com',
         firstname: 'John',
         lastname: 'Doe',
         age: 23,
@@ -72,6 +73,7 @@ describe('AssociationsController', () => {
       const users: Promise<User[]> = Promise.all([
         {
           id: 0,
+          email: 'random@random.com',
           firstname: 'John',
           lastname: 'Doe',
           age: 23,
