@@ -17,7 +17,15 @@ import {MatIconModule} from "@angular/material/icon";
 import { AssociationInfoComponent } from './association-info/association-info.component';
 
 @NgModule({
-  declarations: [AppComponent, UsersListComponent, LoginComponent, PagenotfoundComponent, AssociationsListComponent, AssociationInfoComponent],
+  declarations: [
+    AppComponent,
+    UsersListComponent,
+    LoginComponent,
+    PagenotfoundComponent,
+    AssociationsListComponent,
+    AssociationInfoComponent,
+    ProfileComponent
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
