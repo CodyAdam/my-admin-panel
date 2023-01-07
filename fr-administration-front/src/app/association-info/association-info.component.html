@@ -26,16 +26,37 @@
     <div *ngIf="association.members.length == 0" class="opacity-50 italic">
       No members
     </div>
+    <thead>
+      <tr class="[&>th]:bg-secondary">
+        <th>Email</th>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
     <tbody>
       <tr *ngFor="let member of association.members">
         <td>{{ member.email }}</td>
         <td>{{ member.firstname }} {{ member.name }}</td>
         <td>
-          <div *ngIf="edit">
-            <button mat-icon-button (click)="removeUser(member.id)">
-              <mat-icon>delete</mat-icon>
-            </button>
+          <label
+            [for]="member.id"
+            class="cursor-pointer h-10 w-10 flex items-center justify-center"
+            ><mat-icon>visibility</mat-icon></label
+          >
+          <input type="checkbox" [id]="member.id" class="modal-toggle" />
+          <div class="modal">
+            <div class="modal-box relative">
+              <label
+                [for]="member.id"
+                class="btn btn-sm btn-circle absolute right-2 top-2"
+                >✕</label
+              >
+              <app-user-card [user]="member"></app-user-card>
+            </div>
           </div>
+          <button *ngIf="edit" mat-icon-button (click)="removeUser(member.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
         </td>
       </tr>
     </tbody>
@@ -46,12 +67,15 @@
     (ngSubmit)="addMember()"
     [formGroup]="newMember"
   >
-    <input
-      type="text"
-      class="input"
+    <select
+      class="select select-bordered w-full max-w-xs"
       formControlName="name"
-      placeholder="Email"
-    />
+    >
+      <option value="" [defaultSelected]="true">Choose a user</option>
+      <option *ngFor="let user of users">
+        {{ user.email }}
+      </option>
+    </select>
     <button
       class="btn btn-primary"
       type="submit"
