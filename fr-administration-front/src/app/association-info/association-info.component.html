@@ -1,8 +1,8 @@
 <div *ngIf="association" class="h-full bg-base-200 p-10 flex flex-col gap-5">
-  <h1 class="flex items-center gap-5">
-    <div class="text-5xl flex gap-3 items-center">
+  <h1 class="flex items-center flex-wrap gap-5">
+    <div class="text-5xl flex flex-wrap sm:flex-nowrap gap-3 items-center">
       <div>Association</div>
-      <div *ngIf="!edit" class="font-semibold">{{ association.name }}</div>
+      <div *ngIf="!edit" class="font-semibold whitespace-nowrap">{{ association.name }}</div>
       <input
         type="text"
         *ngIf="edit"
