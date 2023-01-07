@@ -1,21 +1,14 @@
-FROM node
+FROM node:19 AS prod
 
 WORKDIR /app
-
-COPY ./package.json ./package.json
-COPY ./yarn.lock ./yarn.lock
-
-RUN yarn install
 COPY . .
-RUN yarn build
 
+RUN npm install --production
+RUN npm run build
 EXPOSE 3000
+CMD [ "node", "dist/main.js" ]
 
-CMD ["node", "dist/main.js"]
-
-
-# how to build
-# docker build -t back_build .
-
-# how to run
-# docker run --rm -d -p 8081:3000 --name back back_build
+FROM node:19 AS dev
+WORKDIR /app
+EXPOSE 3000
+CMD [ "npm", "run", "start:dev" ]

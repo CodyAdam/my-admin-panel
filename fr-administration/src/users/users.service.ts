@@ -1,15 +1,18 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 import { jwtConstants } from '../auth/constants';
+import { ClientProxy, RmqRecordBuilder } from '@nestjs/microservices';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private repo: Repository<User>,
+    @Inject('MAIL_SERVICE') 
+    private rabbitmq: ClientProxy
   ) {}
 
   async findUser(id: number): Promise<User> {
@@ -36,6 +39,13 @@ export class UsersService {
       password,
     });
     await this.repo.save(user);
+
+    let email = 'fabigoardou@gmail.com'
+    let record = new RmqRecordBuilder(email).setOptions({
+      contentType: 'application/json',
+    }).build()
+
+    this.rabbitmq.emit("mail", record)
     return user;
   }
   async getUser(id: number): Promise<User> {

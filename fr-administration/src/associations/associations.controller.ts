@@ -2,20 +2,24 @@ import {
   Body,
   Controller,
   Delete,
+  forwardRef,
   Get,
+  Inject,
   Param,
+  ParseArrayPipe,
   ParseIntPipe,
   Post,
   Put,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiProperty, ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { Minute } from 'src/minutes/minute.entity';
 import { MinutesService } from 'src/minutes/minutes.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { AssociationDTO } from './association.dto';
+import { Association } from './association.entity';
 import { AssociationsService } from './associations.service';
 
 export class AssociationCreate {

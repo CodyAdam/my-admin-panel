@@ -1,8 +1,12 @@
+import { HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { repositoryMockFactory } from '../associations/associations.controller.spec';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
+import * as bcrypt from 'bcrypt';
+import { jwtConstants } from '../auth/constants';
 
 export type MockType<T> = {
   [P in keyof T]?: jest.Mock<{}>;
