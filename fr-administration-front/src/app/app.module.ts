@@ -15,6 +15,7 @@ import { AssociationsListComponent } from './associations-list/associations-list
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import { AssociationInfoComponent } from './association-info/association-info.component';
+import { UserCardComponent } from './user-card/user-card.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AssociationInfoComponent } from './association-info/association-info.co
     PagenotfoundComponent,
     AssociationsListComponent,
     AssociationInfoComponent,
-    ProfileComponent
+    ProfileComponent,
+    UserCardComponent
   ],
   imports: [
     BrowserModule,
