@@ -12,5 +12,9 @@ CMD [ "node", "dist/main.js" ]
 
 FROM node:19 AS dev
 WORKDIR /app
+COPY package.json package.json
+RUN npm install -g @nestjs/cli
+RUN npm install
+COPY . .
 EXPOSE 3000
 CMD [ "npm", "run", "start:dev" ]

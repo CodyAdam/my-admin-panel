@@ -1,54 +1,61 @@
 services:
-  front_build:
-    image: node
-    volumes:
-      - ./fr-administration-front:/app
-    working_dir: /app
-    command: yarn watch
-  front_host:
-    image: nginx
-    ports:
-      - '8080:80'
+
+  mail:
+    build:
+      context: mail
+      target: dev
     depends_on:
-      - back
-      - front_build
+      - mom
+
+  front:
+    build:
+      context: ./fr-administration-front
+      target: dev
     volumes:
-      - ./fr-administration-front/dist/fr-administration-front:/usr/share/nginx/html
-      - ./fr-administration-front/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./fr-administration-front/src:/app/src:ro
+
+  proxy:
+    build:
+      context: nginx
+    ports:
+      - ${FRONT_PORT}:80
+    depends_on:
+      - front
+      - back
+
+
   back:
-    image: node
+    build:
+      context: ./fr-administration
+      target: dev
     depends_on:
       - db
-    ports:
-      - '8082:3000'
-    volumes:
-      - ./fr-administration:/app
-    working_dir: /app
-    command: yarn start:dev
+      - mom
     environment:
       - DB_HOST=db
-      - DB_USER=postgres
-      - DB_PASSWORD=example
-      - DB_DATABASE=postgres
+      - DB_USER=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
       - DB_PORT=5432
+    volumes:
+      - ./fr-administration/src:/app/src:ro
+
   db:
     image: postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: example
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8081:8080
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_USER=${DB_USERNAME}
+    volumes:
+      - ./db:/var/lib/postgresql/data
 
-  # connect to adminer : http://localhost:8081/?pgsql=db&username=postgres&db=postgres&ns=public
-  # server :             db
-  # user :               postgres
-  # password :           example
-  # database :           postgres
-
-
-  # Front : http://localhost:8080
-  # Adminer : http://localhost:8081
-  # Back : http://localhost:8082
+  mom:
+    hostname: mom
+    image: rabbitmq:3.11.5-management
+    volumes:
+      - ./rabbitmq/core:/var/lib/rabbitmq/
+      - ./rabbitmq/conf:/etc/rabbitmq/
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBIT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBIT_PWD}

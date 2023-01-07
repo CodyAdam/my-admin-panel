@@ -11,9 +11,14 @@ services:
     build:
       context: ./fr-administration-front
       target: prod
+
+  proxy:
+    build:
+      context: nginx
     ports:
       - ${FRONT_PORT}:80
     depends_on:
+      - front
       - back
 
 
