@@ -10,7 +10,7 @@ RUN yarn install
 COPY . .
 RUN yarn build
 
-FROM nginx
+FROM nginx as prod
 
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist/fr-administration-front /usr/share/nginx/html

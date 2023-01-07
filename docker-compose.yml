@@ -3,20 +3,27 @@ services:
   mail:
     build:
       context: mail
-      target: prod
+      target: dev
     depends_on:
       - mom
 
   front:
-    build: ./fr-administration-front
+    build:
+      context: ./fr-administration-front
+      target: prod
+    ports:
+      - ${FRONT_PORT}:80
     depends_on:
       - back
 
 
   back:
-    build: ./fr-administration
+    build:
+      context: ./fr-administration
+      target: prod
     depends_on:
       - db
+      - mom
     environment:
       - DB_HOST=db
       - DB_USER=${DB_USERNAME}
@@ -33,18 +40,6 @@ services:
       - POSTGRES_USER=${DB_USERNAME}
     volumes:
       - ./db:/var/lib/postgresql/data
-
-  proxy:
-    build:
-      context: nginx
-    ports:
-      - "${FRONT_PORT}:80"
-    environment:
-      - NGINX_HOST=${HOST}
-      - NGINX_PORT=80
-    depends_on:
-      - back
-      - front
 
   mom:
     hostname: mom
