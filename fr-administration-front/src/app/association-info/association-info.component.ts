@@ -23,8 +23,7 @@ export class AssociationInfoComponent implements OnInit {
   name = new FormControl('');
   newMember = new FormGroup({
     name: new FormControl(''),
-    role: new FormControl(''),
-  });
+  })
 
   constructor(private route: ActivatedRoute, private api: ApiHelperService) {}
 
@@ -99,27 +98,32 @@ export class AssociationInfoComponent implements OnInit {
     // if name already exists in members
     let email: string = this.newMember.get('name')?.value!;
 
-    this.api
-      .post({
-        endpoint: `/users/byEmail`,
-        data: { email: email },
-      })
-      .then((u) => {
-        this.association.members.push(
-          new Member(u.lastname, u.firstname, u.age, '', u.id, u.email)
-        );
-      })
-      .catch((e) => {
-        console.log(e);
-        if (e.status == HttpStatusCode.NotFound) {
-          this.error = e.error.message;
-        }
-      })
-      .finally(() => {
-        this.newMember.enable();
-        this.users = this.allUsers.filter(
-          (u) => !this.association.members.some((m) => m.id == u.id)
-        );
-      });
+    this.api.post({
+      endpoint: `/users/byEmail`,
+      data: {email: email},
+    }).then(u => {
+      if(this.association.members.some(m => m.id == u.id)){
+        this.error = "This user is already in the list"
+      }else {
+        this.association.members.push(new Member(u.lastname, u.firstname, u.age, "", u.id, u.email))
+        this.newMember.get('name')?.setValue('')
+      }
+    }).catch((e) => {
+      console.log(e)
+      if(e.status == HttpStatusCode.NotFound){
+        this.error = e.error.message
+      }
+    }).finally(() => {
+      this.newMember.enable();
+      this.users = this.allUsers.filter(
+        (u) => !this.association.members.some((m) => m.id == u.id)
+      );
+    });
+
+  }
+
+
+  clearError() {
+    this.error = null
   }
 }
