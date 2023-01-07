@@ -9,9 +9,9 @@
 - docker
 - docker-compose
 
-# Launch production version
+# Launch
 ## Without source code
-Get into a new folder and copy [docker-compose.yml](./docker-compose.yml)\
+Get into a new folder on your machine, and copy [docker-compose.yml](./docker-compose.yml)\
 Execute `docker-compose up`
 ## With source code
 ```shell
@@ -34,7 +34,7 @@ docker-compose up
 | Nginx             | Nginx          |                            | [nginx](./nginx/)                                     |
 
 # Auth
-Usernames and passwords for rabbitmq and postgres are in the [.env](./.env) file
+Usernames and passwords for rabbitmq and postgres are in the [.env](./.env) file.
 
 
 # Build and launch
