@@ -6,7 +6,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Put,
+  Put, Query,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
@@ -111,6 +111,12 @@ export class UsersController {
   @Get(':id')
   async getUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
     return await this.service.findUser(id);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('byEmail')
+  async getUserByEmail(@Body() body): Promise<User> {
+    return await this.service.findUserByEmail(body.email);
   }
 
   @UseGuards(AuthGuard('jwt'))
