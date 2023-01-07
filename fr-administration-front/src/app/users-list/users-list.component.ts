@@ -1,7 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable, lastValueFrom } from 'rxjs';
-import { API_URL } from '../services/api-helper.service';
+import { ApiHelperService, API_URL } from '../services/api-helper.service';
+
+type User = {
+  id: number;
+  lastname: string;
+  firstname: string;
+  age: number;
+  password: string;
+  email: string;
+};
 
 @Component({
   selector: 'app-users-list',
@@ -9,14 +17,14 @@ import { API_URL } from '../services/api-helper.service';
   host: { class: 'h-full' },
 })
 export class UsersListComponent implements OnInit {
-  users: any;
+  users: User[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private api: ApiHelperService) {}
 
   ngOnInit(): void {
-    const resquest = this.http.get(API_URL + '/users', {
-      observe: 'response',
+    const resquest = this.api.get({ endpoint: `/users/` });
+    resquest.then((response) => {
+      this.users = response;
     });
-    lastValueFrom(resquest).then((response) => (this.users = response.body));
   }
 }
