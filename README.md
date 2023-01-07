@@ -4,6 +4,16 @@
 - ADAM Cody
 - GOARDOU Fabien
 
+
+# Requirements
+- docker
+- docker-compose
+
+# Launch production version
+Get into a new folder and download [docker-compose.yml](./docker-compose.yml)
+
+Execute `docker-compose up`
+
 # Services
 | Name              | Technology     | Url                        | Source code                                           |
 |-------------------|----------------|----------------------------|-------------------------------------------------------|
@@ -20,17 +30,14 @@
 # Auth
 Usernames and passwords for rabbitmq and postgres are in the [.env](./.env) file
 
-# Requirements
-- docker
-- docker-compose
 
-# Launch
+# Build and launch
 ## Production
 If you just want to launch the application with optimal performance, but slow build.
 
 About 1 to 5 min on the first build
 ```shell
-docker-compose up
+docker-compose -f docker-compose.prod.yml up
 ```
 
 ## Development
