@@ -9,7 +9,6 @@ import {HttpErrorResponse, HttpStatusCode} from "@angular/common/http";
   selector: 'app-login',
   templateUrl: './login.component.html',
   host: { class: 'h-full' },
-  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
@@ -48,7 +47,7 @@ export class LoginComponent implements OnInit {
 
     const [email, password] = [this.loginGroup.get('email')?.value, this.loginGroup.get('password')?.value];
     this.api
-      .post({ endpoint: '/auth/login', data: { email: email, password } })
+      .post({ endpoint: '/auth/login', data: { username: email, password } })
       .then((response) => {
         if (response.access_token) {
           this.token.save(response.access_token);
