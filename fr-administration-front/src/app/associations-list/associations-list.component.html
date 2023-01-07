@@ -1,0 +1,29 @@
+<div class="h-full bg-base-200 p-10 flex flex-col gap-5">
+  <h1 class="text-3xl font-semibold opacity-40">Associations list</h1>
+  <div class="overflow-x-auto">
+    <table class="table w-full">
+      <!-- head -->
+      <thead>
+      <tr class="[&>th]:bg-secondary">
+        <th>Name</th>
+        <th>Members</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let asso of associations">
+        <td class="font-bold"><a [routerLink]="['assoctiations', asso.id]">{{ asso.name }}</a></td>
+        <td>{{ membersToString(asso) }}</td>
+        <td>
+          <button mat-icon-button aria-label="about" (click)="show(asso)">
+            <mat-icon>information</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="delete" (click)="delete(asso)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
