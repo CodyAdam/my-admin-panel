@@ -2,8 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiHelperService } from '../services/api-helper.service';
 import { TokenStorageService } from '../services/token-storage.service';
-import {FormControl, FormGroup} from "@angular/forms";
-import {HttpErrorResponse, HttpStatusCode} from "@angular/common/http";
+import { FormControl, FormGroup } from '@angular/forms';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -11,21 +11,21 @@ import {HttpErrorResponse, HttpStatusCode} from "@angular/common/http";
   host: { class: 'h-full' },
 })
 export class LoginComponent implements OnInit {
-
   loginGroup = new FormGroup({
     email: new FormControl(''),
-    password: new FormControl('')
-  })
+    password: new FormControl(''),
+  });
   registerGroup = new FormGroup({
     email: new FormControl(''),
     age: new FormControl(0),
     firstname: new FormControl(''),
     lastname: new FormControl(''),
-    password: new FormControl('')
-  })
+    password: new FormControl(''),
+  });
 
   public state: 'loading' | 'error' | 'success' | 'idle' = 'idle';
-  errorMessage: string = ""
+  errorMessage: string = '';
+  successMessage: string = '';
 
   @ViewChild('loginForm') loginForm: ElementRef<HTMLFormElement> | null = null;
   @ViewChild('registerForm') registerForm: ElementRef<HTMLFormElement> | null =
@@ -45,19 +45,23 @@ export class LoginComponent implements OnInit {
       return;
     this.state = 'loading';
 
-    const [email, password] = [this.loginGroup.get('email')?.value, this.loginGroup.get('password')?.value];
+    const [email, password] = [
+      this.loginGroup.get('email')?.value,
+      this.loginGroup.get('password')?.value,
+    ];
     this.api
       .post({ endpoint: '/auth/login', data: { username: email, password } })
       .then((response) => {
         if (response.access_token && response.id) {
           this.token.save(response.access_token, response.id);
+          this.successMessage = 'You are connected! Hooray!';
           this.state = 'success';
           this.router.navigateByUrl('/users');
         } else this.state = 'error';
       })
       .catch((error) => {
-        if(error.status == HttpStatusCode.Unauthorized)
-          this.errorMessage = "Wrong information entered"
+        if (error.status == HttpStatusCode.Unauthorized)
+          this.errorMessage = 'Wrong information entered';
         this.state = 'error';
       });
   }
@@ -72,18 +76,15 @@ export class LoginComponent implements OnInit {
       firstname: this.registerGroup.get('firstname')?.value,
       lastname: this.registerGroup.get('lastname')?.value,
       age: this.registerGroup.get('age')?.value,
-    }
+    };
     this.api
-      .post({ endpoint: '/auth/register', data})
+      .post({ endpoint: '/auth/register', data })
       .then((response) => {
-        if (response.access_token && response.id) {
-          this.token.save(response.access_token, response.id);
-          this.state = 'success';
-          this.router.navigateByUrl('/users');
-        } else this.state = 'error';
+        this.successMessage = 'You are registered! Try to login now!';
+        this.state = 'success';
       })
       .catch((error) => {
-        this.errorMessage = error.error.message
+        this.errorMessage = error.error.message;
         this.state = 'error';
       });
   }
@@ -93,6 +94,6 @@ export class LoginComponent implements OnInit {
   }
 
   closeErrorMessage() {
-    this.state = "idle"
+    this.state = 'idle';
   }
 }
