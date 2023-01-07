@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ApiHelperService, API_URL } from '../services/api-helper.service';
 
-type User = {
+export type User = {
   id: number;
   lastname: string;
   firstname: string;
