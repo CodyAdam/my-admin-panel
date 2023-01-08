@@ -88,14 +88,14 @@
       Add member
     </button>
   </form>
-  <div class="flex gap-5 items-center"><h1 class="text-3xl font-semibold opacity-40">Minutes</h1><label for="newMinute" class="btn">Create</label></div>
+  <div class="flex gap-5 items-center"><h1 class="text-3xl font-semibold opacity-40">Events</h1><label for="newMinute" class="btn">Create</label></div>
 
   <div class="flex flex-wrap gap-3">
     <div class="flex-auto card w-96 bg-base-100 shadow-xl" *ngFor="let min of association.minutes">
       <div class="card-body">
         <div class="flex justify-between">
           <h2 class="card-title">{{min.date}}</h2>
-          <button class="btn btn-square btn-outline" (click)="deleteMinute(min)">
+          <button class="btn btn-square btn-outline" (click)="deleteMinute(min)" *ngIf="edit">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
