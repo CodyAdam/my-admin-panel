@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {Like, Repository} from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 import { jwtConstants } from '../auth/constants';
@@ -20,6 +20,16 @@ export class UsersService {
     if (!res)
       throw new HttpException(`User ${id} not found`, HttpStatus.NOT_FOUND);
     return res;
+  }
+
+  async search(name: string): Promise<User[]> {
+    return await this.repo.find({
+      where: [
+        { firstname: Like(`%${name}%`) },
+        { lastname: Like(`%${name}%`) },
+        { email: Like(`%${name}%`) },
+      ],
+    });
   }
   async findUserByEmail(email: string): Promise<User> {
     const res = await this.repo.findOne({ where: { email: email } });
