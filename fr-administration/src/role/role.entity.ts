@@ -8,8 +8,8 @@ export class Role {
   id: number;
   @Column()
   name: string;
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, { eager: true, onDelete: 'CASCADE' })
   idUser: User;
-  @ManyToOne(() => Association, { eager: true })
+  @ManyToOne(() => Association, { eager: true, onDelete: 'CASCADE' })
   idAssociation: Association;
 }
