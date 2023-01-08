@@ -12,6 +12,7 @@ import { Repository } from 'typeorm';
 import { Minute } from './minute.entity';
 import { MinuteInput } from './minutes.input';
 import { MinuteUpdate } from './minutes.update';
+import {MinuteDTO} from "./minuteDTO.entity";
 
 @Injectable()
 export class MinutesService {
@@ -30,6 +31,14 @@ export class MinutesService {
       },
     });
     if (!min) throw new HttpException('Minute not found', HttpStatus.NOT_FOUND);
+    return min;
+  }
+  mapToDTO(minute: Minute): MinuteDTO {
+    const min = new MinuteDTO();
+    min.date = minute.date;
+    min.content = minute.content;
+    min.id = minute.id;
+    min.users = minute.users;
     return min;
   }
   async getByAsso(
@@ -56,7 +65,7 @@ export class MinutesService {
     const users = await Promise.all(
       creation.idVoters.map(async (id) => await this.userService.findUser(id)),
     );
-    const asso = await this.assoService.findById(creation.idAssocation);
+    const asso = await this.assoService.findById(creation.idAssociation);
     const min = await this.repo.create({
       users,
       association: asso,
