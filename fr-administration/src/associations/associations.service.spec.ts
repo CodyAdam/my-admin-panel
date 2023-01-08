@@ -50,7 +50,6 @@ describe('AssociationsService', () => {
     asso = {
       id: 0,
       name: 'ADAPEI',
-      idUsers: Promise.all([user]),
     };
   });
 
@@ -85,7 +84,7 @@ describe('AssociationsService', () => {
         e.id = 0;
         return e;
       });
-      expect(await service.create([user], asso.name)).toStrictEqual(asso);
+      expect(await service.create(asso.name)).toStrictEqual(asso);
     });
   });
   describe('delete', () => {
@@ -104,9 +103,7 @@ describe('AssociationsService', () => {
       modified.name = 'ADAPEI22';
 
       repo.findOne.mockReturnValue(asso);
-      expect(await service.update(asso.id, undefined, modified.name)).toBe(
-        modified,
-      );
+      expect(await service.update(asso.id, undefined)).toBe(modified);
     });
   });
 });

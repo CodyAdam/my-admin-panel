@@ -108,12 +108,10 @@ describe('AssociationsController', () => {
     it('should return the new association', async () => {
       const assoCreate: AssociationCreate = {
         name: 'ADAPEI',
-        idUsers: [0],
       };
       const expected: Promise<Association> = Promise.resolve({
         id: 0,
         name: assoCreate.name,
-        idUsers: users,
       });
 
       jest.spyOn(service, 'create').mockImplementation(() => expected);

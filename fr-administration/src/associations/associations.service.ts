@@ -6,6 +6,7 @@ import { ILike, Like, Repository } from 'typeorm';
 import { AssociationDTO } from './association.dto';
 import { Association } from './association.entity';
 import { Member } from './association.member';
+import { MinutesService } from '../minutes/minutes.service';
 
 @Injectable()
 export class AssociationsService {
@@ -13,6 +14,7 @@ export class AssociationsService {
     @InjectRepository(Association)
     private repo: Repository<Association>,
     private roleService: RoleService,
+    private minutesService: MinutesService,
   ) {}
 
   async search(name: string): Promise<Association[]> {
@@ -80,6 +82,9 @@ export class AssociationsService {
       return member;
     });
     assoDTO.members = await Promise.all(members);
+    assoDTO.minutes = (await this.minutesService.getByAsso(asso.id)).map((m) =>
+      this.minutesService.mapToDTO(m),
+    );
     return assoDTO;
   }
 }

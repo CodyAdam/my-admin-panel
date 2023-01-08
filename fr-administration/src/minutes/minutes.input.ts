@@ -30,5 +30,5 @@ export class MinuteInput {
     example: '1',
     type: Number,
   })
-  public idAssocation: number;
+  public idAssociation: number;
 }
