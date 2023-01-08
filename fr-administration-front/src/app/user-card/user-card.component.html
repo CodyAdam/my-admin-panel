@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-3">
+<div class="flex flex-col gap-3" *ngIf="user">
   <div class="flex flex-col sm:flex-row gap-5 pb-5">
     <div class="avatar sm:w-fit w-full flex justify-center p-1">
       <div
@@ -20,7 +20,7 @@
     <div
       class="flex flex-col items-center justify-center -space-y-1 font-semibold"
     >
-      <div class="form-control w-full max-w-xs" *ngIf="user.firstname">
+      <div class="form-control w-full max-w-xs">
         <input
           type="text"
           placeholder="First Name"
@@ -30,7 +30,7 @@
         />
       </div>
       <!-- show if it's a User type not a Member -->
-      <div class="form-control w-full max-w-xs" *ngIf="user.lastname">
+      <div class="form-control w-full max-w-xs">
         <input
           type="text"
           placeholder="Last Name"
@@ -41,7 +41,7 @@
       </div>
     </div>
   </div>
-  <div class="form-control w-full max-w-xs -space-y-1 relative" *ngIf="user.age">
+  <div class="form-control w-full max-w-xs -space-y-1 relative">
     <label class="label z-10 opacity-50 font-semibold">
       <span class="label-text px-2">Age</span>
     </label>
@@ -53,7 +53,7 @@
       readonly
     />
   </div>
-  <div class="form-control w-full max-w-xs -space-y-1 relative" *ngIf="user.email">
+  <div class="form-control w-full max-w-xs -space-y-1 relative">
     <label class="label z-10 opacity-50 font-semibold">
       <span class="label-text px-2">Email</span>
     </label>
@@ -65,4 +65,14 @@
       readonly
     />
   </div>
+  <div *ngIf="roles != undefined" class="flex flex-col gap-4 overflow-auto">
+    <label class="label z-10 opacity-50 font-semibold">
+      <span class="label-text px-2">Associations</span>
+    </label>
+    <a *ngFor="let role of roles" class="btn normal-case w-fit gap-3 items-center" href="associations/{{role.idAssociation.id}}">
+     {{ role.idAssociation.name }}
+      <p class="badge badge-info normal-case">{{role.name}}</p>
+    </a>
+  </div>
 </div>
+<div *ngIf="!user">Loading...</div>

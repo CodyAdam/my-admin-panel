@@ -54,7 +54,7 @@
                 class="btn btn-sm btn-circle absolute right-2 top-2"
                 >✕</label
               >
-              <app-user-card [user]="member"></app-user-card>
+              <app-user-card [userid]="member.id"></app-user-card>
             </div>
           </div>
           <button *ngIf="edit" mat-icon-button (click)="removeUser(member.id)">

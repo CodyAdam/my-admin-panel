@@ -1,7 +1,12 @@
 <div class="h-full bg-base-200 p-10 flex flex-col gap-5">
   <h1 class="text-3xl font-semibold opacity-40">Users list</h1>
   <form [formGroup]="search" (ngSubmit)="searchUsers()" class="flex gap-3">
-    <input type="text" class="input w-full max-w-xs" formControlName="name" placeholder="Search">
+    <input
+      type="text"
+      class="input w-full max-w-xs"
+      formControlName="name"
+      placeholder="Search"
+    />
     <button class="btn btn-primary" type="submit">Search</button>
   </form>
   <div class="overflow-x-auto">
@@ -38,7 +43,7 @@
                   class="btn btn-sm btn-circle absolute right-2 top-2"
                   >✕</label
                 >
-                <app-user-card [user]="user"></app-user-card>
+                <app-user-card [userid]="user.id"></app-user-card>
               </div>
             </div>
             <button
