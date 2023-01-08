@@ -9,7 +9,14 @@
 - docker
 - docker-compose
 
-# Launch
+# Access online
+https://wm.fgdou.ovh/ \
+https://wm.fgdou.ovh/api/api \
+https://wm.fgdou.ovh/maildev/ \
+https://wm.fgdou.ovh/rabbitmq/ \
+https://wm.fgdou.ovh/adminer/
+
+# Launch it yourself
 ## Without source code
 Get into a new folder on your machine, and copy [docker-compose.yml](./docker-compose.yml)\
 Execute `docker-compose up`
@@ -37,7 +44,7 @@ docker-compose up
 Usernames and passwords for rabbitmq and postgres are in the [.env](./.env) file.
 
 
-# Build and launch
+# Build project and launch
 ## Production
 If you just want to launch the application with optimal performance, but slow build.
 
