@@ -10,11 +10,12 @@
 - docker-compose
 
 # Access online
+Usernames and passwords for rabbitmq and postgres are in the [.env](./.env) file.
+
 https://wm.fgdou.ovh/ \
 https://wm.fgdou.ovh/api/api \
 https://wm.fgdou.ovh/maildev/ \
-https://wm.fgdou.ovh/rabbitmq/ \
-https://wm.fgdou.ovh/adminer/
+https://wm.fgdou.ovh/rabbitmq/
 
 # Launch it yourself
 ## Without source code
@@ -39,9 +40,6 @@ docker-compose up
 | Adminer (dev)     | Adminer        | http://localhost/adminer/  |                                                       |
 | Database          | postgres       |                            |                                                       |
 | Nginx             | Nginx          |                            | [nginx](./nginx/)                                     |
-
-# Auth
-Usernames and passwords for rabbitmq and postgres are in the [.env](./.env) file.
 
 
 # Build project and launch
