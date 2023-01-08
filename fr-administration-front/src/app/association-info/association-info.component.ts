@@ -143,8 +143,7 @@ export class AssociationInfoComponent implements OnInit {
               },
             })
             .then(() => {
-              this.newMember.get('name')?.setValue('');
-              this.newMember.get('role')?.setValue('');
+              this.newMember.reset()
               this.association.members.push(
                 new Member(u.lastname, u.lastname, u.age, role, u.id, u.email)
               );
@@ -205,6 +204,7 @@ export class AssociationInfoComponent implements OnInit {
         res.users
       ))
       this.newMinuteModal.setValue(false)
+      this.newMinute.reset()
     })
   }
 
