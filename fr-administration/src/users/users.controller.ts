@@ -112,6 +112,11 @@ export class UsersController {
   async getUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
     return await this.service.findUser(id);
   }
+  @UseGuards(AuthGuard('jwt'))
+  @Get('search/:name')
+  async search(@Param('name') name: string): Promise<User[]> {
+    return await this.service.search(name);
+  }
 
   @UseGuards(AuthGuard('jwt'))
   @Post('byEmail')

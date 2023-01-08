@@ -3,6 +3,10 @@
     <div class="text-3xl font-semibold opacity-40">Association List</div>
     <label for="newAssociation" class="btn btn-primary">Create</label>
   </div>
+  <form [formGroup]="search" (ngSubmit)="searchAsso()" class="flex gap-3">
+    <input type="text" class="input" formControlName="name" placeholder="Search">
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
   <div class="overflow-x-auto">
     <table class="table w-full">
       <!-- head -->
