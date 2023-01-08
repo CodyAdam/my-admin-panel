@@ -27,11 +27,10 @@ export class AssociationsService {
       );
     return res;
   }
-  async create(idUsers: User[], name: string): Promise<Association> {
+  async create(name: string): Promise<Association> {
     const ass = await this.repo.create({
       name,
     });
-    ass.idUsers = Promise.resolve(idUsers);
     await this.repo.save(ass);
     return ass;
   }
@@ -42,12 +41,10 @@ export class AssociationsService {
   }
   async update(
     id: number,
-    idUsers: User[],
     name: string,
   ): Promise<Association> {
     const ass = await this.findById(id);
 
-    if (idUsers) ass.idUsers = Promise.resolve(this.removeDuplicates(idUsers));
     if (name) ass.name = name;
 
     await this.repo.save(ass);
@@ -66,13 +63,10 @@ export class AssociationsService {
     const assoDTO = new AssociationDTO();
     assoDTO.name = asso.name;
     assoDTO.id = asso.id;
-    const members = (await asso.idUsers).map(async (u) => {
-      let role = '';
-      try {
-        role = (await this.roleService.getByUserAndAsso(u.id, asso.id)).name;
-      } catch (e) {}
+    const members = (await this.roleService.getByAsso(asso.id)).map((role) => {
+      const u = role.idUser;
       const member = new Member();
-      member.role = role;
+      member.role = role.name;
       member.firstname = u.firstname;
       member.age = u.age;
       member.name = u.lastname;

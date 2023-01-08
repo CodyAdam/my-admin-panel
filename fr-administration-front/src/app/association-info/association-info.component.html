@@ -28,6 +28,7 @@
     </div>
     <thead>
       <tr class="[&>th]:bg-secondary">
+        <th>Role</th>
         <th>Email</th>
         <th>Name</th>
         <th>Actions</th>
@@ -35,6 +36,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let member of association.members">
+        <td *ngIf="!edit">{{ member.role }}</td>
+        <td *ngIf="edit"><input class="input input-bordered input-primary input-sm" [value]="member.role" (change)="changeRole(member.id, $event)"></td>
         <td>{{ member.email }}</td>
         <td>{{ member.firstname }} {{ member.name }}</td>
         <td class="flex">
@@ -76,6 +79,7 @@
         {{ user.email }}
       </option>
     </select>
+    <input class="input" placeholder="role" type="text" formControlName="role">
     <button
       class="btn btn-primary"
       type="submit"

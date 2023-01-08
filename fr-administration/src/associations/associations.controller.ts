@@ -17,14 +17,9 @@ import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { AssociationDTO } from './association.dto';
 import { AssociationsService } from './associations.service';
+import {Member} from "./association.member";
 
 export class AssociationCreate {
-  @ApiProperty({
-    description: 'List of users',
-    example: [1],
-    type: Array<number>(),
-  })
-  public idUsers: number[];
   @ApiProperty({
     description: 'Name',
     example: 'ADAPEI',
@@ -33,13 +28,6 @@ export class AssociationCreate {
   public name: string;
 }
 export class AssociationUpdate {
-  @ApiProperty({
-    description: 'List of users',
-    example: [1],
-    type: Array<number>(),
-    required: false,
-  })
-  public idUsers?: number[];
   @ApiProperty({
     description: 'Name',
     example: 'ADAPEI',
@@ -74,11 +62,13 @@ export class AssociationsController {
 
   @Post()
   async create(@Body() a: AssociationCreate): Promise<AssociationDTO> {
-    const users: User[] = await Promise.all(
-      a.idUsers.map(async (u) => await this.users.findUser(u)),
-    );
-    const asso = await this.service.create(users, a.name);
+    const asso = await this.service.create(a.name);
     return this.service.mapDTO(asso);
+  }
+
+  @Get(':id/members')
+  async getMembers(@Param('id', ParseIntPipe) id: number): Promise<Member[]> {
+    return (await this.service.mapDTO(await this.service.findById(id))).members;
   }
 
   @Put(':id')
@@ -86,12 +76,7 @@ export class AssociationsController {
     @Param('id', ParseIntPipe) id: number,
     @Body() a: AssociationUpdate,
   ): Promise<AssociationDTO> {
-    let users: User[];
-    if (a.idUsers)
-      users = await Promise.all(
-        a.idUsers.map(async (u) => await this.users.findUser(u)),
-      );
-    const asso = await this.service.update(id, users, a.name);
+    const asso = await this.service.update(id, a.name);
     return this.service.mapDTO(asso);
   }
 
@@ -106,11 +91,5 @@ export class AssociationsController {
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
     return await this.service.delete(id);
-  }
-
-  @Get(':id/members')
-  async getMembers(@Param('id', ParseIntPipe) id: number): Promise<User[]> {
-    const asso = await this.service.findById(id);
-    return asso.idUsers;
   }
 }

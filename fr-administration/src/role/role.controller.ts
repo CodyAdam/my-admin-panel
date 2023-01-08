@@ -54,6 +54,10 @@ export class RoleController {
   async getUsersByRoleName(@Param('name') name: string): Promise<User[]> {
     return await this.service.getUsersByName(name);
   }
+  @Get('association/:id')
+  async getByAsso(@Param('id', ParseIntPipe) id: number): Promise<Role[]> {
+    return await this.service.getByAsso(id);
+  }
   @Get(':user/:asso')
   async getByUserAndAsso(
     @Param('user', ParseIntPipe) user: number,
