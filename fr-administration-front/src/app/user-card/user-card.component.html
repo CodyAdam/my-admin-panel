@@ -69,7 +69,7 @@
     <label class="label z-10 opacity-50 font-semibold">
       <span class="label-text px-2">Associations</span>
     </label>
-    <a *ngFor="let role of roles" class="btn normal-case w-fit gap-3 items-center" href="associations/{{role.idAssociation.id}}">
+    <a *ngFor="let role of roles" class="mx-2 btn normal-case w-fit gap-3 items-center" href="associations/{{role.idAssociation.id}}">
      {{ role.idAssociation.name }}
       <p class="badge badge-info normal-case">{{role.name}}</p>
     </a>

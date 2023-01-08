@@ -36,6 +36,10 @@ export class UsersListComponent implements OnInit {
     this.updateUsers();
   }
 
+  isMe(id: number): boolean {
+    return id == this.auth.getUserId();
+  }
+
   updateUsers() {
     const resquest = this.api.get({ endpoint: `/users/` });
     resquest.then((response) => {

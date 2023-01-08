@@ -13,8 +13,8 @@
     <table class="table w-full">
       <!-- head -->
       <thead>
-        <tr class="[&>th]:bg-secondary">
-          <th></th>
+        <tr class="[&>th]:bg-secondary ">
+          <th><strong>#</strong></th>
           <th>Email</th>
           <th>Lastname</th>
           <th>Firstname</th>
@@ -23,10 +23,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users">
+        <tr *ngFor="let user of users" class="{{isMe(user.id) ? 'active' : ''}}">
           <td class="font-bold">{{ user.id }}</td>
           <td>{{ user.email }}</td>
-          <td>{{ user.lastname }}</td>
+          <td>{{ user.lastname }}{{isMe(user.id) ? ' (me)' : ''}}</td>
           <td>{{ user.firstname }}</td>
           <td>{{ user.age }}</td>
           <td class="flex items-center">

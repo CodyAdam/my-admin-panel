@@ -41,7 +41,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let member of association.members">
+        <tr *ngFor="let member of association.members" class="{{isMe(member.id) ? 'active' : ''}}">
           <td *ngIf="!edit">{{ member.role }}</td>
           <td *ngIf="edit">
             <input
@@ -51,7 +51,7 @@
             />
           </td>
           <td>{{ member.email }}</td>
-          <td>{{ member.firstname }} {{ member.name }}</td>
+          <td>{{ member.firstname }} {{ member.name }}{{isMe(member.id) ? ' (me)' : ''}}</td>
           <td class="flex">
             <label
               [for]="member.id"

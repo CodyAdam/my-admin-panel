@@ -6,7 +6,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Member } from '../associations-list/association.member';
 import { HttpStatusCode } from '@angular/common/http';
 import { User } from '../users-list/users-list.component';
-import {MinuteDTO} from "../associations-list/minutes.entity";
+import { MinuteDTO } from '../associations-list/minutes.entity';
+import { TokenStorageService } from '../services/token-storage.service';
 
 @Component({
   selector: 'app-association-info',
@@ -21,12 +22,12 @@ export class AssociationInfoComponent implements OnInit {
 
   error: string | null = null;
 
-  newMinuteModal = new FormControl(false)
+  newMinuteModal = new FormControl(false);
   newMinute = new FormGroup({
     date: new FormControl(new Date()),
     voters: new FormControl([]),
-    content: new FormControl('')
-  })
+    content: new FormControl(''),
+  });
 
   name = new FormControl('');
   newMember = new FormGroup({
@@ -34,13 +35,20 @@ export class AssociationInfoComponent implements OnInit {
     role: new FormControl(''),
   });
 
-  constructor(private route: ActivatedRoute, private api: ApiHelperService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private api: ApiHelperService,
+    private auth: TokenStorageService
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.updateInfos();
     });
+  }
+  isMe(id: number): boolean {
+    return id == this.auth.getUserId();
   }
 
   updateInfos() {
@@ -143,7 +151,7 @@ export class AssociationInfoComponent implements OnInit {
               },
             })
             .then(() => {
-              this.newMember.reset()
+              this.newMember.reset();
               this.association.members.push(
                 new Member(u.lastname, u.lastname, u.age, role, u.id, u.email)
               );
@@ -188,31 +196,34 @@ export class AssociationInfoComponent implements OnInit {
     let voters = this.newMinute.get('voters')?.value!;
     let content = this.newMinute.get('content')?.value!;
 
-    this.api.post({
-      endpoint: `/minutes`,
-      data: {
-        content,
-        date: date,
-        idAssociation: this.id,
-        idVoters: voters,
-      }
-    }).then((res: MinuteDTO) => {
-      this.association.minutes.push(new MinuteDTO(
-        res.id,
-        res.date,
-        res.content,
-        res.users
-      ))
-      this.newMinuteModal.setValue(false)
-      this.newMinute.reset()
-    })
+    this.api
+      .post({
+        endpoint: `/minutes`,
+        data: {
+          content,
+          date: date,
+          idAssociation: this.id,
+          idVoters: voters,
+        },
+      })
+      .then((res: MinuteDTO) => {
+        this.association.minutes.push(
+          new MinuteDTO(res.id, res.date, res.content, res.users)
+        );
+        this.newMinuteModal.setValue(false);
+        this.newMinute.reset();
+      });
   }
 
   deleteMinute(min: MinuteDTO) {
-    this.api.delete({
-      endpoint: `/minutes/${min.id}`
-    }).then(() => {
-      this.association.minutes = this.association.minutes.filter(m => m.id != min.id)
-    })
+    this.api
+      .delete({
+        endpoint: `/minutes/${min.id}`,
+      })
+      .then(() => {
+        this.association.minutes = this.association.minutes.filter(
+          (m) => m.id != min.id
+        );
+      });
   }
 }

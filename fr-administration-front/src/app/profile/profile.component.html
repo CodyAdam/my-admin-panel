@@ -1,10 +1,10 @@
 <div class="min-h-full grow bg-base-200 p-14">
   <form
     [formGroup]="profile"
-    class="flex flex-col gap-3"
+    class="flex flex-col gap-8"
     (submit)="submit($event)"
   >
-    <div class="flex flex-col sm:flex-row gap-5 pb-5">
+    <div class="flex flex-col sm:flex-row gap-8 pb-5">
       <div class="avatar sm:w-fit w-full flex justify-center p-1">
         <div
           class="w-24 rounded-full ring bg-base-100 ring-offset-base-100 ring-offset-2"
@@ -51,7 +51,7 @@
         type="number"
         placeholder="Type here"
         formControlName="age"
-        class="input input-ghost input-sm w-full max-w-xs text-lg"
+        class="input input-ghost input-sm w-full max-w-xs text-2xl"
       />
     </div>
     <div class="form-control w-full max-w-xs -space-y-1 relative">
@@ -62,7 +62,7 @@
         type="text"
         formControlName="email"
         placeholder="Type here"
-        class="input input-ghost input-sm w-full max-w-xs text-lg"
+        class="input input-ghost input-sm w-full max-w-xs text-2xl"
       />
     </div>
     <div class="form-control w-full max-w-xs -space-y-1 relative">
@@ -72,7 +72,7 @@
       <input
         type="password"
         placeholder="Type here"
-        class="input input-ghost input-sm w-full max-w-xs text-lg"
+        class="input input-ghost input-sm w-full max-w-xs text-2xl"
         value="********"
         readonly
       />
@@ -89,7 +89,7 @@
               type="password"
               autocomplete="new-password"
               placeholder="Type here"
-              class="input w-full max-w-xs text-lg"
+              class="input w-full max-w-xs text-2xl"
               formControlName="newpassword"
             />
           </div>
