@@ -40,13 +40,6 @@ export class AssociationInfoComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.updateInfos();
-      const resquest = this.api.get({ endpoint: `/users/` });
-      resquest.then((response) => {
-        this.allUsers = [...response]; // copy
-        this.users = this.allUsers.filter(
-          (u) => !this.association.members.some((m) => m.id == u.id)
-        );
-      });
     });
   }
 
@@ -61,6 +54,14 @@ export class AssociationInfoComponent implements OnInit {
         this.users = this.allUsers.filter(
           (u) => !this.association.members.some((m) => m.id == u.id)
         );
+
+        const resquest = this.api.get({ endpoint: `/users/` });
+        resquest.then((response) => {
+          this.allUsers = [...response]; // copy
+          this.users = this.allUsers.filter(
+            (u) => !this.association.members.some((m) => m.id == u.id)
+          );
+        });
       });
   }
   updateMembers() {
