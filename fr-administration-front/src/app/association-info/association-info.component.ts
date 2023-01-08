@@ -51,6 +51,13 @@ export class AssociationInfoComponent implements OnInit {
     return id == this.auth.getUserId();
   }
 
+  formatDate(date: string): string {
+    return new Intl.DateTimeFormat('en-US', {
+      dateStyle: 'full',
+      timeStyle: 'medium',
+    }).format(new Date(date));
+  }
+
   updateInfos() {
     this.api
       .get({

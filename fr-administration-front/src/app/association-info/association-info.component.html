@@ -41,7 +41,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let member of association.members" class="{{isMe(member.id) ? 'active' : ''}}">
+        <tr
+          *ngFor="let member of association.members"
+          class="{{ isMe(member.id) ? 'active' : '' }}"
+        >
           <td *ngIf="!edit">{{ member.role }}</td>
           <td *ngIf="edit">
             <input
@@ -51,7 +54,10 @@
             />
           </td>
           <td>{{ member.email }}</td>
-          <td>{{ member.firstname }} {{ member.name }}{{isMe(member.id) ? ' (me)' : ''}}</td>
+          <td>
+            {{ member.firstname }} {{ member.name
+            }}{{ isMe(member.id) ? " (me)" : "" }}
+          </td>
           <td class="flex">
             <label
               [for]="member.id"
@@ -122,7 +128,9 @@
     >
       <div class="card-body">
         <div class="flex justify-between">
-          <h2 class="card-title">{{ min.date }}</h2>
+          <h2 class="card-title">
+            {{ formatDate(min.date) }}
+          </h2>
           <button
             class="btn btn-square btn-outline"
             (click)="deleteMinute(min)"
@@ -131,11 +139,14 @@
             <mat-icon>delete</mat-icon>
           </button>
         </div>
-        <p>
+        <p class="text-sm">
           {{ min.content }}
         </p>
-        <ul>
-          <li *ngFor="let u of min.users">
+        <label class="label p-0 z-10 pt-5 opacity-50 font-semibold">
+          <span class="label-text">Participants</span>
+        </label>
+        <ul class="flex flex-wrap gap-2">
+          <li *ngFor="let u of min.users" class="badge badge-lg">
             {{ u.firstname }} {{ u.lastname }}
           </li>
         </ul>
@@ -152,41 +163,50 @@
   />
   <div class="modal">
     <div class="modal-box">
-      <h3 class="font-bold text-lg">Event Creation</h3>
-      <form [formGroup]="newMinute" (ngSubmit)="createMinute()">
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text">Name</span>
+      <form
+        [formGroup]="newMinute"
+        (ngSubmit)="createMinute()"
+        class="flex p-2 gap-5 flex-col"
+      >
+        <h3 class="font-semibold text-2xl">Event Creation</h3>
+        <div class="form-control gap-2">
+          <label class="label p-0 z-10 opacity-50 font-semibold">
+            <span class="label-text">Date</span>
           </label>
           <input
             type="date"
             formControlName="date"
             placeholder="Type here"
-            class="input input-bordered w-full max-w-xs"
+            class="input input-bordered w-full max-w-xs text-lg"
           />
         </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text">Voters</span>
+        <div class="form-control gap-2">
+          <label class="label p-0 z-10 opacity-50 font-semibold">
+            <span class="label-text">Participants</span>
           </label>
-          <select name="voters" formControlName="voters" multiple>
+          <select
+            name="voters"
+            formControlName="voters"
+            multiple
+            class="select select-bordered text-lg"
+          >
             <option *ngFor="let u of association.members" [value]="u.id">
               {{ u.role }} {{ u.firstname }} {{ u.name }}
             </option>
           </select>
         </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text">Content</span>
+        <div class="form-control gap-2">
+          <label class="label p-0 z-10 opacity-50 font-semibold">
+            <span class="label-text">Description</span>
           </label>
           <textarea
-            class="textarea textarea-bordered h-24"
+            class="textarea text-lg textarea-bordered h-24"
             placeholder=""
             formControlName="content"
           ></textarea>
         </div>
 
-        <div class="flex flex-row-reverse">
+        <div class="flex flex-row-reverse gap-3">
           <button type="submit" class="btn btn-primary">Submit</button>
           <label for="newMinute" class="btn btn-ghost">Cancel</label>
         </div>
