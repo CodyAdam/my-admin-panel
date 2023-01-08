@@ -2,7 +2,7 @@ import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {RoleService} from 'src/role/role.service';
 import {User} from 'src/users/user.entity';
-import {Like, Repository} from 'typeorm';
+import {ILike, Like, Repository} from 'typeorm';
 import {AssociationDTO} from './association.dto';
 import {Association} from './association.entity';
 import {Member} from './association.member';
@@ -18,7 +18,7 @@ export class AssociationsService {
   async search(name: string): Promise<Association[]> {
     return await this.repo.find({
       where: {
-        name: Like(`%${name}%`),
+        name: ILike(`%${name}%`),
       },
     });
   }

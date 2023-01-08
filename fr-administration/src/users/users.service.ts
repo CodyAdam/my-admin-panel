@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {Like, Repository} from 'typeorm';
+import {ILike, Like, Repository} from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 import { jwtConstants } from '../auth/constants';
@@ -25,9 +25,9 @@ export class UsersService {
   async search(name: string): Promise<User[]> {
     return await this.repo.find({
       where: [
-        { firstname: Like(`%${name}%`) },
-        { lastname: Like(`%${name}%`) },
-        { email: Like(`%${name}%`) },
+        { firstname: ILike(`%${name}%`) },
+        { lastname: ILike(`%${name}%`) },
+        { email: ILike(`%${name}%`) },
       ],
     });
   }
