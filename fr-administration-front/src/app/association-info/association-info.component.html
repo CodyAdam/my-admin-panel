@@ -2,7 +2,9 @@
   <h1 class="flex items-center flex-wrap gap-5">
     <div class="text-5xl flex flex-wrap sm:flex-nowrap gap-3 items-center">
       <div>Association</div>
-      <div *ngIf="!edit" class="font-semibold whitespace-nowrap">{{ association.name }}</div>
+      <div *ngIf="!edit" class="font-semibold whitespace-nowrap">
+        {{ association.name }}
+      </div>
       <input
         type="text"
         *ngIf="edit"
@@ -22,48 +24,63 @@
     </button>
   </h1>
   <h1 class="text-3xl font-semibold opacity-40">Members</h1>
-  <table class="table">
-    <div *ngIf="association.members.length == 0" class="opacity-50 italic py-3">
-      No members
-    </div>
-    <thead>
-      <tr class="[&>th]:bg-secondary">
-        <th>Role</th>
-        <th>Email</th>
-        <th>Name</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let member of association.members">
-        <td *ngIf="!edit">{{ member.role }}</td>
-        <td *ngIf="edit"><input class="input input-bordered input-primary input-sm" [value]="member.role" (change)="changeRole(member.id, $event)"></td>
-        <td>{{ member.email }}</td>
-        <td>{{ member.firstname }} {{ member.name }}</td>
-        <td class="flex">
-          <label
-            [for]="member.id"
-            class="cursor-pointer h-10 w-10 flex items-center justify-center"
-            ><mat-icon>visibility</mat-icon></label
-          >
-          <input type="checkbox" [id]="member.id" class="modal-toggle" />
-          <div class="modal">
-            <div class="modal-box relative">
-              <label
-                [for]="member.id"
-                class="btn btn-sm btn-circle absolute right-2 top-2"
-                >✕</label
-              >
-              <app-user-card [userid]="member.id"></app-user-card>
+  <div class="overflow-x-auto">
+    <table class="table w-full">
+      <div
+        *ngIf="association.members.length == 0"
+        class="opacity-50 italic py-3"
+      >
+        No members
+      </div>
+      <thead>
+        <tr class="[&>th]:bg-secondary">
+          <th>Role</th>
+          <th>Email</th>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let member of association.members">
+          <td *ngIf="!edit">{{ member.role }}</td>
+          <td *ngIf="edit">
+            <input
+              class="input input-bordered input-primary input-sm"
+              [value]="member.role"
+              (change)="changeRole(member.id, $event)"
+            />
+          </td>
+          <td>{{ member.email }}</td>
+          <td>{{ member.firstname }} {{ member.name }}</td>
+          <td class="flex">
+            <label
+              [for]="member.id"
+              class="cursor-pointer h-10 w-10 flex items-center justify-center"
+              ><mat-icon>visibility</mat-icon></label
+            >
+            <input type="checkbox" [id]="member.id" class="modal-toggle" />
+            <div class="modal">
+              <div class="modal-box relative">
+                <label
+                  [for]="member.id"
+                  class="btn btn-sm btn-circle absolute right-2 top-2"
+                  >✕</label
+                >
+                <app-user-card [userid]="member.id"></app-user-card>
+              </div>
             </div>
-          </div>
-          <button *ngIf="edit" mat-icon-button (click)="removeUser(member.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+            <button
+              *ngIf="edit"
+              mat-icon-button
+              (click)="removeUser(member.id)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <form
     *ngIf="edit"
     class="flex gap-3"
@@ -79,7 +96,12 @@
         {{ user.email }}
       </option>
     </select>
-    <input class="input" placeholder="role" type="text" formControlName="role">
+    <input
+      class="input"
+      placeholder="role"
+      type="text"
+      formControlName="role"
+    />
     <button
       class="btn btn-primary"
       type="submit"
@@ -88,52 +110,80 @@
       Add member
     </button>
   </form>
-  <div class="flex gap-5 items-center"><h1 class="text-3xl font-semibold opacity-40">Events</h1><label for="newMinute" class="btn">Create</label></div>
+  <div class="flex gap-5 items-center">
+    <h1 class="text-3xl font-semibold opacity-40">Events</h1>
+    <label for="newMinute" class="btn btn-primary">Create</label>
+  </div>
 
   <div class="flex flex-wrap gap-3">
-    <div class="flex-auto card w-96 bg-base-100 shadow-xl" *ngFor="let min of association.minutes">
+    <div
+      class="flex-auto card w-96 bg-base-100 shadow-xl"
+      *ngFor="let min of association.minutes"
+    >
       <div class="card-body">
         <div class="flex justify-between">
-          <h2 class="card-title">{{min.date}}</h2>
-          <button class="btn btn-square btn-outline" (click)="deleteMinute(min)" *ngIf="edit">
+          <h2 class="card-title">{{ min.date }}</h2>
+          <button
+            class="btn btn-square btn-outline"
+            (click)="deleteMinute(min)"
+            *ngIf="edit"
+          >
             <mat-icon>delete</mat-icon>
           </button>
         </div>
         <p>
-          {{min.content}}
+          {{ min.content }}
         </p>
         <ul>
-          <li *ngFor="let u of min.users">{{u.firstname}} {{u.lastname}}</li>
+          <li *ngFor="let u of min.users">
+            {{ u.firstname }} {{ u.lastname }}
+          </li>
         </ul>
       </div>
     </div>
   </div>
 
   <!-- Put this part before </body> tag -->
-  <input type="checkbox" id="newMinute" class="modal-toggle" [formControl]="newMinuteModal" />
+  <input
+    type="checkbox"
+    id="newMinute"
+    class="modal-toggle"
+    [formControl]="newMinuteModal"
+  />
   <div class="modal">
     <div class="modal-box">
-      <h3 class="font-bold text-lg">Minute creation</h3>
+      <h3 class="font-bold text-lg">Event Creation</h3>
       <form [formGroup]="newMinute" (ngSubmit)="createMinute()">
         <div class="form-control">
           <label class="label">
             <span class="label-text">Name</span>
           </label>
-          <input type="date" formControlName="date" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+          <input
+            type="date"
+            formControlName="date"
+            placeholder="Type here"
+            class="input input-bordered w-full max-w-xs"
+          />
         </div>
         <div class="form-control">
           <label class="label">
             <span class="label-text">Voters</span>
           </label>
           <select name="voters" formControlName="voters" multiple>
-            <option *ngFor="let u of association.members" [value]="u.id">{{u.role}} {{u.firstname}} {{u.name}}</option>
+            <option *ngFor="let u of association.members" [value]="u.id">
+              {{ u.role }} {{ u.firstname }} {{ u.name }}
+            </option>
           </select>
         </div>
         <div class="form-control">
           <label class="label">
             <span class="label-text">Content</span>
           </label>
-          <textarea class="textarea textarea-bordered h-24" placeholder="" formControlName="content"></textarea>
+          <textarea
+            class="textarea textarea-bordered h-24"
+            placeholder=""
+            formControlName="content"
+          ></textarea>
         </div>
 
         <div class="flex flex-row-reverse">
