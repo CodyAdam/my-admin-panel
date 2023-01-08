@@ -6,6 +6,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Member } from '../associations-list/association.member';
 import { HttpStatusCode } from '@angular/common/http';
 import { User } from '../users-list/users-list.component';
+import {MinuteDTO} from "../associations-list/minutes.entity";
 
 @Component({
   selector: 'app-association-info',
@@ -19,6 +20,13 @@ export class AssociationInfoComponent implements OnInit {
   users: User[] = [];
 
   error: string | null = null;
+
+  newMinuteModal = new FormControl(false)
+  newMinute = new FormGroup({
+    date: new FormControl(new Date()),
+    voters: new FormControl([]),
+    content: new FormControl('')
+  })
 
   name = new FormControl('');
   newMember = new FormGroup({
@@ -165,6 +173,38 @@ export class AssociationInfoComponent implements OnInit {
       }
     }).then(() => {
       this.association.members.find(m => m.id = id)!.role = value;
+    })
+  }
+
+  createMinute() {
+    let date = this.newMinute.get('date')?.value!;
+    let voters = this.newMinute.get('voters')?.value!;
+    let content = this.newMinute.get('content')?.value!;
+
+    this.api.post({
+      endpoint: `/minutes`,
+      data: {
+        content,
+        date: date,
+        idAssociation: this.id,
+        idVoters: voters,
+      }
+    }).then((res: MinuteDTO) => {
+      this.association.minutes.push(new MinuteDTO(
+        res.id,
+        res.date,
+        res.content,
+        res.users
+      ))
+      this.newMinuteModal.setValue(false)
+    })
+  }
+
+  deleteMinute(min: MinuteDTO) {
+    this.api.delete({
+      endpoint: `/minutes/${min.id}`
+    }).then(() => {
+      this.association.minutes = this.association.minutes.filter(m => m.id != min.id)
     })
   }
 }
