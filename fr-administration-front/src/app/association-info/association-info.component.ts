@@ -24,7 +24,7 @@ export class AssociationInfoComponent implements OnInit {
   newMember = new FormGroup({
     name: new FormControl(''),
     role: new FormControl(''),
-  })
+  });
 
   constructor(private route: ActivatedRoute, private api: ApiHelperService) {}
 
@@ -32,13 +32,13 @@ export class AssociationInfoComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.updateInfos();
-    });
-    const resquest = this.api.get({ endpoint: `/users/` });
-    resquest.then((response) => {
-      this.allUsers = [...response]; // copy
-      this.users = this.allUsers.filter(
-        (u) => !this.association.members.some((m) => m.id == u.id)
-      );
+      const resquest = this.api.get({ endpoint: `/users/` });
+      resquest.then((response) => {
+        this.allUsers = [...response]; // copy
+        this.users = this.allUsers.filter(
+          (u) => !this.association.members.some((m) => m.id == u.id)
+        );
+      });
     });
   }
 
@@ -55,12 +55,14 @@ export class AssociationInfoComponent implements OnInit {
         );
       });
   }
-  updateMembers(){
-    this.api.get({
-      endpoint: `/associations/${this.id}/members`,
-    }).then((members: Member[]) => {
-      this.association.members = members;
-    })
+  updateMembers() {
+    this.api
+      .get({
+        endpoint: `/associations/${this.id}/members`,
+      })
+      .then((members: Member[]) => {
+        this.association.members = members;
+      });
   }
 
   changeEdit(state: boolean) {
@@ -88,11 +90,15 @@ export class AssociationInfoComponent implements OnInit {
   }
 
   removeUser(id: number) {
-    this.api.delete({
-      endpoint: `/roles/${id}/${this.id}`,
-    }).then(() => {
-      this.association.members = this.association.members.filter(m => m.id != id);
-    });
+    this.api
+      .delete({
+        endpoint: `/roles/${id}/${this.id}`,
+      })
+      .then(() => {
+        this.association.members = this.association.members.filter(
+          (m) => m.id != id
+        );
+      });
     this.users = this.allUsers.filter(
       (u) => !this.association.members.some((m) => m.id == u.id)
     );
@@ -109,62 +115,63 @@ export class AssociationInfoComponent implements OnInit {
     let email: string = this.newMember.get('name')?.value!;
     let role: string = this.newMember.get('role')?.value!;
 
-    this.api.post({
-      endpoint: `/users/byEmail`,
-      data: {email: email},
-    }).then(async u => {
-      if (this.association.members.some(m => m.id == u.id)) {
-        this.error = "This user is already in the list"
-      } else {
-        await this.api.post({
-          endpoint: `/roles`,
-          data: {
-            name: role,
-            idUser: u.id,
-            idAssociation: this.id,
-          }
-        }).then(() => {
-          this.newMember.get('name')?.setValue('');
-          this.newMember.get('role')?.setValue('');
-          this.association.members.push(new Member(
-            u.lastname,
-            u.lastname,
-            u.age,
-            role,
-            u.id,
-            u.email
-          ))
-        })
-      }
-    }).catch((e) => {
-      console.log(e)
-      if(e.status == HttpStatusCode.NotFound){
-        this.error = e.error.message
-      }
-    }).finally(() => {
-      this.newMember.enable();
-      this.users = this.allUsers.filter(
-        (u) => !this.association.members.some((m) => m.id == u.id)
-      );
-    });
-
+    this.api
+      .post({
+        endpoint: `/users/byEmail`,
+        data: { email: email },
+      })
+      .then(async (u) => {
+        if (this.association.members.some((m) => m.id == u.id)) {
+          this.error = 'This user is already in the list';
+        } else {
+          await this.api
+            .post({
+              endpoint: `/roles`,
+              data: {
+                name: role,
+                idUser: u.id,
+                idAssociation: this.id,
+              },
+            })
+            .then(() => {
+              this.newMember.get('name')?.setValue('');
+              this.newMember.get('role')?.setValue('');
+              this.association.members.push(
+                new Member(u.lastname, u.lastname, u.age, role, u.id, u.email)
+              );
+            });
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        if (e.status == HttpStatusCode.NotFound) {
+          this.error = e.error.message;
+        }
+      })
+      .finally(() => {
+        this.newMember.enable();
+        this.users = this.allUsers.filter(
+          (u) => !this.association.members.some((m) => m.id == u.id)
+        );
+      });
   }
 
-
   clearError() {
-    this.error = null
+    this.error = null;
   }
 
   changeRole(id: number, event: Event) {
-    const value = (event.target as HTMLInputElement).value
+    const value = (event.target as HTMLInputElement).value;
 
-    this.api.put({
-      endpoint: `/roles/${id}/${this.id}`,
-      data: {
-        name: value
-      }
-    }).then(() => {
-      this.association.members.find(m => m.id = id)!.role = value;
-    })
+    this.api
+      .put({
+        endpoint: `/roles/${id}/${this.id}`,
+        data: {
+          name: value,
+        },
+      })
+      .then(() => {
+        this.association.members.find((m) => (m.id = id))!.role = value;
+      });
   }
 }
