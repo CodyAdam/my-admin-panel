@@ -214,36 +214,4 @@ export class AssociationInfoComponent implements OnInit {
       this.association.minutes = this.association.minutes.filter(m => m.id != min.id)
     })
   }
-
-  createMinute() {
-    let date = this.newMinute.get('date')?.value!;
-    let voters = this.newMinute.get('voters')?.value!;
-    let content = this.newMinute.get('content')?.value!;
-
-    this.api.post({
-      endpoint: `/minutes`,
-      data: {
-        content,
-        date: date,
-        idAssociation: this.id,
-        idVoters: voters,
-      }
-    }).then((res: MinuteDTO) => {
-      this.association.minutes.push(new MinuteDTO(
-        res.id,
-        res.date,
-        res.content,
-        res.users
-      ))
-      this.newMinuteModal.setValue(false)
-    })
-  }
-
-  deleteMinute(min: MinuteDTO) {
-    this.api.delete({
-      endpoint: `/minutes/${min.id}`
-    }).then(() => {
-      this.association.minutes = this.association.minutes.filter(m => m.id != min.id)
-    })
-  }
 }
