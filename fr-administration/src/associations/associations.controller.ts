@@ -1,12 +1,22 @@
-import {Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards,} from '@nestjs/common';
-import {AuthGuard} from '@nestjs/passport';
-import {ApiProperty, ApiTags} from '@nestjs/swagger';
-import {Minute} from 'src/minutes/minute.entity';
-import {MinutesService} from 'src/minutes/minutes.service';
-import {UsersService} from '../users/users.service';
-import {AssociationDTO} from './association.dto';
-import {AssociationsService} from './associations.service';
-import {Member} from "./association.member";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiProperty, ApiTags } from '@nestjs/swagger';
+import { Minute } from 'src/minutes/minute.entity';
+import { MinutesService } from 'src/minutes/minutes.service';
+import { UsersService } from '../users/users.service';
+import { AssociationDTO } from './association.dto';
+import { AssociationsService } from './associations.service';
+import { Member } from './association.member';
 
 export class AssociationCreate {
   @ApiProperty({

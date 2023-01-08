@@ -6,7 +6,8 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Put, Query,
+  Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
