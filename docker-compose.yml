@@ -4,18 +4,20 @@ services:
     image: fgdou/wm-project-mail
     depends_on:
       - mom
+    restart: always
 
   front:
     image: fgdou/wm-project-front
+    restart: always
 
   proxy:
     ports:
-      - 80:80
+      - 8280:80
     depends_on:
       - front
       - back
     image: fgdou/wm-project-proxy
-
+    restart: always
 
   back:
     depends_on:
@@ -28,6 +30,7 @@ services:
       - DB_DATABASE=WMproject
       - DB_PORT=5432
     image: fgdou/wm-project-back
+    restart: always
   
   db:
     image: postgres
@@ -38,6 +41,7 @@ services:
       - POSTGRES_USER=user
     volumes:
       - ./db:/var/lib/postgresql/data
+    restart: always
 
   mom:
     hostname: mom
@@ -47,6 +51,8 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=user
       - RABBITMQ_DEFAULT_PASS=password
+    restart: always
 
   smtp:
     image: maildev/maildev:2.0.5
+    restart: always
