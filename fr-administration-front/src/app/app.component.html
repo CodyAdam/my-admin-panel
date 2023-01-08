@@ -1,6 +1,7 @@
 <div data-theme="bumblebee" class="h-full min-h-screen flex flex-col">
-  <div class="navbar bg-base-100 top-0">
-    <div class="navbar-start">
+  <div class="navbar bg-base-100 h-20">
+    <div class="navbar-start" *ngIf="!isLogged()"></div>
+    <div class="navbar-start" *ngIf="isLogged()">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost btn-circle">
           <svg width="32" height="32" viewBox="0 0 24 24" class="w-6 h-6">
@@ -12,7 +13,7 @@
         </label>
         <ul
           tabindex="0"
-          class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+          class="menu menu-compact dropdown-content mt-5 p-2 shadow bg-base-100 rounded-box w-52"
         >
           <li>
             <a
@@ -57,7 +58,10 @@
     <div class="navbar-center hidden sm:block">
       <a href="/" class="btn btn-ghost normal-case text-xl">Administration</a>
     </div>
-    <div class="navbar-end gap-3">
+    <div class="navbar-end gap-3 p-3">
+      <p *ngIf="!isLogged()" class="text-end sm:text-base text-sm">
+        You are <strong>not authenticated</strong>, dummy!
+      </p>
       <a *ngIf="isLogged()" class="btn btn-ghost btn-circle" href="/profile">
         <div class="indicator">
           <svg width="32" height="32" viewBox="0 0 24 24" class="w-6 h-6">
