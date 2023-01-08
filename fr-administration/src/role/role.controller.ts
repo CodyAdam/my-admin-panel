@@ -50,6 +50,10 @@ export class RoleController {
   async getById(@Param('id', ParseIntPipe) id: number): Promise<Role> {
     return await this.service.getById(id);
   }
+  @Get('userid/:id')
+  async getByUserId(@Param('id', ParseIntPipe) id: number): Promise<Role[]> {
+    return await this.service.getByUserId(id);
+  }
   @Get('users/:name')
   async getUsersByRoleName(@Param('name') name: string): Promise<User[]> {
     return await this.service.getUsersByName(name);

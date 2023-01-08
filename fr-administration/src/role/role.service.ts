@@ -83,6 +83,17 @@ export class RoleService {
     if (!role) throw new HttpException('Role not found', HttpStatus.NOT_FOUND);
     return role;
   }
+  async getByUserId(id: number): Promise<Role[]> {
+    const role = await this.repo.find({
+      where: {
+        idUser: {
+          id: id,
+        },
+      },
+    });
+    if (!role) throw new HttpException('Role not found', HttpStatus.NOT_FOUND);
+    return role;
+  }
   async delete(user: number, asso: number): Promise<boolean> {
     try {
       const role = await this.getByUserAndAsso(user, asso);
