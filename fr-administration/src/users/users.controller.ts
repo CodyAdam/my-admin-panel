@@ -95,7 +95,7 @@ export class UsersController {
   }
 
   @ApiCreatedResponse({
-    description: 'The user has neem successfully created.',
+    description: 'The user has been successfully created.',
   })
   @Post()
   async create(@Body() u: UserCreation): Promise<User> {
