@@ -23,6 +23,7 @@ export class AssociationInfoComponent implements OnInit {
   name = new FormControl('');
   newMember = new FormGroup({
     name: new FormControl(''),
+    role: new FormControl(''),
   })
 
   constructor(private route: ActivatedRoute, private api: ApiHelperService) {}
@@ -54,6 +55,13 @@ export class AssociationInfoComponent implements OnInit {
         );
       });
   }
+  updateMembers(){
+    this.api.get({
+      endpoint: `/associations/${this.id}/members`,
+    }).then((members: Member[]) => {
+      this.association.members = members;
+    })
+  }
 
   changeEdit(state: boolean) {
     this.edit = state;
@@ -80,9 +88,11 @@ export class AssociationInfoComponent implements OnInit {
   }
 
   removeUser(id: number) {
-    this.association.members = this.association.members.filter(
-      (m) => m.id != id
-    );
+    this.api.delete({
+      endpoint: `/roles/${id}/${this.id}`,
+    }).then(() => {
+      this.association.members = this.association.members.filter(m => m.id != id);
+    });
     this.users = this.allUsers.filter(
       (u) => !this.association.members.some((m) => m.id == u.id)
     );
@@ -97,16 +107,34 @@ export class AssociationInfoComponent implements OnInit {
     this.newMember.disable();
     // if name already exists in members
     let email: string = this.newMember.get('name')?.value!;
+    let role: string = this.newMember.get('role')?.value!;
 
     this.api.post({
       endpoint: `/users/byEmail`,
       data: {email: email},
-    }).then(u => {
-      if(this.association.members.some(m => m.id == u.id)){
+    }).then(async u => {
+      if (this.association.members.some(m => m.id == u.id)) {
         this.error = "This user is already in the list"
-      }else {
-        this.association.members.push(new Member(u.lastname, u.firstname, u.age, "", u.id, u.email))
-        this.newMember.get('name')?.setValue('')
+      } else {
+        await this.api.post({
+          endpoint: `/roles`,
+          data: {
+            name: role,
+            idUser: u.id,
+            idAssociation: this.id,
+          }
+        }).then(() => {
+          this.newMember.get('name')?.setValue('');
+          this.newMember.get('role')?.setValue('');
+          this.association.members.push(new Member(
+            u.lastname,
+            u.lastname,
+            u.age,
+            role,
+            u.id,
+            u.email
+          ))
+        })
       }
     }).catch((e) => {
       console.log(e)
@@ -125,5 +153,18 @@ export class AssociationInfoComponent implements OnInit {
 
   clearError() {
     this.error = null
+  }
+
+  changeRole(id: number, event: Event) {
+    const value = (event.target as HTMLInputElement).value
+
+    this.api.put({
+      endpoint: `/roles/${id}/${this.id}`,
+      data: {
+        name: value
+      }
+    }).then(() => {
+      this.association.members.find(m => m.id = id)!.role = value;
+    })
   }
 }

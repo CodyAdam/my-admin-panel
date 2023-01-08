@@ -11,9 +11,6 @@ import {
 export class Association {
   @PrimaryGeneratedColumn()
   id: number;
-  @ManyToMany(() => User, { eager: false })
-  @JoinTable()
-  idUsers: Promise<User[]>;
   @Column()
   name: string;
 }

@@ -33,6 +33,15 @@ export class RoleService {
     this.repo.save(obj);
     return obj;
   }
+  async getByAsso(assoId: number): Promise<Role[]> {
+    return await this.repo.find({
+      where: {
+        idAssociation: {
+          id: assoId,
+        },
+      },
+    });
+  }
   async getByUserAndAsso(userId: number, assoId: number): Promise<Role> {
     const role = await this.repo.findOne({
       where: {
