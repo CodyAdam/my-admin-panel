@@ -15,6 +15,9 @@ export class AssociationsListComponent implements OnInit {
     name: new FormControl(''),
   });
   modalNewAsso = new FormControl(false);
+  search = new FormGroup({
+    name: new FormControl('')
+  })
 
   constructor(private api: ApiHelperService, private router: Router) {}
 
@@ -38,6 +41,21 @@ export class AssociationsListComponent implements OnInit {
     str = asso.members.map((m) => `${m.firstname} ${m.name}`).join(', ');
     if (str.length > 20) str = asso.members.length + ' members';
     return str;
+  }
+
+  searchAsso(){
+    let name: string = this.search.get('name')?.value!
+
+    if(name.length == 0) {
+      this.getAssociations();
+      return;
+    }
+
+    this.api.get({
+      endpoint: `/associations/search/${name}`,
+    }).then((res: AssociationDTO[]) => {
+      this.associations = res
+    })
   }
 
   show(asso: AssociationDTO) {
