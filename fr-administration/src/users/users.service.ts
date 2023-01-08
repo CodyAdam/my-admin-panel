@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ILike, Like, Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 import { jwtConstants } from '../auth/constants';
@@ -104,6 +104,7 @@ export class UsersService {
   async deleteUser(id: number): Promise<boolean> {
     try {
       const user = await this.findUser(id);
+      // remove the user from relatinoship
       await this.repo.remove(user);
       return true;
     } catch (e) {
