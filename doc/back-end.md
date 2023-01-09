@@ -4,6 +4,7 @@ For the backend of our application we opted for a **NestJS** application using *
 
 We also used **Swagger** to document our API.
 And **Postman** combined with NestJS to test our API.
+To store our data we used a seperated **Postgres** database that we used through **TypeORM**.
 
 The Swagger interface is available at [wm.fgdou.ovh/api/api](https://wm.fgdou.ovh/api/api).
 
@@ -52,7 +53,7 @@ The Swagger interface is available at [wm.fgdou.ovh/api/api](https://wm.fgdou.ov
 `DELETE` /minutes/{id}
 
 
-# Modules
+# NestJS Modules
 
 - Associations
 - Auth
