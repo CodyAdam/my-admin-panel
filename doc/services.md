@@ -2,14 +2,17 @@
 ```mermaid
 flowchart LR
     user{{Web Browser}}
-    db[("DataBase (Postgres)")]
-    quarkus[["Mail server (Quarkus)"]]
-    maildev[["MailDev"]]
-    mom(["RabbitMQ"])
-    proxy[["Proxy (Nginx)"]]
-    front[["Front-end (Angular)"]]
-    back[["Back-end (NestJS)"]]
-    adminer[["Adminer (Database client)"]]
+    
+    subgraph "Internal docker network"
+        db[("DataBase (Postgres)")]
+        quarkus[["Mail server (Quarkus)"]]
+        maildev[["MailDev"]]
+        mom(["RabbitMQ"])
+        proxy[["Proxy (Nginx)"]]
+        front[["Front-end (Angular)"]]
+        back[["Back-end (NestJS)"]]
+        adminer[["Adminer (Database client)"]]
+    end
     
     user --> | https://wm.fgdou.ovh \n http://localhost | proxy
 
@@ -24,7 +27,7 @@ flowchart LR
     proxy --> | / | front
     proxy .-> | /rabbitmq/ | mom
     proxy --> | /maildev/ | maildev
-    proxy --> | /adminer/ | adminer
+    proxy --> | /adminer/ | adminer 
 ```
 
 | Name              | Technology     | Docker Hostname | Url Production                 | Url Dev                    | Source code                                            |
