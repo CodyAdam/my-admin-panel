@@ -7,7 +7,8 @@ flowchart TD
     app --> pagenotfound
     app --> profile
     
-    associations-list --> association-info
+    associations-info --> user-card
+    associations-list --> associations-info
     users-list --> user-card
 ```
 
