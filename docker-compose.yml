@@ -41,7 +41,6 @@ services:
       - POSTGRES_USER=user
     volumes:
       - ./db:/var/lib/postgresql/data
-    restart: always
 
   mom:
     hostname: mom
