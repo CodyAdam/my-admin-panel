@@ -13,7 +13,7 @@ flowchart LR
     
     user --> | https://wm.fgdou.ovh \n http://localhost | proxy
 
-    front --> back
+    front --> | back | back
     back --> |db| db
     back --> |mom| mom
     quarkus --> |mom| mom
