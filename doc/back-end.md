@@ -8,6 +8,12 @@ To store our data we used a seperated **Postgres** database that we used through
 
 The Swagger interface is available at [wm.fgdou.ovh/api/api](https://wm.fgdou.ovh/api/api).
 
+# Auth
+
+We used **Passport** to handle the authentication. We used the **JWT** strategy to authenticate users. We also used **bcrypt** to hash the passwords.
+
+The authentication is done through the `/auth/login` route. The user must provide his email and password. If the credentials are correct, the user is authenticated and a JWT is returned. This JWT must be used in the `Authorization` header of **every** request to the API.
+
 # Routes
 
 ## Default
