@@ -1,18 +1,20 @@
 # Description
 
-For the backend of our application we opted for a **NestJS** application using **Typescript**. NestJS is a framework for building efficient, scalable Node.js server-side applications. It provide a great REST API structure and a lot of useful features.
+For the backend of our application, we opted for a **NestJS** application using **Typescript**. NestJS is a framework for building efficient, scalable Node.js server-side applications. It provides a great REST API structure and many useful features.
 
 We also used **Swagger** to document our API.
 And **Postman** combined with NestJS to test our API.
-To store our data we used a seperated **Postgres** database that we used through **TypeORM**.
+To store our data, we used a separated **Postgres** database that we used through **TypeORM**.
 
 The Swagger interface is available at [wm.fgdou.ovh/api/api](https://wm.fgdou.ovh/api/api).
 
 # Auth
 
-We used **Passport** to handle the authentication. We used the **JWT** strategy to authenticate users. We also used **bcrypt** to hash the passwords.
+We used **Passport** to handle the authentication. We used the **JWT** strategy to authenticate users. Furthermore, we also used **bcrypt** to hash the passwords.
 
 The authentication is done through the `/auth/login` route. The user must provide his email and password. If the credentials are correct, the user is authenticated and a JWT is returned. This JWT must be used in the `Authorization` header of **every** request to the API.
+
+
 
 # Routes
 
