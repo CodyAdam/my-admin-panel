@@ -30,6 +30,10 @@ flowchart LR
     proxy --> | /adminer/ | adminer 
 ```
 
+The dots links are specials links, not useful to actually run the services :
+- The front / back link do not really exist. The front on the web-browser call the `/api` location and is redirected through `nginx` directly on the backend.
+- The rabbitMQ link exist, but is only here to connect to the management plugin of RabbitMQ. It is not used by any services, just by the user for debug.
+
 | Name              | Technology     | Docker Hostname | Url Production                 | Url Dev                    | Source code                                            |
 |-------------------|----------------|-----------------|--------------------------------|----------------------------|--------------------------------------------------------|
 | Front             | Angular        | front           | https://wm.fgdou.ovh/          | http://localhost/          | [fr-administration-front](../fr-administration-front/) |
