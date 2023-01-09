@@ -14,7 +14,11 @@ We used **Passport** to handle the authentication. We used the **JWT** strategy 
 
 The authentication is done through the `/auth/login` route. The user must provide his email and password. If the credentials are correct, the user is authenticated and a JWT is returned. This JWT must be used in the `Authorization` header of **every** request to the API.
 
+# Mailing
 
+When a new user get registered through the `/auth/register` route, an email is sent to the newly created user through the **rabbitMQ** API.
+
+You can preview sent mail by accessing the MailDev ([wm.fgdou.ovh/maildev/](https://wm.fgdou.ovh/maildev/)) interface.
 
 # Routes
 
