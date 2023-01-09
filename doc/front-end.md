@@ -8,7 +8,7 @@ flowchart TD
     app --> profile
     
     associations-info --> user-card
-    associations-list --> association-info
+    associations-list --> associations-info
     users-list --> user-card
 ```
 
