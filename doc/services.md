@@ -1,4 +1,5 @@
-# Diagram of the services
+# Services architecture
+
 ```mermaid
 flowchart LR
     user{{Web Browser}}
@@ -14,7 +15,7 @@ flowchart LR
         adminer[["Adminer (Database client)"]]
     end
     
-    user --> | https://wm.fgdou.ovh \n http://localhost | proxy
+    user --> | prod: https://wm.fgdou.ovh \n dev: http://localhost | proxy
 
     front .-> | /api/ | back
     back --> |db| db
@@ -34,16 +35,16 @@ The dots links are specials links, not useful to actually run the services :
 - The front / back link do not really exist. The front on the web-browser call the `/api` location and is redirected through `nginx` directly on the backend.
 - The rabbitMQ link exist, but is only here to connect to the management plugin of RabbitMQ. It is not used by any services, just by the user for debug.
 
-| Name              | Technology     | Docker Hostname | Url Production                 | Url Dev                    | Source code                                            |
-|-------------------|----------------|-----------------|--------------------------------|----------------------------|--------------------------------------------------------|
-| Front             | Angular        | front           | https://wm.fgdou.ovh/          | http://localhost/          | [fr-administration-front](../fr-administration-front/) |
-| API               | NestJS         | back            | https://wm.fgdou.ovh/api/      | http://localhost/api/      | [fr-administration](../fr-administration/)             |
-| Swagger           | Swagger        | back            | https://wm.fgdou.ovh/api/api   | http://localhost/api/api/  | [fr-administration](../fr-administration/)             |
-| Mail microservice | Quarkus native | mail            |                                |                            | [mail](../mail/)                                       |
-| MailDev           | MailDev        | smtp            | https://wm.fgdou.ovh/maildev/  | http://localhost/maildev/  |                                                        |
-| RabbitMQ          | RabbitMQ       | mom             | https://wm.fgdou.ovh/rabbitmq/ | http://localhost/rabbitmq/ |                                                        |
-| Adminer (dev)     | Adminer        | adminer         |                                | http://localhost/adminer/  |                                                        |
-| Database          | postgres       | db              |                                |                            |                                                        |
-| Nginx             | Nginx          | proxy           |                                |                            | [nginx](../nginx/)                                     |
+| Name              | Technologies         | Docker Hostname | Url Production                    | Url Dev                           | Source code                                             |
+| ----------------- | -------------------- | --------------- | --------------------------------- | --------------------------------- | ------------------------------------------------------- |
+| Nginx             | Nginx                | `proxy`         | https://wm.fgdou.ovh/             | http://localhost/                 | [/nginx](../nginx/)                                     |
+| Front             | Angular, TS          | `front`         | https://wm.fgdou.ovh/             | http://localhost/                 | [/fr-administration-front](../fr-administration-front/) |
+| API               | NestJS, TS           | `back`          | https://wm.fgdou.ovh/api/         | http://localhost/api/             | [/fr-administration](../fr-administration/)             |
+| Swagger           | Swagger              | `back`          | https://wm.fgdou.ovh/api/api      | http://localhost/api/api/         | [/fr-administration](../fr-administration/)             |
+| Mail microservice | Quarkus native, Java | `mail`          | *not accessible from the outside* | *not accessible from the outside* | [/mail](../mail/)                                       |
+| MailDev           | MailDev              | `smtp`          | https://wm.fgdou.ovh/maildev/     | http://localhost/maildev/         | *docker image*                                          |
+| RabbitMQ          | RabbitMQ             | `mom`           | https://wm.fgdou.ovh/rabbitmq/    | http://localhost/rabbitmq/        | [/rabbitmq](../rabbitmq/)                               |
+| Adminer (dev)     | Adminer              | `adminer`       | *not accessible from the outside* | http://localhost/adminer/         | *docker image*                                          |
+| Database          | Postgres             | `db`            | *not accessible from the outside* | *not accessible from the outside* | *docker image*                                          |
 
-Usernames and passwords for rabbitmq and postgres are in the [.env](../.env) file.
+> Note: Usernames and passwords for rabbitmq and postgres are in the [.env](../.env) file.
