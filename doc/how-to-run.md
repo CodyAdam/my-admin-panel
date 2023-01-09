@@ -5,7 +5,7 @@
 
 # Launch it yourself
 ## Without source code
-Get into a new folder on your machine, and copy [docker-compose.yml](./docker-compose.yml)\
+Get into a new folder on your machine, and copy [docker-compose.yml](../docker-compose.yml)\
 Execute `docker-compose up`
 ## With source code
 ```shell
@@ -13,22 +13,6 @@ git clone https://gitlab.istic.univ-rennes1.fr/fgoardou/wm-project
 cd wm-project
 docker-compose up
 ```
-
-# Services
-| Name              | Technology     | Url                        | Source code                                           |
-| ----------------- | -------------- | -------------------------- | ----------------------------------------------------- |
-| Front             | Angular        | http://localhost/          | [fr-administration-front](./fr-administration-front/) |
-| API               | NestJS         | http://localhost/api/      | [fr-administration](./fr-administration/)             |
-| Swagger           | Swagger        | http://localhost/api/api/  | [fr-administration](./fr-administration/)             |
-| Mail microservice | Quarkus native |                            | [mail](./mail/)                                       |
-| MailDev           | MailDev        | http://localhost/maildev/  |                                                       |
-| RabbitMQ          | RabbitMQ       | http://localhost/rabbitmq/ |                                                       |
-| Adminer (dev)     | Adminer        | http://localhost/adminer/  |                                                       |
-| Database          | postgres       |                            |                                                       |
-| Nginx             | Nginx          |                            | [nginx](./nginx/)                                     |
-
-Usernames and passwords for rabbitmq and postgres are in the [.env](./.env) file.
-
 
 # Build project and launch
 ## Production

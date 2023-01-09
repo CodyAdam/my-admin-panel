@@ -7,7 +7,7 @@ This is a project for the Web and Mobile course at ESIR. The goal is to create a
 # Project Members
 
 - [ADAM Cody](https://codyadm.com)
-- [GOARDOU Fabien](https://fgdou.ovh)
+- [GOARDOU Fabien](https://fabiengoardou.fr)
 
 # Hosted Demo
 
@@ -20,24 +20,9 @@ You can try the application on our server at:
 
 > Usernames and passwords for rabbitmq and postgres are in the [.env](./.env) file.
 
-# Services List
-
-Each service is running in a isolated container. The services are:
-
-| Name              | Technology     | Url                        | Source code                                           |
-| ----------------- | -------------- | -------------------------- | ----------------------------------------------------- |
-| Front             | Angular        | http://localhost/          | [fr-administration-front](./fr-administration-front/) |
-| API               | NestJS         | http://localhost/api/      | [fr-administration](./fr-administration/)             |
-| Swagger           | Swagger        | http://localhost/api/api/  | [fr-administration](./fr-administration/)             |
-| Mail microservice | Quarkus native |                            | [mail](./mail/)                                       |
-| MailDev           | MailDev        | http://localhost/maildev/  |                                                       |
-| RabbitMQ          | RabbitMQ       | http://localhost/rabbitmq/ |                                                       |
-| Adminer (dev)     | Adminer        | http://localhost/adminer/  |                                                       |
-| Database          | postgres       |                            |                                                       |
-| Nginx             | Nginx          |                            | [nginx](./nginx/)                                     |
-
-# Learn More
+# Documentation
 
 - [How to run](./doc/how-to-run.md)
-- [More about the back-end (API)](./doc/back-end.md)
-- []
+- [Services list](./doc/services.md)
+- [Front-end technical documentation](./doc/front-end.md)
+- [Back-end (API) technical documentation](./doc/back-end.md)
