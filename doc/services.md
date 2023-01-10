@@ -14,9 +14,11 @@ flowchart LR
         back[["Back-end (NestJS)"]]
         adminer[["Adminer (Database client)"]]
         
-        subgraph "Monitoring and Logging"
+        subgraph "Monitoring, Logging and load testing"
             prometheus[["Prometheus"]]
             grafana[["Grafana"]]
+        k6[["Load tester (k6)"]]
+        k6export[["k6export"]]
         end
     end
     
@@ -42,6 +44,10 @@ flowchart LR
     prometheus --> quarkus
     
     grafana --> prometheus
+    grafana --> k6export
+    k6 --> k6export
+    k6 --> back
+    
 ```
 
 The dots links are specials links, not useful to actually run the services :
@@ -63,3 +69,10 @@ The dots links are specials links, not useful to actually run the services :
 | Database          | Prometheus           | `prometheus`    | https://wm.fgdou.ovh/prometheus/  | http://localhost/prometheus/      | *docker image*                                          |
 
 > Note: Usernames and passwords for rabbitmq and postgres are in the [.env](../.env) file.
+
+# Mail API (Quarkus)
+The mail api which send mail to the maildev service is written with `Quarkus`. 
+At the production build, GraalVM is used to compile in native mode, 
+which means that the execution time is greatly improved, but the compilation time is greatly increased.
+
+The build does not require GraalVM or Quarkus, since it use docker for the build.
