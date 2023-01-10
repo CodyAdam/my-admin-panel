@@ -12,7 +12,7 @@ services:
 
   proxy:
     ports:
-      - 8280:80
+      - 80:80
     depends_on:
       - front
       - back
@@ -44,9 +44,7 @@ services:
 
   mom:
     hostname: mom
-    image: rabbitmq:3.11.5-management
-    volumes:
-      - ./rabbitmq/conf:/etc/rabbitmq/
+    image: fgdou/wm-project-mom
     environment:
       - RABBITMQ_DEFAULT_USER=user
       - RABBITMQ_DEFAULT_PASS=password

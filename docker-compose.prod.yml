@@ -53,9 +53,10 @@ services:
 
   mom:
     hostname: mom
-    image: rabbitmq:3.11.5-management
-    volumes:
-      - ./rabbitmq/conf:/etc/rabbitmq/
+    image: fgdou/wm-project-mom
+    build:
+      context: rabbitmq
+      target: prod
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBIT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBIT_PWD}
