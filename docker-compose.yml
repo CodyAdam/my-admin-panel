@@ -1,5 +1,4 @@
 services:
-
   mail:
     image: fgdou/wm-project-mail
     depends_on:
@@ -31,7 +30,7 @@ services:
       - DB_PORT=5432
     image: fgdou/wm-project-back
     restart: always
-  
+
   db:
     image: postgres
     restart: always
@@ -67,7 +66,7 @@ services:
       - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yaml
       - ./grafana/dashboards/:/var/lib/grafana/dashboards
       - ./grafana/config.ini:/etc/grafana/grafana.ini
-    user: "${UID}:${GID}"
+    user: '${UID}:${GID}'
 
   prometheus:
     image: bitnami/prometheus:2.41.0
@@ -77,7 +76,7 @@ services:
       - --web.route-prefix=/
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    user: "${UID}:${GID}"
+    user: '${UID}:${GID}'
     environment:
       - UID=${UID}
       - GID=${GID}
@@ -85,3 +84,34 @@ services:
       - mom
       - back
       - mail
+      - k6export
+      
+  k6:
+    image: ./k6
+    ports:
+      - '${K6_PORT}:6565'
+    environment:
+      - K6_OUT=influxdb=http://influxdb:${INFLUX_DB_PORT}/k6
+      - API_URL=http://back:${BACK_PORT}
+      - K6_PROMETHEUS_RW_SERVER_URL=http://prometheus:9090
+      - K6_STATSD_ENABLE_TAGS=true
+      - K6_STATSD_ADDR=k6export:9125
+      - TEST_NAME=stress_test # smoke_test, load_test, soak_test, stress_test
+    volumes:
+      - ./k6:/scripts
+    command: run -o statsd /scripts/main.js --verbose
+    depends_on:
+      - back
+
+  k6export:
+    image: ./k6export
+    ports:
+      - ${K6_EXPORT_PORT}:9102
+      - ${K6_SEND_PORT}:9125
+      - ${K6_SEND_PORT}:9125/udp
+    volumes:
+      - ./k6export/statsd_mapping.yml:/tmp/statsd_mapping.yml
+    command:
+      - --statsd.mapping-config=/tmp/statsd_mapping.yml
+    depends_on:
+      - k6
