@@ -1,7 +1,5 @@
-FROM grafana/k6:0.42.0 as build
+FROM prom/statsd-exporter as prod
 
 COPY statsd_mapping.yml /tmp/statsd_mapping.yml
 
-EXPOSE 9102
-EXPOSE 9125/udp
-EXPOSE 9125
+CMD ["--statsd.mapping-config=/tmp/statsd_mapping.yml"]

@@ -54,33 +54,29 @@ services:
     restart: always
 
   grafana:
-    image: grafana/grafana:9.3.2
+    image: fgdou/wm-project-grafana
     environment:
-      - UID=${UID}
-      - GID=${GID}
-      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PWD}
-      - GF_SERVER_SERVE_FROM_SUB_PATH=true
-    volumes:
-      - ./grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yaml
-      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yaml
-      - ./grafana/dashboards/:/var/lib/grafana/dashboards
-      - ./grafana/config.ini:/etc/grafana/grafana.ini
-    user: '${UID}:${GID}'
+      - GF_SECURITY_ADMIN_USER=user
+      - GF_SECURITY_ADMIN_PASSWORD=password
 
   prometheus:
-    image: bitnami/prometheus:2.41.0
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --web.external-url=/prometheus/
-      - --web.route-prefix=/
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    user: '${UID}:${GID}'
-    environment:
-      - UID=${UID}
-      - GID=${GID}
+    image: fgdou/wm-project-prometheus
     depends_on:
       - mom
       - back
       - mail
+      - k6export
+      -
+  k6:
+    image: fgdou/wm-project-k6
+    environment:
+      - API_URL=http://back:80
+      - K6_PROMETHEUS_RW_SERVER_URL=prometheus:9090
+      - K6_STATSD_ADDR=k6export:9125
+      - TEST_NAME=stress_test # smoke_test, load_test, soak_test, stress_test
+    depends_on:
+      - back
+      - k6export
+
+  k6export:
+    image: fgdou/wm-project-k6export
