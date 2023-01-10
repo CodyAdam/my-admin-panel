@@ -145,7 +145,7 @@ export default function (data) {
     sleep(.5);
   })
 
-  group("/roles", function () {
+  group("/minutes", function () {
     const res = http.get(API_URL + "/minutes", {
       headers: {
         Authorization: `Bearer ${token}`,
