@@ -1,5 +1,9 @@
-FROM grafana/k6:0.42.0 as build
+FROM grafana/k6:0.42.0 as prod
+
+ENV K6_STATSD_ENABLE_TAGS=true
 
 COPY . /scripts
 
 EXPOSE 6565
+
+CMD ["run", "-o", "statsd", "/scripts/main.js", "--verbose"]

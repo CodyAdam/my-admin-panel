@@ -23,6 +23,10 @@ services:
     depends_on:
       - front
       - back
+      - mom
+      - smtp
+      - grafana
+      - prometheus
     image: fgdou/wm-project-proxy
 
 
@@ -53,9 +57,10 @@ services:
 
   mom:
     hostname: mom
-    image: rabbitmq:3.11.5-management
-    volumes:
-      - ./rabbitmq/conf:/etc/rabbitmq/
+    image: fgdou/wm-project-mom
+    build:
+      context: rabbitmq
+      target: prod
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBIT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBIT_PWD}
@@ -64,32 +69,19 @@ services:
     image: maildev/maildev:2.0.5
 
   grafana:
-    image: grafana/grafana:9.3.2
+    image: fgdou/wm-project-grafana
+    build:
+      context: grafana
+      target: prod
     environment:
-      - UID=${UID}
-      - GID=${GID}
       - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PWD}
-      - GF_SERVER_SERVE_FROM_SUB_PATH=true
-    volumes:
-      - ./grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yaml
-      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yaml
-      - ./grafana/dashboards/:/var/lib/grafana
-      - ./grafana/config.ini:/etc/grafana/grafana.ini
-    user: "${UID}:${GID}"
 
   prometheus:
-    image: bitnami/prometheus:2.41.0
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --web.external-url=/prometheus/
-      - --web.route-prefix=/
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    user: "${UID}:${GID}"
-    environment:
-      - UID=${UID}
-      - GID=${GID}
+    build:
+      context: prometheus
+      target: prod
+    image: fgdou/wm-project-prometheus
     depends_on:
       - mom
       - back
@@ -97,31 +89,21 @@ services:
       - k6export
   
   k6:
-    build: ./k6
-    ports:
-      - "${K6_PORT}:6565"
+    build:
+      context: k6
+      target: prod
+    image: fgdou/wm-project-k6
     environment:
-      - K6_OUT=influxdb=http://influxdb:${INFLUX_DB_PORT}/k6
       - API_URL=http://back:${BACK_PORT}
-      - K6_PROMETHEUS_RW_SERVER_URL=http://prometheus:9090
-      - K6_STATSD_ENABLE_TAGS=true
+      - K6_PROMETHEUS_RW_SERVER_URL=prometheus:9090
       - K6_STATSD_ADDR=k6export:9125
       - TEST_NAME=stress_test # smoke_test, load_test, soak_test, stress_test
-    volumes:
-      - ./k6:/scripts
-    command: run -o statsd /scripts/main.js --verbose
     depends_on:
       - back
+      - k6export
 
   k6export:
-    build: ./k6export
-    ports:
-      - ${K6_EXPORT_PORT}:9102
-      - ${K6_SEND_PORT}:9125 
-      - ${K6_SEND_PORT}:9125/udp
-    volumes:
-      - ./k6export/statsd_mapping.yml:/tmp/statsd_mapping.yml
-    command:
-      - --statsd.mapping-config=/tmp/statsd_mapping.yml
-    depends_on:
-      - k6
+    build:
+      context: k6export
+      target: prod
+    image: fgdou/wm-project-k6export
