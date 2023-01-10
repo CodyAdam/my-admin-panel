@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
 import { Association } from './association.entity';
 import { AssociationsService } from './associations.service';
@@ -23,7 +22,6 @@ describe('AssociationsService', () => {
   let service: AssociationsService;
   let repo: MockType<Repository<Association>>;
   let asso: Association;
-  let user: User;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -39,14 +37,6 @@ describe('AssociationsService', () => {
 
     repo = module.get(getRepositoryToken(Association));
     service = module.get<AssociationsService>(AssociationsService);
-    user = {
-      id: 0,
-      email: 'random@random.com',
-      firstname: 'John',
-      lastname: 'Doe',
-      age: 23,
-      password: '',
-    };
     asso = {
       id: 0,
       name: 'ADAPEI',
