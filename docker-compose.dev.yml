@@ -94,7 +94,6 @@ services:
       - --web.route-prefix=/
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - ./prometheus/data:/opt/bitnami/prometheus/data
     user: "${UID}:${GID}"
     environment:
       - UID=${UID}
