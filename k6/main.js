@@ -67,7 +67,7 @@ export function setup() {
     password: PASSWORD,
   });
   const json = JSON.parse(login.body);
-  if (json.access_token) {
+  if (json && json.access_token) {
     token = json.access_token;
   }
 }
