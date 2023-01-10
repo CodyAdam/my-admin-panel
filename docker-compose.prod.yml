@@ -97,7 +97,7 @@ services:
       - k6export
   
   k6:
-    image: ./k6
+    build: ./k6
     ports:
       - "${K6_PORT}:6565"
     environment:
@@ -114,7 +114,7 @@ services:
       - back
 
   k6export:
-    image: ./k6export
+    build: ./k6export
     ports:
       - ${K6_EXPORT_PORT}:9102
       - ${K6_SEND_PORT}:9125 
