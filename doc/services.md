@@ -14,7 +14,7 @@ flowchart LR
         back[["Back-end (NestJS)"]]
         adminer[["Adminer (Database client)"]]
         
-        subgraph "Load testing"
+        subgraph "Monitoring and Logging"
             prometheus[["Prometheus"]]
             grafana[["Grafana"]]
         end
