@@ -39,6 +39,8 @@ You can try the application on our server at:
 - [wm.fgdou.ovh/api/api](https://wm.fgdou.ovh/api/api)
 - [wm.fgdou.ovh/maildev/](https://wm.fgdou.ovh/maildev/)
 - [wm.fgdou.ovh/rabbitmq/](https://wm.fgdou.ovh/rabbitmq/)
+- [wm.fgdou.ovh/grafana/](https://wm.fgdou.ovh/grafana/)
+- [wm.fgdou.ovh/prometheus/](https://wm.fgdou.ovh/prometheus/)
 
 > Note : Usernames and passwords for `rabbitmq` and `postgres` are in the [.env](./.env) file.
 
