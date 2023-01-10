@@ -11,6 +11,7 @@ import { RoleModule } from './role/role.module';
 import { Role } from './role/role.entity';
 import { MinutesModule } from './minutes/minutes.module';
 import { Minute } from './minutes/minute.entity';
+import {PrometheusModule} from "@willsoto/nestjs-prometheus";
 
 @Module({
   imports: [
@@ -29,6 +30,12 @@ import { Minute } from './minutes/minute.entity';
     AuthModule,
     RoleModule,
     MinutesModule,
+    PrometheusModule.register({
+      defaultMetrics: {
+        config: {},
+        enabled: true,
+      },
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
