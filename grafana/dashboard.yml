@@ -6,4 +6,4 @@ providers:
     type: 'file'
     updateIntervalSeconds: 10
     options:
-      path: /var/lib/grafana/dashboards
+      path: /var/lib/grafana/
