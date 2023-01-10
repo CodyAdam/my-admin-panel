@@ -6,5 +6,5 @@ USER root
 
 COPY ./dashboard.yml /etc/grafana/provisioning/dashboards/dashboard.yaml
 COPY ./datasource.yml /etc/grafana/provisioning/datasources/datasource.yaml
-COPY ./dashboards /var/lib/grafana
+COPY ./dashboards /var/lib/grafana/dashboards
 COPY ./config.ini /etc/grafana/grafana.ini
