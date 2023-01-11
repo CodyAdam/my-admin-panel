@@ -1,0 +1,5 @@
+FROM prom/statsd-exporter as prod
+
+COPY statsd_mapping.yml /tmp/statsd_mapping.yml
+
+CMD ["--statsd.mapping-config=/tmp/statsd_mapping.yml"]

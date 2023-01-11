@@ -6,6 +6,15 @@ services:
       target: dev
     depends_on:
       - mom
+    environment:
+      - EMAIL_FROM=fabigoardou@gmail.com
+      - EMAIL_HOST=smtp
+      - EMAIL_PORT=1025
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_PORT=${RABBIT_PORT}
+      - RABBIT_USER=${RABBIT_USER}
+      - RABBIT_PWD=${RABBIT_PWD}
+      - RABBIT_QUEUE=${RABBIT_QUEUE}
 
   front:
     build:
@@ -23,6 +32,11 @@ services:
     depends_on:
       - front
       - back
+      - mom
+      - adminer
+      - smtp
+      - grafana
+      - prometheus
 
 
   back:
@@ -38,6 +52,11 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_DATABASE=${DB_DATABASE}
       - DB_PORT=5432
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_PORT=${RABBIT_PORT}
+      - RABBIT_USER=${RABBIT_USER}
+      - RABBIT_PWD=${RABBIT_PWD}
+      - RABBIT_QUEUE=${RABBIT_QUEUE}
     volumes:
       - ./fr-administration/src:/app/src:ro
 
@@ -59,9 +78,65 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBIT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBIT_PWD}
+      - RABBITMQ_NODE_PORT=${RABBIT_PORT}
 
   adminer:
     image: adminer
 
   smtp:
     image: maildev/maildev:2.0.5
+
+  grafana:
+    image: grafana/grafana:9.3.2
+    environment:
+      - UID=${UID}
+      - GID=${GID}
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PWD}
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+    volumes:
+      - ./grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yaml
+      - ./grafana/dashboards/:/var/lib/grafana/dashboards
+      - ./grafana/config.ini:/etc/grafana/grafana.ini
+    user: "${UID}:${GID}"
+
+  prometheus:
+    image: bitnami/prometheus:2.41.0
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.external-url=/prometheus/
+      - --web.route-prefix=/
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    user: "${UID}:${GID}"
+    environment:
+      - UID=${UID}
+      - GID=${GID}
+    depends_on:
+      - mom
+      - back
+      - mail
+      - k6export
+  
+  k6:
+    image: grafana/k6:0.42.0
+    environment:
+      - API_URL=http://back:${BACK_PORT}
+      - K6_PROMETHEUS_RW_SERVER_URL=prometheus:9090
+      - K6_STATSD_ENABLE_TAGS=true
+      - K6_STATSD_ADDR=k6export:9125
+      - TEST_NAME=${K6_TEST_TYPE}
+    volumes:
+      - ./k6:/scripts
+    command: run -o statsd /scripts/main.js --verbose
+    depends_on:
+      - back
+      - k6export
+
+  k6export:
+    image: prom/statsd-exporter
+    volumes:
+      - ./k6export/statsd_mapping.yml:/tmp/statsd_mapping.yml
+    command:
+      - --statsd.mapping-config=/tmp/statsd_mapping.yml

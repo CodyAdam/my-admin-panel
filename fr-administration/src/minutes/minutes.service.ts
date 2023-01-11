@@ -12,7 +12,7 @@ import { Repository } from 'typeorm';
 import { Minute } from './minute.entity';
 import { MinuteInput } from './minutes.input';
 import { MinuteUpdate } from './minutes.update';
-import {MinuteDTO} from "./minuteDTO.entity";
+import { MinuteDTO } from './minuteDTO.entity';
 
 @Injectable()
 export class MinutesService {

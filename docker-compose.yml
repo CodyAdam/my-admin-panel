@@ -1,10 +1,18 @@
 services:
-
   mail:
     image: fgdou/wm-project-mail
     depends_on:
       - mom
     restart: always
+    environment:
+      - EMAIL_FROM=fabigoardou@gmail.com
+      - EMAIL_HOST=smtp
+      - EMAIL_PORT=1025
+      - RABBIT_HOST=mom
+      - RABBIT_PORT=5672
+      - RABBIT_USER=user
+      - RABBIT_PWD=password
+      - RABBIT_QUEUE=mail
 
   front:
     image: fgdou/wm-project-front
@@ -29,9 +37,14 @@ services:
       - DB_PASSWORD=esir
       - DB_DATABASE=WMproject
       - DB_PORT=5432
+      - RABBIT_HOST=mom
+      - RABBIT_PORT=5672
+      - RABBIT_USER=user
+      - RABBIT_PWD=password
+      - RABBIT_QUEUE=mail
     image: fgdou/wm-project-back
     restart: always
-  
+
   db:
     image: postgres
     restart: always
@@ -48,8 +61,36 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=user
       - RABBITMQ_DEFAULT_PASS=password
+      - RABBITMQ_NODE_PORT=5672
     restart: always
 
   smtp:
     image: maildev/maildev:2.0.5
     restart: always
+
+  grafana:
+    image: fgdou/wm-project-grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=user
+      - GF_SECURITY_ADMIN_PASSWORD=password
+
+  prometheus:
+    image: fgdou/wm-project-prometheus
+    depends_on:
+      - mom
+      - back
+      - mail
+      - k6export
+  k6:
+    image: fgdou/wm-project-k6
+    environment:
+      - API_URL=http://back:80
+      - K6_PROMETHEUS_RW_SERVER_URL=prometheus:9090
+      - K6_STATSD_ADDR=k6export:9125
+      - TEST_NAME=stress_test # options : smoke_test, load_test, soak_test, stress_test
+    depends_on:
+      - back
+      - k6export
+
+  k6export:
+    image: fgdou/wm-project-k6export

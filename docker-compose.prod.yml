@@ -7,6 +7,15 @@ services:
     image: fgdou/wm-project-mail
     depends_on:
       - mom
+    environment:
+      - EMAIL_FROM=fabigoardou@gmail.com
+      - EMAIL_HOST=smtp
+      - EMAIL_PORT=1025
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_PORT=${RABBIT_PORT}
+      - RABBIT_USER=${RABBIT_USER}
+      - RABBIT_PWD=${RABBIT_PWD}
+      - RABBIT_QUEUE=${RABBIT_QUEUE}
 
   front:
     build:
@@ -23,6 +32,10 @@ services:
     depends_on:
       - front
       - back
+      - mom
+      - smtp
+      - grafana
+      - prometheus
     image: fgdou/wm-project-proxy
 
 
@@ -39,6 +52,11 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_DATABASE=${DB_DATABASE}
       - DB_PORT=5432
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_PORT=${RABBIT_PORT}
+      - RABBIT_USER=${RABBIT_USER}
+      - RABBIT_PWD=${RABBIT_PWD}
+      - RABBIT_QUEUE=${RABBIT_QUEUE}
     image: fgdou/wm-project-back
   
   db:
@@ -60,6 +78,47 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBIT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBIT_PWD}
+      - RABBITMQ_NODE_PORT=${RABBIT_PORT}
 
   smtp:
     image: maildev/maildev:2.0.5
+
+  grafana:
+    image: fgdou/wm-project-grafana
+    build:
+      context: grafana
+      target: prod
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PWD}
+
+  prometheus:
+    build:
+      context: prometheus
+      target: prod
+    image: fgdou/wm-project-prometheus
+    depends_on:
+      - mom
+      - back
+      - mail
+      - k6export
+  
+  k6:
+    build:
+      context: k6
+      target: prod
+    image: fgdou/wm-project-k6
+    environment:
+      - API_URL=http://back:${BACK_PORT}
+      - K6_PROMETHEUS_RW_SERVER_URL=prometheus:9090
+      - K6_STATSD_ADDR=k6export:9125
+      - TEST_NAME=${K6_TEST_TYPE}
+    depends_on:
+      - back
+      - k6export
+
+  k6export:
+    build:
+      context: k6export
+      target: prod
+    image: fgdou/wm-project-k6export

@@ -53,7 +53,7 @@ flowchart LR
 | /users            | users-list        |
 | /profile          | profile           |
 | /associations/:id | association-info  |
-| /pagenotfound     | pagenotfound      |
+| /:any_other     | pagenotfound      |
 
 # External dependencies
 

@@ -4,10 +4,14 @@
   - [Production](#production)
   - [Development](#development)
 
+---
+
 # Requirements
 - Docker
 - Docker-Compose
   
+---
+
 # From docker hub 
 
 Get into a new folder on your machine, and copy [docker-compose.yml](../docker-compose.yml)\
@@ -20,6 +24,11 @@ git clone https://gitlab.istic.univ-rennes1.fr/fgoardou/wm-project
 cd wm-project
 docker-compose up
 ```
+
+>**_NOTE:_** Default port is 80  
+> Change it if you do not have permissions
+
+---
 
 # Build from source code
 
