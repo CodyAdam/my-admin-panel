@@ -7,6 +7,15 @@ services:
     image: fgdou/wm-project-mail
     depends_on:
       - mom
+    environment:
+      - EMAIL_FROM=fabigoardou@gmail.com
+      - EMAIL_HOST=smtp
+      - EMAIL_PORT=1025
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_PORT=${RABBIT_PORT}
+      - RABBIT_USER=${RABBIT_USER}
+      - RABBIT_PWD=${RABBIT_PWD}
+      - RABBIT_QUEUE=${RABBIT_QUEUE}
 
   front:
     build:
@@ -43,6 +52,11 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_DATABASE=${DB_DATABASE}
       - DB_PORT=5432
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_PORT=${RABBIT_PORT}
+      - RABBIT_USER=${RABBIT_USER}
+      - RABBIT_PWD=${RABBIT_PWD}
+      - RABBIT_QUEUE=${RABBIT_QUEUE}
     image: fgdou/wm-project-back
   
   db:
@@ -64,6 +78,7 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBIT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBIT_PWD}
+      - RABBITMQ_NODE_PORT=${RABBIT_PORT}
 
   smtp:
     image: maildev/maildev:2.0.5
