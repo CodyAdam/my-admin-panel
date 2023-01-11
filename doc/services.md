@@ -93,10 +93,9 @@ The doted links are specials links, not useful to actually run the services :
 
 ## Nginx
 
+We ensure that all the ports are not accessible from the outside. Only the ports 80 are accessible from the outside. For this task, we used Nginx as a reverse proxy to redirect the requests to the right service. It also serves the static files of the front-end. 
 
-We ensure that all the ports are not accessible from the outside. Only the ports 80 are accessible from the outside. For this task we used Nginx as a reverse proxy to redirect the requests to the right service. It also serves the static files of the front-end. 
-
-We chosed Nginx because it is very **easy to configure** and is **widely used** in the industry. Compared to other reverse proxies like Apache, Nginx is **faster**.
+We chose Nginx because it is very **easy to configure** and is **widely used** in the industry. Compared to other reverse proxies like Apache, Nginx is **faster**.
 
 ## Frontend
 
@@ -104,11 +103,11 @@ Angular was **chosen by the client**, so we had to use it. Nevertheless, there a
 
 ## Backend REST API
 
-For the API we used NestJS using TypeScript. This was also **chosen by the client**. NestJS is **widely used** in the industry and is a **good framework** to use.
+For the API, we used NestJS using TypeScript. This was also **chosen by the client**. NestJS is **widely used** in the industry and is a **good framework** to use.
 
 ## Swagger API
 
-Swagger API is a developping tool to show the API documentation. It was **chosen by the client**.
+Swagger API is a development tool to show the API documentation. It was **chosen by the client**.
 
 ## RabbitMQ
 
@@ -116,11 +115,11 @@ Used to send messages between the backend and the mail microservice with a queue
 
 ## Quarkus
 
-This is the mail api which send mail to the maildev service. 
+This is the mail api which send mail to the MailDev service. 
 At the production build, GraalVM is used to compile in native mode.
 The build does not require GraalVM or Quarkus, since it use docker for the build.
 
-We chose Quarkus because it is a very popular Java framework and it is very **easy to use**. It is also **very fast** and **lightweight** due to its **native compilation**. The side effect of the native compilation is that it is **very slow to compile**.
+We chose Quarkus because it is a very popular Java framework, and it is **very easy to use**. It is also **very fast** and **lightweight** due to its **native compilation**. The side effect of the native compilation is that it is **very slow to compile**.
 
 ## MailDev
 
@@ -132,7 +131,7 @@ Adminer is a development tool to **manage** the database. It is a **lightweight*
 
 ## Prometheus
 
-Prometheus is the center of the monitoring system. Prometheus plug into the services to collect metrics and store them in a database (Pull and Store). Other alternatives are InfluxDB (Push to Store), Graphgite or Kapacitor. It was **recommended by the client**.
+Prometheus is the center of the monitoring system. Prometheus plugs into the services to collect metrics and store them in a database (Pull and Store). Other alternatives are InfluxDB (Push to Store), Graphgite or Kapacitor. It was **recommended by the client**.
 
 ## Grafana
 
@@ -140,7 +139,7 @@ This is the interface to display the metrics stored by Prometheus. It is a **ver
 
 ## K6
 
-K6 is a tool to operate load testing on our REST API. We run **4 types of test**s : smoke test, load test, soak test and stress test. K6 as the advantage of being very **modern** and **frictionless** to use. The setup of the routes and the tests are configured using **Javascript** which we are confortable with. To send the metrics of the load test to Prometheus we used a middleware which is Statsd. 
+K6 is a tool to operate load testing on our REST API. We run **4 types of test**s : smoke test, load test, soak test and stress test. K6 as the advantage of being very **modern** and **frictionless** to use. The setup of the routes and the tests are configured using **Javascript** which we are confortable with. To send the metrics of the load test to Prometheus, we used a middleware which is Statsd. 
 
 We could use other tools like [wrk](https://github.com/wg/wrk) and [locust](https://github.com/locustio/locust) wich are also widely used
 
@@ -153,7 +152,7 @@ Postgres is the database used by the backend. We firstly attempted to MySQL and 
 
 You can configure the services with environment variables available in the [.env](../.env) file.
 
-It's not recommanded to change the default values, but if you want to, you can.
+It's not recommended to change the default values, but if you want to, you can.
 
 | Service  | Variable Name  | Description             | Default value          |
 | -------- | -------------- | ----------------------- | ---------------------- |
