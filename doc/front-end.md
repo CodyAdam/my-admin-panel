@@ -71,3 +71,21 @@ This allows forms to have the property `(ngSubmit)`, so that the request is sent
 The application uses a JWT token to authenticate the user. The token is stored in the local storage.
 
 Each request to the API is intercepted by the `interceptors` module. If the token is missing or expired, then the user will be redirected to the login page.
+
+# Screenshots
+
+## Login
+
+![login](assets/login.png)
+
+## Home
+
+![home](assets/home.png)
+
+## Profile 
+
+![profile](assets/profile.png)
+
+## Association
+
+![association](assets/asso.png)

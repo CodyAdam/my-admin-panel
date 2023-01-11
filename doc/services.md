@@ -99,9 +99,13 @@ We chose Nginx because it is very **easy to configure** and is **widely used** i
 
 ## Frontend
 
+More information about the front end [here](./front-end.md).
+
 Angular was **chosen by the client**, so we had to use it. Nevertheless, there are plenty of frontend frameworks that could have been used. (e.g.: React, Vue, Svelte, etc.)
 
 ## Backend REST API
+
+More information about the backend [here](./back-end.md).
 
 For the API, we used NestJS using TypeScript. This was also **chosen by the client**. NestJS is **widely used** in the industry and is a **good framework** to use.
 
@@ -109,9 +113,13 @@ For the API, we used NestJS using TypeScript. This was also **chosen by the clie
 
 Swagger API is a development tool to show the API documentation. It is run inside of the backend server. It was **chosen by the client**.
 
+![swagger](assets/swagger.png)
+
 ## RabbitMQ
 
 Used to send messages between the backend and the mail microservice with a queue system. We chose RabbitMQ because it is a very **popular** message broker. Other popular message brokers are Kafka and ActiveMQ.
+
+![rabbitmq](assets/rabbitmq.png)
 
 ## Quarkus
 
@@ -124,6 +132,10 @@ We chose Quarkus because it is a very popular Java framework, and it is **very e
 ## MailDev
 
 Used to **debug** the emails sent by the mail microservice. It is a **very simple** and **lightweight** SMTP server that displays the emails sent to it.
+
+Preview of a received email :
+
+![maildev](assets/maildev.png)
 
 ## Admider
 
@@ -160,7 +172,9 @@ K6 as the advantage of being very **modern** and **frictionless** to use. The se
 
 We could use other tools like [wrk](https://github.com/wg/wrk) and [locust](https://github.com/locustio/locust) wich are also widely used
 
-The report is available on a Grafana dashboard.
+Report on the Grafana dashboard :
+
+![k6](assets/dashboard_k6.png)
 
 ## Postgres
 

@@ -1,4 +1,12 @@
 # My Admin Panel Project
+<p align="middle">
+  <img src="/doc/assets/login.png" width=300" />
+  <img src="/doc/assets/user.png" width=300" />
+  <img src="/doc/assets/swagger.png" width=300" />
+  <img src="/doc/assets/dashboard.png" width=300" /> 
+  <img src="/doc/assets/rabbitmq.png" width=300" />
+  </p>
+
 
 # TLDR
 
