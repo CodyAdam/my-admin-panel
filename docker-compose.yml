@@ -72,7 +72,7 @@ services:
       - API_URL=http://back:80
       - K6_PROMETHEUS_RW_SERVER_URL=prometheus:9090
       - K6_STATSD_ADDR=k6export:9125
-      - TEST_NAME=stress_test # smoke_test, load_test, soak_test, stress_test
+      - TEST_NAME=stress_test # options : smoke_test, load_test, soak_test, stress_test
     depends_on:
       - back
       - k6export

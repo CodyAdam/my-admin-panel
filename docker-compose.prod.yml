@@ -97,7 +97,7 @@ services:
       - API_URL=http://back:${BACK_PORT}
       - K6_PROMETHEUS_RW_SERVER_URL=prometheus:9090
       - K6_STATSD_ADDR=k6export:9125
-      - TEST_NAME=stress_test # smoke_test, load_test, soak_test, stress_test
+      - TEST_NAME=${K6_TEST_TYPE}
     depends_on:
       - back
       - k6export

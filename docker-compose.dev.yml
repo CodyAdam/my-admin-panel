@@ -111,7 +111,7 @@ services:
       - K6_PROMETHEUS_RW_SERVER_URL=prometheus:9090
       - K6_STATSD_ENABLE_TAGS=true
       - K6_STATSD_ADDR=k6export:9125
-      - TEST_NAME=stress_test # smoke_test, load_test, soak_test, stress_test
+      - TEST_NAME=${K6_TEST_TYPE}
     volumes:
       - ./k6:/scripts
     command: run -o statsd /scripts/main.js --verbose

@@ -139,9 +139,13 @@ This is the interface to display the metrics stored by Prometheus. It is a **ver
 
 ## K6
 
-K6 is a tool to operate load testing on our REST API. We run **4 types of test**s : smoke test, load test, soak test and stress test. K6 as the advantage of being very **modern** and **frictionless** to use. The setup of the routes and the tests are configured using **Javascript** which we are confortable with. To send the metrics of the load test to Prometheus, we used a middleware which is Statsd. 
+K6 is a tool to operate load testing on our REST API. We run **4 types of test**s : smoke test, load test, soak test and stress test. (select in the environment variable `K6_TEST_TYPE`)
+
+K6 as the advantage of being very **modern** and **frictionless** to use. The setup of the routes and the tests are configured using **Javascript** which we are confortable with. To send the metrics of the load test to Prometheus, we used a middleware which is Statsd. 
 
 We could use other tools like [wrk](https://github.com/wg/wrk) and [locust](https://github.com/locustio/locust) wich are also widely used
+
+The report is available on a Grafana dashboard.
 
 ## Postgres
 
@@ -154,17 +158,18 @@ You can configure the services with environment variables available in the [.env
 
 It's not recommended to change the default values, but if you want to, you can.
 
-| Service  | Variable Name  | Description             | Default value          |
-| -------- | -------------- | ----------------------- | ---------------------- |
-| Database | `DB_USERNAME`  | Database login username | `user`                 |
-| Database | `DB_PASSWORD`  | Database login password | `esir`                 |
-| Database | `HOST`         | Database hostname       | `localhost`            |
-| Database | `DB_DATABASE`  | Database name           | `WMproject`            |
-| Front    | `FRONT_PORT`   | Front port              | `80`                   |
-| Front    | `BACK_URL`     | Back url                | `http://localhost/api` |
-| Front    | `FRONT_URL`    | Front url               | `http://localhost`     |
-| Back     | `BACK_PORT`    | Back port               | `3000`                 |
-| RabbitMQ | `RABBIT_USER`  | RabbitMQ login username | `user`                 |
-| RabbitMQ | `RABBIT_PWD`   | RabbitMQ login password | `password`             |
-| Grafana  | `GRAFANA_USER` | Grafana login username  | `user`                 |
-| Grafana  | `GRAFANA_PWD`  | Grafana login password  | `password`             |
+| Service  | Variable Name  | Description                                                                       | Default value          |
+| -------- | -------------- | --------------------------------------------------------------------------------- | ---------------------- |
+| Database | `DB_USERNAME`  | Database login username                                                           | `user`                 |
+| Database | `DB_PASSWORD`  | Database login password                                                           | `esir`                 |
+| Database | `HOST`         | Database hostname                                                                 | `localhost`            |
+| Database | `DB_DATABASE`  | Database name                                                                     | `WMproject`            |
+| Front    | `FRONT_PORT`   | Front port                                                                        | `80`                   |
+| Front    | `BACK_URL`     | Back url                                                                          | `http://localhost/api` |
+| Front    | `FRONT_URL`    | Front url                                                                         | `http://localhost`     |
+| Back     | `BACK_PORT`    | Back port                                                                         | `3000`                 |
+| RabbitMQ | `RABBIT_USER`  | RabbitMQ login username                                                           | `user`                 |
+| RabbitMQ | `RABBIT_PWD`   | RabbitMQ login password                                                           | `password`             |
+| Grafana  | `GRAFANA_USER` | Grafana login username                                                            | `user`                 |
+| Grafana  | `GRAFANA_PWD`  | Grafana login password                                                            | `password`             |
+| K6       | `K6_TEST_TYPE` | K6 test type, options are : `smoke_test`, `load_test`, `soak_test`, `stress_test` | `smoke_test`           |
