@@ -37,6 +37,11 @@ services:
       - DB_PASSWORD=esir
       - DB_DATABASE=WMproject
       - DB_PORT=5432
+      - RABBIT_HOST=mom
+      - RABBIT_PORT=5672
+      - RABBIT_USER=user
+      - RABBIT_PWD=password
+      - RABBIT_QUEUE=mail
     image: fgdou/wm-project-back
     restart: always
 

@@ -52,6 +52,11 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_DATABASE=${DB_DATABASE}
       - DB_PORT=5432
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_PORT=${RABBIT_PORT}
+      - RABBIT_USER=${RABBIT_USER}
+      - RABBIT_PWD=${RABBIT_PWD}
+      - RABBIT_QUEUE=${RABBIT_QUEUE}
     image: fgdou/wm-project-back
   
   db:
