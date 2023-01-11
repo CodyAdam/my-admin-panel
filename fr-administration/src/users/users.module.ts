@@ -16,8 +16,10 @@ import { UsersService } from './users.service';
         name: 'MAIL_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://user:password@mom:5672'],
-          queue: 'mail',
+          urls: [
+            `amqp://${process.env.RABBIT_USER}:${process.env.RABBIT_PWD}@${process.env.RABBIT_HOST}:${process.env.RABBIT_PORT}`,
+          ],
+          queue: process.env.RABBIT_QUEUE,
           queueOptions: {
             durable: true,
           },
