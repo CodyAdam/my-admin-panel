@@ -73,6 +73,7 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBIT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBIT_PWD}
+      - RABBITMQ_NODE_PORT=${RABBIT_PORT}
 
   adminer:
     image: adminer
