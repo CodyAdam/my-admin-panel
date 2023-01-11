@@ -4,7 +4,7 @@ services:
     build:
       context: mail
       target: prod
-    image: fgdou/wm-project-mail
+    image: fgdou/wm-project-mail:al
     depends_on:
       - mom
     environment:
@@ -21,7 +21,7 @@ services:
     build:
       context: ./fr-administration-front
       target: prod
-    image: fgdou/wm-project-front
+    image: fgdou/wm-project-front:al
 
   proxy:
     build:
@@ -36,7 +36,7 @@ services:
       - smtp
       - grafana
       - prometheus
-    image: fgdou/wm-project-proxy
+    image: fgdou/wm-project-proxy:al
 
 
   back:
@@ -57,7 +57,7 @@ services:
       - RABBIT_USER=${RABBIT_USER}
       - RABBIT_PWD=${RABBIT_PWD}
       - RABBIT_QUEUE=${RABBIT_QUEUE}
-    image: fgdou/wm-project-back
+    image: fgdou/wm-project-back:al
   
   db:
     image: postgres
@@ -71,7 +71,7 @@ services:
 
   mom:
     hostname: mom
-    image: fgdou/wm-project-mom
+    image: fgdou/wm-project-mom:al
     build:
       context: rabbitmq
       target: prod
@@ -84,7 +84,7 @@ services:
     image: maildev/maildev:2.0.5
 
   grafana:
-    image: fgdou/wm-project-grafana
+    image: fgdou/wm-project-grafana:al
     build:
       context: grafana
       target: prod
@@ -96,7 +96,7 @@ services:
     build:
       context: prometheus
       target: prod
-    image: fgdou/wm-project-prometheus
+    image: fgdou/wm-project-prometheus:al
     depends_on:
       - mom
       - back
@@ -107,7 +107,7 @@ services:
     build:
       context: k6
       target: prod
-    image: fgdou/wm-project-k6
+    image: fgdou/wm-project-k6:al
     environment:
       - API_URL=http://back:${BACK_PORT}
       - K6_PROMETHEUS_RW_SERVER_URL=prometheus:9090
@@ -121,4 +121,4 @@ services:
     build:
       context: k6export
       target: prod
-    image: fgdou/wm-project-k6export
+    image: fgdou/wm-project-k6export:al
