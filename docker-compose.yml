@@ -61,7 +61,7 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=user
       - RABBITMQ_DEFAULT_PASS=password
-      - RABBITMQ_NODE_PORT=${5672}
+      - RABBITMQ_NODE_PORT=5672
     restart: always
 
   smtp:
