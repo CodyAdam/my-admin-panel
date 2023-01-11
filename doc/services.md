@@ -93,7 +93,10 @@ The doted links are specials links, not useful to actually run the services :
 
 ## Nginx
 
-Used as a reverse proxy to redirect the requests to the right service. It also serves the static files of the front-end. We chosed Nginx because it is very **easy to configure** and is **widely used** in the industry.
+
+We ensure that all the ports are not accessible from the outside. Only the ports 80 are accessible from the outside. For this task we used Nginx as a reverse proxy to redirect the requests to the right service. It also serves the static files of the front-end. 
+
+We chosed Nginx because it is very **easy to configure** and is **widely used** in the industry. Compared to other reverse proxies like Apache, Nginx is **faster**.
 
 ## Frontend
 
