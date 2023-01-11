@@ -107,7 +107,7 @@ For the API, we used NestJS using TypeScript. This was also **chosen by the clie
 
 ## Swagger API
 
-Swagger API is a development tool to show the API documentation. It was **chosen by the client**.
+Swagger API is a development tool to show the API documentation. It is run inside of the backend server. It was **chosen by the client**.
 
 ## RabbitMQ
 
@@ -129,13 +129,28 @@ Used to **debug** the emails sent by the mail microservice. It is a **very simpl
 
 Adminer is a development tool to **manage** the database. It is a **lightweight** and **easy to setup** with preconfigured docker image.
 
+*(note: available only on development mode)*
+
 ## Prometheus
 
-Prometheus is the center of the monitoring system. Prometheus plugs into the services to collect metrics and store them in a database (Pull and Store). Other alternatives are InfluxDB (Push to Store), Graphgite or Kapacitor. It was **recommended by the client**.
+Prometheus is the center of the monitoring system. Prometheus plugs into the services to collect metrics and store them in a database (Pull and Store). 
+
+Monitored services are :
+- Backend server
+- Quarkus
+- RabbitMQ
+
+Other alternatives are InfluxDB (Push to Store), Graphgite or Kapacitor. It was **recommended by the client**.
 
 ## Grafana
 
+
+
 This is the interface to display the metrics stored by Prometheus. It is a **very popular** and quite **modern** with a **pleasant interface** that is **easy to customize**.
+
+Here is an exemple of the monitoring dashboard for the backend server :
+
+![Backend monitoring dashboard](./assets/dashboard.png)
 
 ## K6
 
@@ -150,6 +165,8 @@ The report is available on a Grafana dashboard.
 ## Postgres
 
 Postgres is the database used by the backend. We firstly attempted to MySQL and SQLite which lead numerous **compatibility issues**. We then switched to Postgres which made everything **simpler**.
+
+You can inspect the raw content of the database using the adminer interface.
 
 
 # Configuration
