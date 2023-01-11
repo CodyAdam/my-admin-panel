@@ -166,14 +166,3 @@ It's not recommanded to change the default values, but if you want to, you can.
 | RabbitMQ | `RABBIT_PWD`   | RabbitMQ login password | `password`             |
 | Grafana  | `GRAFANA_USER` | Grafana login username  | `user`                 |
 | Grafana  | `GRAFANA_PWD`  | Grafana login password  | `password`             |
-
-| Service | Variable Name | Description       | Default value        |
-| ------- | ------------- | ----------------- | -------------------- |
-| Front   | FRONT_PORT    | Front port        | 80                   |
-| Back    | BACK_PORT     | Back port         | 3000                 |
-| Back    | BACK_URL      | Back url          | http://localhost/api |
-| Front   | FRONT_URL     | Front url         | http://localhost     |
-| Rabbit  | RABBIT_USER   | RabbitMQ user     | user                 |
-| Rabbit  | RABBIT_PWD    | RabbitMQ password | password             |
-| Grafana | GRAFANA_USER  | Grafana user      | user                 |
-| Grafana | GRAFANA_PWD   | Grafana password  | password             |
