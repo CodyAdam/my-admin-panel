@@ -1,6 +1,6 @@
 services:
   mail:
-    image: fgdou/wm-project-mail
+    image: fgdou/wm-project-mail:al
     depends_on:
       - mom
     restart: always
@@ -15,7 +15,7 @@ services:
       - RABBIT_QUEUE=mail
 
   front:
-    image: fgdou/wm-project-front
+    image: fgdou/wm-project-front:al
     restart: always
 
   proxy:
@@ -24,7 +24,7 @@ services:
     depends_on:
       - front
       - back
-    image: fgdou/wm-project-proxy
+    image: fgdou/wm-project-proxy:al
     restart: always
 
   back:
@@ -42,7 +42,7 @@ services:
       - RABBIT_USER=user
       - RABBIT_PWD=password
       - RABBIT_QUEUE=mail
-    image: fgdou/wm-project-back
+    image: fgdou/wm-project-back:al
     restart: always
 
   db:
@@ -57,7 +57,7 @@ services:
 
   mom:
     hostname: mom
-    image: fgdou/wm-project-mom
+    image: fgdou/wm-project-mom:al
     environment:
       - RABBITMQ_DEFAULT_USER=user
       - RABBITMQ_DEFAULT_PASS=password
@@ -69,20 +69,20 @@ services:
     restart: always
 
   grafana:
-    image: fgdou/wm-project-grafana
+    image: fgdou/wm-project-grafana:al
     environment:
       - GF_SECURITY_ADMIN_USER=user
       - GF_SECURITY_ADMIN_PASSWORD=password
 
   prometheus:
-    image: fgdou/wm-project-prometheus
+    image: fgdou/wm-project-prometheus:al
     depends_on:
       - mom
       - back
       - mail
       - k6export
   k6:
-    image: fgdou/wm-project-k6
+    image: fgdou/wm-project-k6:al
     environment:
       - API_URL=http://back:80
       - K6_PROMETHEUS_RW_SERVER_URL=prometheus:9090
@@ -93,4 +93,4 @@ services:
       - k6export
 
   k6export:
-    image: fgdou/wm-project-k6export
+    image: fgdou/wm-project-k6export:al
