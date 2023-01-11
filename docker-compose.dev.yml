@@ -6,6 +6,15 @@ services:
       target: dev
     depends_on:
       - mom
+    environment:
+      - EMAIL_FROM=fabigoardou@gmail.com
+      - EMAIL_HOST=smtp
+      - EMAIL_PORT=1025
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_PORT=${RABBIT_PORT}
+      - RABBIT_USER=${RABBIT_USER}
+      - RABBIT_PWD=${RABBIT_PWD}
+      - RABBIT_QUEUE=${RABBIT_QUEUE}
 
   front:
     build:

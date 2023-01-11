@@ -4,6 +4,15 @@ services:
     depends_on:
       - mom
     restart: always
+    environment:
+      - EMAIL_FROM=fabigoardou@gmail.com
+      - EMAIL_HOST=smtp
+      - EMAIL_PORT=1025
+      - RABBIT_HOST=mom
+      - RABBIT_PORT=5672
+      - RABBIT_USER=user
+      - RABBIT_PWD=password
+      - RABBIT_QUEUE=mail
 
   front:
     image: fgdou/wm-project-front
