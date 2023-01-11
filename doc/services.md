@@ -7,7 +7,7 @@
   - [Backend REST API](#backend-rest-api)
   - [Swagger API](#swagger-api)
   - [RabbitMQ](#rabbitmq)
-  - [Mail microservice](#mail-microservice)
+  - [Quarkus](#quarkus)
   - [MailDev](#maildev)
   - [Admider](#admider)
   - [Prometheus](#prometheus)
@@ -51,9 +51,11 @@ flowchart LR
         back[["Back-end (NestJS)"]]
         adminer[["Adminer (Database client)"]]
         
-        subgraph "Monitoring"
+        subgraph "Monitoring, Logging and load testing"
             prometheus[["Prometheus"]]
             grafana[["Grafana"]]
+        k6[["Load tester (k6)"]]
+        k6export[["k6export"]]
         end
     end
     
@@ -84,7 +86,9 @@ flowchart LR
 The doted links are specials links, not useful to actually run the services :
 - The `front / back` link do not really exist. The front on the web-browser call the `/api` location and is redirected through `nginx` directly on the backend.
 - The `rabbitMQ` link exist, but is only here to connect to the management plugin of RabbitMQ. It is not used by any services, just by the user for debug.
-  
+
+> Note: Usernames and passwords for rabbitmq and postgres are in the [.env](../.env) file.
+
 # Choice of technologies
 
 ## Nginx
@@ -107,9 +111,13 @@ Swagger API is a developping tool to show the API documentation. It was **chosen
 
 Used to send messages between the backend and the mail microservice with a queue system. We chose RabbitMQ because it is a very **popular** message broker. Other popular message brokers are Kafka and ActiveMQ.
 
-## Mail microservice
+## Quarkus
 
-Used to send emails. We chose Quarkus because it is a very popular Java framework and it is very **easy to use**. It is also **very fast** and **lightweight** due to its **native compilation**.
+This is the mail api which send mail to the maildev service. 
+At the production build, GraalVM is used to compile in native mode.
+The build does not require GraalVM or Quarkus, since it use docker for the build.
+
+We chose Quarkus because it is a very popular Java framework and it is very **easy to use**. It is also **very fast** and **lightweight** due to its **native compilation**. The side effect of the native compilation is that it is **very slow to compile**.
 
 ## MailDev
 
@@ -159,3 +167,13 @@ It's not recommanded to change the default values, but if you want to, you can.
 | Grafana  | `GRAFANA_USER` | Grafana login username  | `user`                 |
 | Grafana  | `GRAFANA_PWD`  | Grafana login password  | `password`             |
 
+| Service | Variable Name | Description       | Default value        |
+| ------- | ------------- | ----------------- | -------------------- |
+| Front   | FRONT_PORT    | Front port        | 80                   |
+| Back    | BACK_PORT     | Back port         | 3000                 |
+| Back    | BACK_URL      | Back url          | http://localhost/api |
+| Front   | FRONT_URL     | Front url         | http://localhost     |
+| Rabbit  | RABBIT_USER   | RabbitMQ user     | user                 |
+| Rabbit  | RABBIT_PWD    | RabbitMQ password | password             |
+| Grafana | GRAFANA_USER  | Grafana user      | user                 |
+| Grafana | GRAFANA_PWD   | Grafana password  | password             |
