@@ -8,6 +8,8 @@ This is a project for the Web and Mobile course at ESIR.
 
 The application is composed of a **front-end**, an **API**, a **mail microservice**, a **database**, a **message broker** and a **reverse proxy**.
 
+## WM evaluation
+Last commit for WM oral : [wm-deadline](https://gitlab.istic.univ-rennes1.fr/fgoardou/wm-project/-/tree/wm-deadline)
 
 ## Features
 
