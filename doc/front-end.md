@@ -14,9 +14,22 @@ Finally you can log out by clicking on the logout button in the top right corner
 
 If the page you request is not available, then you will be redirected to the `pagenofound` module.
 
-## Features 
+## Features
 
-For the features list, check the [README](../README.md).
+- [x] Login
+- [x] Register
+- [x] Logout
+- [x] Reset password  
+- [x] Email on registration
+- [x] Users list
+- [x] User detail (with association he is in)
+- [x] Preview and edit personal information
+- [x] Association detail
+- [x] Associations list
+- [x] Rename association
+- [x] Create/remove association
+- [x] Add/remove user from association
+- [x] Create/remove association event (assign users to event)
 
 # Modules structure
 ```mermaid
