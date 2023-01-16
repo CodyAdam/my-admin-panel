@@ -10,14 +10,18 @@
 
 # TLDR
 
-This is a project for the Web and Mobile course at ESIR.
+This is a project for the Web and Architecture course at ESIR.
 
 **The goal** is to create a web application with a microservice architecture. The application is a simple administration panel for a company that manages associations. 
 
 The application is composed of a **front-end**, an **API**, a **mail microservice**, a **database**, a **message broker** and a **reverse proxy**.
 
-## WM evaluation
-Last commit for WM oral : [wm-deadline](https://gitlab.istic.univ-rennes1.fr/fgoardou/wm-project/-/tree/wm-deadline)
+# Documentation
+
+- [How to run](./doc/how-to-run.md)
+- [Service architecture](./doc/services.md)
+- [Front-end technical documentation](./doc/front-end.md)
+- [Back-end (API) technical documentation](./doc/back-end.md)
 
 ## Features
 
@@ -53,10 +57,3 @@ You can try the application on our server at:
 - [wm.fgdou.ovh/prometheus/](https://wm.fgdou.ovh/prometheus/)
 
 > Note : Usernames and passwords for `rabbitmq` and `postgres` are in the [.env](./.env) file.
-
-# Documentation
-
-- [How to run](./doc/how-to-run.md)
-- [Service architecture](./doc/services.md)
-- [Front-end technical documentation](./doc/front-end.md)
-- [Back-end (API) technical documentation](./doc/back-end.md)
