@@ -23,23 +23,6 @@ The application is composed of a **front-end**, an **API**, a **mail microservic
 - [Front-end technical documentation](./doc/front-end.md)
 - [Back-end (API) technical documentation](./doc/back-end.md)
 
-## Features
-
-- [x] Login
-- [x] Register
-- [x] Logout
-- [x] Reset password  
-- [x] Email on registration
-- [x] Users list
-- [x] User detail (with association he is in)
-- [x] Preview and edit personal information
-- [x] Association detail
-- [x] Associations list
-- [x] Rename association
-- [x] Create/remove association
-- [x] Add/remove user from association
-- [x] Create/remove association event (assign users to event)
-
 # Project Members
 
 - [ADAM Cody](https://codyadm.com)
