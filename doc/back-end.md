@@ -23,46 +23,46 @@ You can preview sent mail by accessing the MailDev ([wm.fgdou.ovh/maildev/](http
 # Routes
 
 ## Default
-`GET` /
-`POST` /auth/login
-`POST` /auth/register
+- `GET` /
+- `POST` /auth/login
+- `POST` /auth/register
 
 ## Users
-`GET` /users
-`POST` /users
-`GET` /users/{id}
-`PUT` /users/{id}
-`DELETE` /users/{id}
-`GET` /users/search/{name}
-`POST` /users/byEmail
+- `GET` /users
+- `POST` /users
+- `GET` /users/{id}
+- `PUT` /users/{id}
+- `DELETE` /users/{id}
+- `GET` /users/search/{name}
+- `POST` /users/byEmail
 
 ## Associations
-`GET` /associations
-`POST` /associations
-`GET` /associations/{id}
-`PUT` /associations/{id}
-`DELETE` /associations/{id}
-`GET` /associations/{id}/members
-`GET` /associations/search/{name}
-`GET` /associations/{id}/minutes
+- `GET` /associations
+- `POST` /associations
+- `GET` /associations/{id}
+- `PUT` /associations/{id}
+- `DELETE` /associations/{id}
+- `GET` /associations/{id}/members
+- `GET` /associations/search/{name}
+- `GET` /associations/{id}/minutes
 
 ## Roles
-`POST` /roles
-`GET` /roles
-`DELETE` /roles/{user}/{asso}
-`PUT` /roles/{user}/{asso}
-`GET` /roles/{user}/{asso}
-`GET` /roles/{id}
-`GET` /roles/userid/{id}
-`GET` /roles/users/{name}
-`GET` /roles/association/{id}
+- `POST` /roles
+- `GET` /roles
+- `DELETE` /roles/{user}/{asso}
+- `PUT` /roles/{user}/{asso}
+- `GET` /roles/{user}/{asso}
+- `GET` /roles/{id}
+- `GET` /roles/userid/{id}
+- `GET` /roles/users/{name}
+- `GET` /roles/association/{id}
 
 ## Minutes (Association events)
-`GET` /minutes
-`POST` /minutes
-`GET` /minutes/{id}
-`PUT` /minutes/{id}
-`DELETE` /minutes/{id}
+- `GET` /minutes
+- `POST` /minutes
+- `GET` /minutes/{id}
+- `PUT` /minutes/{id}
+- `DELETE` /minutes/{id}
 
 
 # NestJS Modules
