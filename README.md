@@ -14,7 +14,7 @@ This is a project for the Web and Architecture course at ESIR.
 
 **The goal** is to create a web application with a microservice architecture. The application is a simple administration panel for a company that manages associations. 
 
-The application is composed of a **front-end**, an **API**, a **mail microservice**, a **database**, a **message broker** and a **reverse proxy**.
+The application is composed of a **front-end**, an **API**, a **mail microservice**, a **database**, a **message broker**, a **reverse proxy**, a **load tester** and **monitoring tools**.
 
 # Documentation
 
